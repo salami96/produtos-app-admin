@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { StoreService } from './services/store.service';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',

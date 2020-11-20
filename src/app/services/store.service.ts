@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Store } from './entities';
+import { Observable, Observer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StoreService {
-  // store: Store;
-  store: string;
+  private store: Observer<string>;
 
   constructor() { }
 
+  getStore = new Observable<string>((observer) => {
+    observer.next();
+    this.store = observer;
+  });
+
+  setStore(text: string) {
+    this.store.next(text);
+  }
 }
