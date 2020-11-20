@@ -1,4 +1,6 @@
-<a style="margin:1em" routerLink="/pedidos">Pedidos</a>
-<a style="margin:1em" routerLink="/loja">Loja</a>
-<a style="margin:1em" routerLink="/produtos">Produtos</a>
-<a style="margin:1em" routerLink="/preferencias">Preferencias</a>
+<div *ngIf="store">
+    <a style="margin:1em" routerLink="/pedidos">Pedidos</a>
+    <a style="margin:1em" routerLink="/loja">Loja</a>
+    <a style="margin:1em" routerLink="/produtos">Produtos</a>
+    <a style="margin:1em" routerLink="/preferencias">Preferencias</a>
+</div>

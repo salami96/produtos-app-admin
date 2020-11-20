@@ -13,6 +13,7 @@ import { PreferencesComponent } from './preferences/preferences.component';
 import { NavComponent } from './nav/nav.component';
 import { LoginComponent } from './login/login.component';
 import { ChooseStoreComponent } from './choose-store/choose-store.component';
+import { CreateComponent } from './choose-store/create/create.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ChooseStoreComponent } from './choose-store/choose-store.component';
     PreferencesComponent,
     NavComponent,
     LoginComponent,
-    ChooseStoreComponent
+    ChooseStoreComponent,
+    CreateComponent
   ],
   imports: [
     BrowserModule,
