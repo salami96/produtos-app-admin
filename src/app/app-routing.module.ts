@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { OrdersComponent } from './orders/orders.component';
 import { PreferencesComponent } from './preferences/preferences.component';
 import { ProductsComponent } from './products/products.component';
+import { AuthGuard } from './services/auth.guard';
 import { StoreComponent } from './store/store.component';
 
 const routes: Routes = [
