@@ -6,6 +6,7 @@ import { Observable, Observer } from 'rxjs';
 })
 export class StoreService {
   private store: Observer<string>;
+  alreadySelected = false;
 
   constructor() { }
 
@@ -15,6 +16,7 @@ export class StoreService {
   });
 
   setStore(text: string) {
+    this.alreadySelected = text !== undefined;
     this.store.next(text);
   }
 }

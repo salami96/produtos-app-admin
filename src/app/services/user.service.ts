@@ -6,6 +6,7 @@ import { Observable, Observer } from 'rxjs';
 })
 export class UserService {
   private user: Observer<string>;
+  logged = false;
 
   constructor() { }
 
@@ -15,6 +16,7 @@ export class UserService {
   });
 
   setUser(text: string) {
+    this.logged = text !== undefined;
     this.user.next(text);
   }
 }

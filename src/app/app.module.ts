@@ -14,6 +14,8 @@ import { NavComponent } from './nav/nav.component';
 import { LoginComponent } from './login/login.component';
 import { ChooseStoreComponent } from './choose-store/choose-store.component';
 import { CreateStoreComponent } from './choose-store/create-store/create-store.component';
+import { StoreGuard } from './services/store.guard';
+import { UserGuard } from './services/user.guard';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,7 @@ import { CreateStoreComponent } from './choose-store/create-store/create-store.c
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ StoreGuard, UserGuard ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

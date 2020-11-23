@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Observer, Subscription } from 'rxjs';
 import { StoreService } from '../services/store.service';
 import { UserService } from '../services/user.service';
 
@@ -8,18 +8,30 @@ import { UserService } from '../services/user.service';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements OnInit {
-  store$: Observable<string>;
+export class NavComponent implements OnInit, OnDestroy {
+  subs: Subscription[] = [];
+  show: boolean;
   user$: Observable<string>;
 
   constructor(
-    private uService: UserService,
-    private sService: StoreService
+    public uService: UserService,
+    public sService: StoreService
   ) { }
 
   ngOnInit() {
-    this.store$ = this.sService.getStore;
     this.user$ = this.uService.getUser;
+    this.subs.push(
+      this.uService.getUser.subscribe(this.verify),
+      this.sService.getStore.subscribe(this.verify)
+    );
+  }
+
+  verify = (resp) => {
+    this.show = this.uService.logged && this.sService.alreadySelected;
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(s => s.unsubscribe());
   }
 
 }
