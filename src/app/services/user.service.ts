@@ -19,4 +19,20 @@ export class UserService {
     this.logged = text !== undefined;
     this.user.next(text);
   }
+
+  login(email: string, pass: string): Promise<any> {
+    return;
+  }
+
+  save(name: string, phone: string, email: string, pass: string): Promise<any> {
+    return;
+  }
+
+  providerLogin(method: string): Promise<any> {
+    return;
+  }
+
+  resetPassword(email: string): Promise<any> {
+    return;
+  }
 }

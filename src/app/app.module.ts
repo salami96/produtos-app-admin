@@ -16,6 +16,8 @@ import { ChooseStoreComponent } from './choose-store/choose-store.component';
 import { CreateStoreComponent } from './choose-store/create-store/create-store.component';
 import { StoreGuard } from './services/store.guard';
 import { UserGuard } from './services/user.guard';
+import { FormsModule } from '@angular/forms';
+import { IconsModule } from './icons/icons.module';
 
 @NgModule({
   declarations: [
@@ -33,10 +35,12 @@ import { UserGuard } from './services/user.guard';
     CreateStoreComponent
   ],
   imports: [
+    AppRoutingModule,
     BrowserModule,
-    AppRoutingModule
+    FormsModule,
+    IconsModule
   ],
-  providers: [ StoreGuard, UserGuard ],
+  providers: [ IconsModule, StoreGuard, UserGuard ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

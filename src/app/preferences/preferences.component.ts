@@ -25,4 +25,9 @@ export class PreferencesComponent implements OnInit {
     this.router.navigate([ '/entrar' ]);
   }
 
+  selectStore() {
+    this.sService.setStore(undefined);
+    this.router.navigate([ '/escolher-loja' ]);
+  }
+
 }

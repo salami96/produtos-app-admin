@@ -1,0 +1,224 @@
+@media (min-width: 1200px) {
+    .login-error {
+        left: 15vw !important;
+        right: 15vw !important;
+        width: 70vw !important;
+    }
+}
+
+@media (min-width: 949px) {
+    main {
+        background: white;
+        padding-bottom: 2em;
+        margin: 2em auto;
+        width: 100%;
+        max-width: 500px;
+        border-radius: 0.5em;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+    }
+    main nav div {
+        border-radius: 0.5em;
+    }
+    main nav div a {
+        border-top-left-radius: 0.5em;
+        border-top-right-radius: 0.5em;
+    }
+    .login-error {
+        font-size: 1.1em;
+        bottom: 1em !important;
+    }
+    .nav-item.nav-link.active {
+        border-bottom-width: 10px !important;
+        box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.25);
+    }
+}
+
+.nav-item.nav-link {
+    color: var(--secondary);
+    border: none;
+    transition: 300ms;
+    background: transparent;
+    border-radius: 0;
+}
+
+.nav-item.nav-link.active:nth-first-child() {
+    border-right: 1px solid white;
+}
+
+.nav-item.nav-link.active:nth-last-child() {
+    border-left: 1px solid white;
+}
+
+.nav-item.nav-link.active {
+    color: white;
+    border-bottom: 5px solid white;
+    transition: 300ms;
+}
+
+main nav div {
+    display: grid;
+    grid-template: 1fr / 1fr 1fr;
+    background: var(--primary);
+    height: 3em;
+    align-items: center;
+    justify-items: center;
+    margin-bottom: 1em;
+}
+
+main nav div a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main .form-signin div:not(.label-float) {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 0.5em;
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 450px;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+
+.label-float {
+    position: relative;
+    padding-top: 13px;
+}
+
+.label-float input {
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    outline: none;
+    width: 100%;
+    min-width: 200px;
+    padding: 15px 20px;
+    font-size: 16px;
+    transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    -moz-transition: all .1s linear;
+    -webkit-appearance: none;
+}
+
+.label-float input:focus {
+    border: 2px solid var(--primary);
+}
+
+.label-float input::placeholder {
+    color: transparent;
+}
+
+.label-float label {
+    pointer-events: none;
+    position: absolute;
+    top: calc(50% - 8px);
+    left: 15px;
+    transition: all .1s linear;
+    -webkit-transition: all .1s linear;
+    -moz-transition: all .1s linear;
+    background-color: white;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.label-float input.invalid+label, .text-danger {
+    color: tomato !important;
+}
+
+.label-float input.invalid {
+    border: 2px solid tomato;
+}
+
+.label-float input:focus+label, .label-float input:not(:placeholder-shown)+label {
+    font-size: 13px;
+    top: 0.5em;
+    line-height: 0;
+    color: var(--primary);
+}
+
+.fade:not(.show) {
+    height: 0;
+    width: 0;
+    opacity: 0;
+    transition: 500ms;
+}
+
+.fade.show {
+    height: auto;
+    opacity: 1;
+    transition: 500ms;
+}
+
+.separator {
+    margin: 2em auto;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: var(--dark);
+}
+
+.separator::before, .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--dark);
+}
+
+.separator::before {
+    margin-right: 1em;
+}
+
+.separator::after {
+    margin-left: 1em;
+}
+
+.login-error {
+    position: fixed;
+    z-index: 1040;
+    bottom: 5em;
+    right: 5vw;
+    left: 5vw;
+    width: 90vw;
+    background: var(--secondary);
+    color: var(--dark);
+    border-color: var(--dark);
+    box-shadow: 1px 1px 2px var(--accent);
+}
+
+.hide {
+    position: fixed;
+    z-index: -1000;
+    opacity: 0;
+}
+
+.fb {
+    background: #3b5998;
+    color: white;
+    transition: 300ms;
+}
+
+.google {
+    background: #EA4335;
+    color: white;
+    transition: 300ms;
+}
+
+.fb:hover, .fb:focus {
+    color: #3b5998;
+    border-color: #3b5998;
+    background: transparent;
+    transition: 300ms;
+    box-shadow: none;
+}
+
+.google:hover, .google:focus {
+    color: #EA4335;
+    border-color: #EA4335;
+    background: transparent;
+    transition: 300ms;
+    box-shadow: none;
+}
