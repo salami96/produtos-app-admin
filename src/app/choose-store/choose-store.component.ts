@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Store, User } from '../services/entities';
 import { StoreService } from '../services/store.service';
 import { UserService } from '../services/user.service';
 
@@ -10,8 +11,8 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./choose-store.component.css']
 })
 export class ChooseStoreComponent implements OnInit {
-  user$: Observable<string>;
-  store$: Observable<string>;
+  user: User;
+  stores$: Observable<Store[]>;
 
   constructor(
     private uService: UserService,
@@ -20,15 +21,17 @@ export class ChooseStoreComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.user$ = this.uService.getUser.pipe();
-    this.store$ = this.sService.getStore;
+    this.uService.getUser.subscribe(user => {
+      this.user = user;
+      this.stores$ = this.sService.getStores(user.uid);
+    });
     if (!this.uService.logged) {
       this.router.navigate([ '/entrar' ]);
     }
   }
 
-  setStore(text: string) {
-    this.sService.setStore(text);
+  setStore(store: Store) {
+    this.sService.setStore(store);
     this.router.navigate([ '/pedidos' ]);
   }
 }

@@ -18,6 +18,19 @@ import { StoreGuard } from './services/store.guard';
 import { UserGuard } from './services/user.guard';
 import { FormsModule } from '@angular/forms';
 import { IconsModule } from './icons/icons.module';
+import * as firebase from 'firebase';
+import { HttpClientModule } from '@angular/common/http';
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyCYIemjawWYApHGDQ1QpjheX4FArLLPDfo',
+  authDomain: 'produtos-app-login.firebaseapp.com',
+  databaseURL: 'https://produtos-app-login.firebaseio.com',
+  projectId: 'produtos-app-login',
+  storageBucket: 'produtos-app-login.appspot.com',
+  messagingSenderId: '558255407559',
+  appId: '1:558255407559:web:79a7b9b9fa17b455ecd9e2',
+  measurementId: 'G-C19JT983YJ'
+};
 
 @NgModule({
   declarations: [
@@ -38,9 +51,16 @@ import { IconsModule } from './icons/icons.module';
     AppRoutingModule,
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     IconsModule
   ],
   providers: [ IconsModule, StoreGuard, UserGuard ],
   bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { StoreService } from '../services/store.service';
 import { UserService } from '../services/user.service';
 
@@ -36,10 +37,11 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private uService: UserService,
-    private sService: StoreService
+    private sService: StoreService,
   ) { }
 
   ngOnInit() {
+    this.uService.verifyLocalStorage();
   }
 
   validate() {

@@ -10,12 +10,4 @@ import { UserService } from './services/user.service';
 })
 export class AppComponent {
   title = 'Gerente produtos.app';
-
-  constructor(
-    private uService: UserService,
-    private sService: StoreService
-  ) {
-    uService.getUser.subscribe();
-    sService.getStore.subscribe();
-  }
 }

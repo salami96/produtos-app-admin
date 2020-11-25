@@ -1,22 +1,31 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
+import { Observer } from 'rxjs';
+import { Store } from './entities';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StoreService {
-  private store: Observer<string>;
-  alreadySelected = false;
+  selected: Store;
+  options = {
+    headers: {
+      'authorization': 't5b3b9a5',
+      'Access-Control-Allow-Origin': '*'
+    }
+  };
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  getStore = new Observable<string>((observer) => {
-    observer.next();
-    this.store = observer;
-  });
+  getStores(uid: string) {
+    return this.http.get<Store[]>(
+      `/api/stores-by-owner/${uid}`, this.options
+    );
+  }
 
-  setStore(text: string) {
-    this.alreadySelected = text !== undefined;
-    this.store.next(text);
+  setStore(store: Store) {
+    this.selected = store;
   }
 }

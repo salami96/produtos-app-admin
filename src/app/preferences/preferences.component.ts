@@ -20,9 +20,8 @@ export class PreferencesComponent implements OnInit {
   }
 
   logout() {
-    this.uService.setUser(undefined);
+    this.uService.logout();
     this.sService.setStore(undefined);
-    this.router.navigate([ '/entrar' ]);
   }
 
   selectStore() {

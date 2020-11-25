@@ -77,7 +77,6 @@ export interface User {
     email: string;
     address: Address[];
     avatar: string;
-    pushID: string;
 }
 export interface Address {
     name: string;
