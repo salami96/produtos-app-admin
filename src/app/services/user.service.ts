@@ -111,8 +111,9 @@ export class UserService {
 
   private getUserApi(uid: string) {
     this.http.get<User>(
-      `/api/user/${uid}`, this.options
-      ).subscribe(user => {
+      `http://localhost:9000/api/user/${uid}`, this.options
+    ).subscribe(user => {
+      console.log(user);
       this.logged = true;
       this.user.next(user);
       this.router.navigate(['/escolher-loja']);
@@ -121,7 +122,7 @@ export class UserService {
 
   private saveUserApi(user: User) {
     this.http.post<User>(
-      `/api/user`, user, this.options
+      `http://localhost:9000/api/user`, user, this.options
     ).subscribe(resp => {
       this.logged = true;
       this.user.next(user);

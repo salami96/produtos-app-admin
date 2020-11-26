@@ -21,14 +21,14 @@ export class NavComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.user$ = this.uService.getUser;
-    // this.subs.push(
-    //   this.uService.getUser.subscribe(this.verify),
-    //   this.sService.getStores().subscribe(this.verify)
-    // );
+    this.subs.push(
+      this.uService.getUser.subscribe(this.verify),
+      this.sService.getStore.subscribe(this.verify)
+    );
   }
 
   verify = (resp) => {
-    // this.show = this.uService.logged && this.sService.alreadySelected;
+    this.show = this.uService.logged && this.sService.selected !== undefined;
   }
 
   ngOnDestroy(): void {

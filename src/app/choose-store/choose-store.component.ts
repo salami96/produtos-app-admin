@@ -22,6 +22,7 @@ export class ChooseStoreComponent implements OnInit {
 
   ngOnInit() {
     this.uService.getUser.subscribe(user => {
+      console.log(user);
       this.user = user;
       this.stores$ = this.sService.getStores(user.uid);
     });

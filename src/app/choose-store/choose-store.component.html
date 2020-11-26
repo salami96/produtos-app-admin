@@ -1,3 +1,2 @@
-<div style="width: 5em; height: 5em; margin: 1em; background: aqua;" (click)="setStore('Loja 1')">Loja 1</div>
-<div style="width: 5em; height: 5em; margin: 1em; background: aquamarine;" (click)="setStore('Loja 2')">Loja 2</div>
-<div style="width: 5em; height: 5em; margin: 1em; background: lightblue;" routerLink="/nova-loja" > + Nova Loja</div>
+<div *ngFor="let store of stores$ | async">{{ store.title }}</div>
+<!-- <div style="width: 5em; height: 5em; margin: 1em; background: aqua;" (click)="setStore('Loja 1')">Loja 1</div> -->
