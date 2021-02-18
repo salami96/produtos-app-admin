@@ -1,6 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IconAlertCircle, IconFacebook, IconLogIn, IconSave, IconSlash } from 'angular-feather';
+import {
+  IconAlertCircle,
+  IconBriefcase,
+  IconChevronDown,
+  IconChevronRight,
+  IconChevronUp,
+  IconFacebook,
+  IconLogIn,
+  IconPlusCircle,
+  IconSave,
+  IconSearch,
+  IconSettings,
+  IconShoppingBag,
+  IconSlash,
+  IconTag
+} from 'angular-feather';
 import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
@@ -10,11 +25,20 @@ import { LoadingComponent } from './loading/loading.component';
   declarations: [ LoadingComponent ],
   exports: [
     IconAlertCircle,
+    IconBriefcase,
+    IconChevronDown,
+    IconChevronRight,
+    IconChevronUp,
     IconFacebook,
     IconLogIn,
+    IconPlusCircle,
     IconSave,
+    IconSearch,
+    IconSettings,
+    IconShoppingBag,
     IconSlash,
-    LoadingComponent
+    IconTag,
+    LoadingComponent,
   ]
 })
 export class IconsModule { }

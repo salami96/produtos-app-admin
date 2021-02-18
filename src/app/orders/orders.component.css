@@ -1,0 +1,67 @@
+nav {
+  background-color: var(--primary);
+  color: var(--secondary);
+}
+.search-bar {
+  display: flex;
+}
+.search-bar > div:not(.input-group) {
+  display: grid;
+  grid-template-columns: 8fr 1fr;
+  width: 100%;
+}
+.search-bar .close {
+  color: var(--secondary);
+  align-self: start;
+  justify-self: flex-end;
+}
+.btn-search {
+  border-radius: 0.5em;
+}
+.search-bar input {
+  border-top-left-radius: 0.5em;
+  border-bottom-left-radius: 0.5em;
+}
+.btn-search, .search-bar input {
+  background-color: var(--secondary);
+  color: var(--dark);
+}
+#accordion > .card {
+  background: var(--dark);
+  color: var(--secondary);
+  border-radius: 0;
+}
+#accordion .card-header {
+  display: flex;
+  justify-content: space-between;
+}
+#accordion .collapse.show {
+  background: var(--primary);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.inner-card {
+  color: #222;
+  display: grid;
+  grid-template-columns: 8fr 5fr 1fr;
+  padding: 0.5em;
+}
+.inner-card > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.inner-card p {
+  margin: 0;
+}
+.f-75 {
+  font-size: 75%;
+  text-overflow: ellipsis;
+}
+.inner-card .colored {
+  color: var(--primary);
+}
+.inner-card i-chevron-right {
+  align-self: center;
+}

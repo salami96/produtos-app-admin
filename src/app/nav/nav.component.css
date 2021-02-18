@@ -1,0 +1,103 @@
+@media (max-width: 949px) {
+  nav.navbar {
+      display: none
+  }
+}
+@media (min-width: 950px) {
+  nav.fixed-bottom {
+      display: none;
+  }
+}
+nav {
+  background-color: var(--primary);
+}
+.navbar-brand {
+  color: white !important;
+}
+.fixed-bottom {
+  display: grid;
+  grid-template: 1fr / 1fr 1fr 1fr 1fr;
+  justify-content: space-around;
+  box-shadow: -1px -1px 0.5em rgba(0, 0, 0, 0.5);
+}
+div.nav-item {
+  margin: 0.5em;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  line-height: normal;
+}
+.nav-item:hover .nav-link {
+  color: white;
+  text-shadow: 1px 1px 4px white;
+  transition: 500ms;
+}
+.isActive {
+  box-shadow:
+      -2px -2px 0px 0px rgba(255, 255, 255, 0.5),
+      2px 2px 0px 0px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow:
+      -2px -2px 0px 0px rgba(255, 255, 255, 0.5),
+      2px 2px 0px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow:
+      -2px -2px 0px 0px rgba(255, 255, 255, 0.5),
+      2px 2px 0px 0px rgba(0, 0, 0, 0.5);
+  transition: 500ms;
+}
+.isActive .tab, .isActive .nav-link,
+.isActive .tab *, .isActive .nav-link * {
+  color: white;
+  text-decoration: none;
+}
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.7em;
+  color: var(--secondary);
+}
+.tab:hover {
+  text-decoration: none;
+}
+
+/* Desktop Navbar */
+ul.nav li {
+  border-radius: 1em;
+  margin: 0 1em;
+  padding: 0 0.5em;
+}
+ul.nav a {
+  color: var(--secondary);
+  display: flex;
+}
+ul.nav a * {
+  display: grid;
+  margin-right: 0.5em;
+}
+.sticky-top .badge.badge-pill {
+  position: absolute;
+  color: var(--dark);
+  background: var(--accent);
+  margin: -0.5em 1em;
+}
+.fixed-bottom .badge.badge-pill {
+  color: var(--dark);
+  background: var(--accent);
+  position: absolute;
+  margin-left: 2em;
+}
+.cart-bottom {
+  animation: cart-bottom 500ms ease-in-out;
+}
+@keyframes cart-bottom {
+  from {
+      transform: translate(-10vw, -10vh);
+  }
+}
+.cart-top {
+  animation: cart-top 500ms ease-in-out;
+}
+@keyframes cart-top {
+  from {
+      transform: translate(-20vw, 50vh) scale(5);
+  }
+}

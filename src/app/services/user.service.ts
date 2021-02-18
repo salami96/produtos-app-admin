@@ -9,14 +9,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class UserService {
-  private user: Observer<User>;
-  logged = false;
-  options = {
-    headers: {
-      'authorization': 't5b3b9a5',
-      'Access-Control-Allow-Origin': '*'
-    }
-  };
+  _user: User;
 
   constructor(
     private http: HttpClient,
@@ -33,17 +26,25 @@ export class UserService {
       }
     });
   }
+  private user: Observer<User>;
+  logged = false;
+  options = {
+    headers: {
+      'authorization': 't5b3b9a5',
+      'Access-Control-Allow-Origin': '*'
+    }
+  };
+
+  getUser = new Observable<User>((observer) => {
+    observer.next(this._user);
+    this.user = observer;
+  });
 
   public verifyLocalStorage() {
     if (localStorage['token']) {
       return this.getUserApi(localStorage['token']);
     }
   }
-
-  getUser = new Observable<User>((observer) => {
-    observer.next();
-    this.user = observer;
-  });
 
   setUser(user: User) {
     this.logged = user !== undefined;
@@ -104,7 +105,9 @@ export class UserService {
   }
 
   public logout() {
+    this._user = undefined;
     this.user.next(undefined);
+    localStorage.removeItem('token');
     this.router.navigate(['/entrar']);
     return auth().signOut();
   }
@@ -113,10 +116,10 @@ export class UserService {
     this.http.get<User>(
       `http://localhost:9000/api/user/${uid}`, this.options
     ).subscribe(user => {
-      console.log(user);
-      this.logged = true;
-      this.user.next(user);
       this.router.navigate(['/escolher-loja']);
+      this.logged = true;
+      this._user = user;
+      this.user.next(user);
     });
   }
 
@@ -124,9 +127,10 @@ export class UserService {
     this.http.post<User>(
       `http://localhost:9000/api/user`, user, this.options
     ).subscribe(resp => {
-      this.logged = true;
-      this.user.next(user);
       this.router.navigate(['/escolher-loja']);
+      this.logged = true;
+      this._user = user;
+      this.user.next(user);
     });
   }
 }

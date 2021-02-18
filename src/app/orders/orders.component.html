@@ -1,3 +1,158 @@
-<p>
-  orders works!
-</p>
+<nav class="navbar fixed-top fade" *ngIf="!showSearchBar" [class.show]="!showSearchBar">
+  <span class="navbar-brand">
+    {{store?.title}}
+  </span>
+  <span (click)="showSearchBar= true">
+    <i-search></i-search>
+  </span>
+</nav>
+<nav class="navbar fixed-top search-bar fade" *ngIf="showSearchBar" [class.show]="showSearchBar">
+  <div>
+    <span class="mb-2">Pesquisar por nome do cliente ou nº do pedido: </span>
+    <button type="button" class="close" (click)="showSearchBar = false">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="input-group">
+    <input type="text" class="form-control">
+    <div class="input-group-append">
+      <span (click)="showSearchBar= true" class="btn btn-sm btn-search">
+        <i-search></i-search>
+      </span>
+    </div>
+  </div>
+</nav>
+<main class="py-5" [style.margin-top]="showSearchBar ? '5em' : '2em'">
+  <div id="accordion">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">
+          Novos
+          <span class="badge badge-pill badge-info">{{qtt['novos']}}</span>
+        </h5>
+        <span (click)="expand('novos')">
+          <i-chevron-down *ngIf="!expanded['novos']"></i-chevron-down>
+          <i-chevron-up *ngIf="expanded['novos']"></i-chevron-up>
+        </span>
+      </div>
+      <div class="collapse p-2" [class.show]="expanded['novos']" data-parent="#accordion">
+        <div class="card inner-card">
+          <div>
+            <p class="colored f-75">pedido #1</p>
+            <p>Gabriel Salami</p>
+            <p class="f-75">Av. Cruz de Malta, 705, Centro</p>
+          </div>
+          <div class="text-right">
+            <p class="f-75">11/02/2021 <br> 11:50</p>
+            <p class="colored">R$ 37,00</p>
+          </div>
+          <i-chevron-right class="colored"></i-chevron-right>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">
+          Em Preparo
+          <span class="badge badge-pill badge-info">{{qtt['em preparo']}}</span>
+        </h5>
+        <span (click)="expand('em preparo')">
+          <i-chevron-down *ngIf="!expanded['em preparo']"></i-chevron-down>
+          <i-chevron-up *ngIf="expanded['em preparo']"></i-chevron-up>
+        </span>
+      </div>
+      <div class="collapse p-2" [class.show]="expanded['em preparo']" data-parent="#accordion">
+        <div class="card inner-card">
+          <div>
+            <p class="colored f-75">pedido #1</p>
+            <p>Gabriel Salami</p>
+            <p class="f-75">Av. Cruz de Malta, 705, Centro</p>
+          </div>
+          <div class="text-right">
+            <p class="f-75">11/02/2021 <br> 11:50</p>
+            <p class="colored">R$ 37,00</p>
+          </div>
+          <i-chevron-right class="colored"></i-chevron-right>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">
+          Em Rota
+          <span class="badge badge-pill badge-info">{{qtt['em rota']}}</span>
+        </h5>
+        <span (click)="expand('em rota')">
+          <i-chevron-down *ngIf="!expanded['em rota']"></i-chevron-down>
+          <i-chevron-up *ngIf="expanded['em rota']"></i-chevron-up>
+        </span>
+      </div>
+      <div class="collapse p-2" [class.show]="expanded['em rota']" data-parent="#accordion">
+        <div class="card inner-card">
+          <div>
+            <p class="colored f-75">pedido #1</p>
+            <p>Gabriel Salami</p>
+            <p class="f-75">Av. Cruz de Malta, 705, Centro</p>
+          </div>
+          <div class="text-right">
+            <p class="f-75">11/02/2021 <br> 11:50</p>
+            <p class="colored">R$ 37,00</p>
+          </div>
+          <i-chevron-right class="colored"></i-chevron-right>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">
+          Entregues
+          <span class="badge badge-pill badge-info">{{qtt['entregues']}}</span>
+        </h5>
+        <span (click)="expand('entregues')">
+          <i-chevron-down *ngIf="!expanded['entregues']"></i-chevron-down>
+          <i-chevron-up *ngIf="expanded['entregues']"></i-chevron-up>
+        </span>
+      </div>
+      <div class="collapse p-2" [class.show]="expanded['entregues']" data-parent="#accordion">
+        <div class="card inner-card">
+          <div>
+            <p class="colored f-75">pedido #1</p>
+            <p>Gabriel Salami</p>
+            <p class="f-75">Av. Cruz de Malta, 705, Centro</p>
+          </div>
+          <div class="text-right">
+            <p class="f-75">11/02/2021 <br> 11:50</p>
+            <p class="colored">R$ 37,00</p>
+          </div>
+          <i-chevron-right class="colored"></i-chevron-right>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">
+          Cancelados
+          <span class="badge badge-pill badge-info">{{ qtt['cancelados'] }}</span>
+        </h5>
+        <span (click)="expand('cancelados')">
+          <i-chevron-down *ngIf="!expanded['cancelados']"></i-chevron-down>
+          <i-chevron-up *ngIf="expanded['cancelados']"></i-chevron-up>
+        </span>
+      </div>
+      <div class="collapse p-2" [class.show]="expanded['cancelados']" data-parent="#accordion">
+        <div class="card inner-card">
+          <div>
+            <p class="colored f-75">pedido #1</p>
+            <p>Gabriel Salami</p>
+            <p class="f-75">Av. Cruz de Malta, 705, Centro</p>
+          </div>
+          <div class="text-right">
+            <p class="f-75">11/02/2021 <br> 11:50</p>
+            <p class="colored">R$ 37,00</p>
+          </div>
+          <i-chevron-right class="colored"></i-chevron-right>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

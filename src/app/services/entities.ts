@@ -46,8 +46,8 @@ export interface Product {
 export interface Order {
     cod: number;
     products: OrderItem[];
-    client: string;
-    store: string;
+    client: User;
+    store: Store;
     date: Date;
     payment: Payment;
     pickup: boolean;

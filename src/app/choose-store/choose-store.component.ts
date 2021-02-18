@@ -21,14 +21,15 @@ export class ChooseStoreComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.uService.getUser.subscribe(user => {
-      console.log(user);
-      this.user = user;
-      this.stores$ = this.sService.getStores(user.uid);
-    });
     if (!this.uService.logged) {
       this.router.navigate([ '/entrar' ]);
     }
+    this.uService.getUser.subscribe(user => {
+      if (user) {
+        this.user = user;
+        this.stores$ = this.sService.getStores(user.uid);
+      }
+    });
   }
 
   setStore(store: Store) {

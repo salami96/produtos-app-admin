@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Observer, Subscription } from 'rxjs';
-import { User } from '../services/entities';
+import { Subscription } from 'rxjs';
+import { User, Store } from '../services/entities';
 import { StoreService } from '../services/store.service';
 import { UserService } from '../services/user.service';
 
@@ -12,7 +12,10 @@ import { UserService } from '../services/user.service';
 export class NavComponent implements OnInit, OnDestroy {
   subs: Subscription[] = [];
   show: boolean;
-  user$: Observable<User>;
+  qtt = 0;
+  cartTop = false;
+  cartBottom = false;
+  title: string;
 
   constructor(
     public uService: UserService,
@@ -20,15 +23,32 @@ export class NavComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    // this.user$ = this.uService.getUser;
     this.subs.push(
       this.uService.getUser.subscribe(this.verify),
-      this.sService.getStore.subscribe(this.verify)
+      this.sService.getStore.subscribe(this.verify),
+      this.sService.getOrders.subscribe(value => {
+        if (value) {
+          console.log(value);
+          const newOrders = value.filter(order => order.status === 0).length;
+          if (newOrders !== this.qtt) {
+            this.cartTop = true;
+            this.cartBottom = true;
+            setTimeout(() => {
+              this.cartTop = false;
+              this.cartBottom = false;
+            }, 1000);
+            this.qtt = newOrders;
+          }
+        }
+      })
     );
   }
 
-  verify = (resp) => {
-    this.show = this.uService.logged && this.sService.selected !== undefined;
+  verify = (value) => {
+    if (value && value.code) {
+      this.title = value.code + '/gerente';
+    }
+    this.show = this.uService.logged && this.sService.alreadySelected;
   }
 
   ngOnDestroy(): void {

@@ -21,11 +21,11 @@ export class PreferencesComponent implements OnInit {
 
   logout() {
     this.uService.logout();
-    this.sService.setStore(undefined);
+    this.sService.unsetStore();
   }
 
   selectStore() {
-    this.sService.setStore(undefined);
+    this.sService.unsetStore();
     this.router.navigate([ '/escolher-loja' ]);
   }
 
