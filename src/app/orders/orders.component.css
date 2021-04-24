@@ -26,7 +26,101 @@ nav {
   background-color: var(--secondary);
   color: var(--dark);
 }
-#accordion > .card {
+#category-selector {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  overflow: auto;
+  /* padding: 0.5em 1em; */
+  margin-bottom: 5px;
+}
+@media (min-width: 650px) {
+  #categorias, #category-selector {
+      justify-content: center;
+  }
+}
+#categorias {
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+label.btn-outline-theme {
+  color: var(--dark);
+  /* border: 0.1px solid var(--dark); */
+  border-radius: 1.5em !important;
+  transition: 300ms;
+  margin: 0 0.5em;
+}
+label.btn-outline-theme.focus, label.btn-outline-theme:focus {
+  box-shadow: none;
+}
+label.btn-outline-theme:hover, label.btn-outline-theme.active {
+  color: #fff;
+  background-color: var(--dark);
+  transition: 300ms;
+}
+main {
+  margin-bottom: 5em;
+}
+.orders {
+  padding: 0.5em 1em;
+}
+.order-card.novos {
+  border-left: .25em solid var(--accent);
+}
+.order-card.preparando {
+  border-left: .25em solid var(--secondary);
+}
+.order-card.entregando {
+  border-left: .25em solid var(--primary);
+}
+.order-card.pronto-para-retirar {
+  border-left: .25em solid var(--info);
+}
+.order-card.entregues {
+  border-left: .25em solid var(--success);
+}
+.order-card.cancelados, .error-card {
+  border-left: .25em solid var(--danger);
+}
+.error-card {
+  color: #222;
+  padding: 1em .5em 0;
+  display: flex;
+  align-items: center;
+  text-align: left;
+}
+.error-card span {
+  font-size: 2em;
+}
+.order-card {
+  color: #222;
+  display: grid;
+  grid-template-columns: 8fr 5fr 1fr;
+  padding: 0.5em;
+  margin-top: 0.5em;
+}
+.order-card > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.order-card p {
+  margin: 0;
+}
+.f-75 {
+  font-size: 75%;
+  text-overflow: ellipsis;
+}
+.order-card .colored {
+  color: var(--primary);
+}
+.order-card i-chevron-right {
+  align-self: center;
+}
+
+/* #accordion > .card {
   background: var(--dark);
   color: var(--secondary);
   border-radius: 0;
@@ -41,27 +135,4 @@ nav {
   flex-direction: column;
   gap: 0.5em;
 }
-.inner-card {
-  color: #222;
-  display: grid;
-  grid-template-columns: 8fr 5fr 1fr;
-  padding: 0.5em;
-}
-.inner-card > div {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-}
-.inner-card p {
-  margin: 0;
-}
-.f-75 {
-  font-size: 75%;
-  text-overflow: ellipsis;
-}
-.inner-card .colored {
-  color: var(--primary);
-}
-.inner-card i-chevron-right {
-  align-self: center;
-}
+ */

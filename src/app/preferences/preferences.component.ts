@@ -26,6 +26,7 @@ export class PreferencesComponent implements OnInit {
 
   selectStore() {
     this.sService.unsetStore();
+    this.uService.refresh();
     this.router.navigate([ '/escolher-loja' ]);
   }
 

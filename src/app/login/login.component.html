@@ -1,112 +1,118 @@
 <main>
-    <nav>
-      <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a class="nav-item nav-link" [class.active]="atLogin" [attr.aria-selected]="atLogin"
-        data-toggle="tab" href="#entrar" role="tab" aria-controls="nav-entrar">Entrar</a>
-        <a class="nav-item nav-link" [class.active]="!atLogin" [attr.aria-selected]="!atLogin"
-        data-toggle="tab" href="#cadastrar" role="tab" aria-controls="nav-cadastrar">Cadastrar</a>
-      </div>
-    </nav>
-    <div class="label-float hide">
-      <input type="email" placeholder=" " />
-      <label>Email</label>
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link" [class.active]="atLogin" [attr.aria-selected]="atLogin" data-toggle="tab"
+        href="#entrar" role="tab" aria-controls="nav-entrar">Entrar</a>
+      <a class="nav-item nav-link" [class.active]="!atLogin" [attr.aria-selected]="!atLogin" data-toggle="tab"
+        href="#cadastrar" role="tab" aria-controls="nav-cadastrar">Cadastrar</a>
     </div>
-    <div class="label-float hide">
-      <input type="password" placeholder=" " />
-      <label>Senha</label>
-    </div>
-    <div class="tab-content" id="nav-tabContent">
-      <div class="form-signin tab-pane fade show active" id="entrar" role="tabpanel" aria-labelledby="nav-home-tab">
-        <div class="label-float">
-          <input type="email" [(ngModel)]="email" [class.invalid]="emailError" placeholder=" " (keyup.enter)="focus('senha')" autofocus />
-          <label>Email</label>
-        </div>
-        <div class="text-danger fade mt-1 text-right" [class.show]="emailError">Email inválido</div>
-        <div class="label-float">
-          <input type="password" [(ngModel)]="password" id="senha" [class.invalid]="passwordError" placeholder=" " (keyup.enter)="signIn()" />
-          <label>Senha</label>
-        </div>
-        <div class="text-danger fade mt-1 text-right" [class.show]="passwordError">A senha deve possui 8 caracteres ou mais!</div>
-        <div>
-          <span class="text-theme pointer" (click)="resetPassword()">Esqueceu a senha?</span>
-        </div>
-        <span class="text-success fade mt-2 d-block" [class.show]="emailSend">
-          Email enviado, confira sua caixa de entrada!
-        </span>
-        <button type="button" class="btn btn-theme btn-block mt-4" (click)="signIn()">
-          <div>
-            <i-log-in class="fade" [class.show]="!loading.login"></i-log-in>
-            <i-loading class="fade" [class.show]="loading.login"></i-loading>
-          </div>
-          Entrar
-        </button>
-      </div>
-      <div class="tab-pane fade form-signin" id="cadastrar" role="tabpanel" aria-labelledby="nav-profile-tab">
-        <div class="label-float">
-          <input type="text" [(ngModel)]="name" [class.invalid]="nameError" placeholder=" " (keyup.enter)="focus('phone')" autofocus />
-          <label>Nome Completo</label>
-        </div>
-        <div class="text-danger fade mt-1 text-right" [class.show]="nameError">É obrigatório informar seu nome</div>
-        <div class="label-float">
-          <input type="text" [(ngModel)]="phone" [class.invalid]="phoneError" id="phone" placeholder=" " (keyup.enter)="focus('email')" />
-          <label>Telefone</label>
-        </div>
-        <div class="text-danger fade mt-1 text-right" [class.show]="phoneError">Número de telefone inválido</div>
-        <div class="label-float">
-          <input id="email" type="email" [(ngModel)]="cadEmail" [class.invalid]="cadEmailError" placeholder=" " (keyup.enter)="focus('cad-senha')" />
-          <label>Email</label>
-        </div>
-        <div class="text-danger fade mt-1 text-right" [class.show]="cadEmailError">Email inválido</div>
-        <div class="label-float">
-          <input type="password" [(ngModel)]="cadPassword" id="cad-senha" [class.invalid]="cadPasswordError" placeholder=" " (keyup.enter)="focus('cad-senha2')" />
-          <label>Senha</label>
-        </div>
-        <div class="text-danger fade mt-1 text-right" [class.show]="cadPasswordError">A senha deve possui 8 caracteres ou mais!</div>
-        <div class="label-float">
-          <input type="password" [(ngModel)]="cadPassword2" id="cad-senha2" [class.invalid]="cadPassword2Error" placeholder=" " (keyup.enter)="save()" />
-          <label>Repetir senha</label>
-        </div>
-        <div class="text-danger fade mt-1 text-right" [class.show]="cadPassword2Error">A senha deve ser igual à primeira!</div>
-        <button type="button" class="btn btn-theme btn-block mt-4" (click)="save()">
-          <div>
-            <i-save class="fade" [class.show]="!loading.register"></i-save>
-            <i-loading class="fade" [class.show]="loading.register"></i-loading>
-          </div>
-          Salvar
-        </button>
-        <button type="button" class="btn btn-outline-danger btn-block" (click)="clear()"><i-slash></i-slash>Limpar</button>
-      </div>
-    </div>
-    <div class="form-signin">
-      <div class="separator">
-        ou
-      </div>
-      <button class="btn btn-block google" (click)="socialLogin('google')">
-        <div>
-          <svg class="fade" [class.show]="!loading.google" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-            width="24px" height="24px" viewBox="0 0 510 510" style="enable-background:new 0 0 510 510; fill: currentColor;" xml:space="preserve">
-            <g>
-              <g id="glass">
-                <path d="M286.875,229.5v63.75h150.45c-15.3,89.25-86.7,153-175.95,153c-104.55,0-191.25-86.7-191.25-191.25
-                  s86.7-191.25,191.25-191.25c53.55,0,99.45,22.95,132.6,58.65l45.9-45.9c-45.9-45.9-107.1-76.5-178.5-76.5
-                  c-140.25,0-255,114.75-255,255s114.75,255,255,255s242.25-114.75,242.25-255v-25.5H286.875z"/>
-              </g>
-            </g>
-          </svg>
-          <i-loading class="fade mx-auto" [class.show]="loading.google"></i-loading>
-        </div>
-        Entrar com Google
-      </button>
-      <button class="btn btn-block fb" (click)="socialLogin('facebook')">
-        <div>
-          <i-facebook class="fade" [class.show]="!loading.facebook"></i-facebook>
-          <i-loading class="fade" [class.show]="loading.facebook"></i-loading>
-        </div>
-        Entrar com Facebook
-      </button>
-    </div>
-  </main>
-  <div class="alert alert-danger fade login-error text-center" [class.show]="loginError">
-    <i-alert-circle></i-alert-circle>
-    <span class="mx-3">{{msgError}}</span>
+  </nav>
+  <div class="label-float hide">
+    <input type="email" placeholder=" " />
+    <label>Email</label>
   </div>
+  <div class="label-float hide">
+    <input type="password" placeholder=" " />
+    <label>Senha</label>
+  </div>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="form-signin tab-pane fade show active" id="entrar" role="tabpanel" aria-labelledby="nav-home-tab">
+      <div class="label-float">
+        <input type="email" [(ngModel)]="email" [class.invalid]="emailError" placeholder=" "
+          (keyup.enter)="focus('senha')" autofocus />
+        <label>Email</label>
+      </div>
+      <div class="text-danger fade mt-1 text-right" [class.show]="emailError">Email inválido</div>
+      <div class="label-float">
+        <input type="password" [(ngModel)]="password" id="senha" [class.invalid]="passwordError" placeholder=" "
+          (keyup.enter)="signIn()" />
+        <label>Senha</label>
+      </div>
+      <div class="text-danger fade mt-1 text-right" [class.show]="passwordError">A senha deve possui 8 caracteres ou
+        mais!</div>
+      <div>
+        <span class="text-theme pointer" (click)="resetPassword()">Esqueceu a senha?</span>
+      </div>
+      <button type="button" class="btn btn-theme btn-block mt-4" (click)="signIn()">
+        <div>
+          <i-log-in class="fade" [class.show]="!loading.login"></i-log-in>
+          <i-loading class="fade" [class.show]="loading.login"></i-loading>
+        </div>
+        Entrar
+      </button>
+    </div>
+    <div class="tab-pane fade form-signin" id="cadastrar" role="tabpanel" aria-labelledby="nav-profile-tab">
+      <div class="label-float">
+        <input type="text" [(ngModel)]="name" [class.invalid]="nameError" placeholder=" " (keyup.enter)="focus('phone')"
+          autofocus />
+        <label>Nome Completo</label>
+      </div>
+      <div class="text-danger fade mt-1 text-right" [class.show]="nameError">É obrigatório informar seu nome</div>
+      <div class="label-float">
+        <input type="text" [(ngModel)]="phone" [class.invalid]="phoneError" id="phone" placeholder=" "
+          (keyup.enter)="focus('email')" />
+        <label>Telefone</label>
+      </div>
+      <div class="text-danger fade mt-1 text-right" [class.show]="phoneError">Número de telefone inválido</div>
+      <div class="label-float">
+        <input id="email" type="email" [(ngModel)]="cadEmail" [class.invalid]="cadEmailError" placeholder=" "
+          (keyup.enter)="focus('cad-senha')" />
+        <label>Email</label>
+      </div>
+      <div class="text-danger fade mt-1 text-right" [class.show]="cadEmailError">Email inválido</div>
+      <div class="label-float">
+        <input type="password" [(ngModel)]="cadPassword" id="cad-senha" [class.invalid]="cadPasswordError"
+          placeholder=" " (keyup.enter)="focus('cad-senha2')" />
+        <label>Senha</label>
+      </div>
+      <div class="text-danger fade mt-1 text-right" [class.show]="cadPasswordError">A senha deve possui 8 caracteres ou
+        mais!</div>
+      <div class="label-float">
+        <input type="password" [(ngModel)]="cadPassword2" id="cad-senha2" [class.invalid]="cadPassword2Error"
+          placeholder=" " (keyup.enter)="save()" />
+        <label>Repetir senha</label>
+      </div>
+      <div class="text-danger fade mt-1 text-right" [class.show]="cadPassword2Error">A senha deve ser igual à primeira!
+      </div>
+      <button type="button" class="btn btn-theme btn-block mt-4" (click)="save()">
+        <div>
+          <i-save class="fade" [class.show]="!loading.register"></i-save>
+          <i-loading class="fade" [class.show]="loading.register"></i-loading>
+        </div>
+        Salvar
+      </button>
+      <button type="button" class="btn btn-outline-danger btn-block" (click)="clear()">
+        <i-slash></i-slash>Limpar
+      </button>
+    </div>
+  </div>
+  <div class="form-signin">
+    <div class="separator">
+      ou
+    </div>
+    <button class="btn btn-block google" (click)="socialLogin('google')">
+      <div>
+        <svg class="fade" [class.show]="!loading.google" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 510 510"
+          style="enable-background:new 0 0 510 510; fill: currentColor;" xml:space="preserve">
+          <g>
+            <g id="glass">
+              <path d="M286.875,229.5v63.75h150.45c-15.3,89.25-86.7,153-175.95,153c-104.55,0-191.25-86.7-191.25-191.25
+                  s86.7-191.25,191.25-191.25c53.55,0,99.45,22.95,132.6,58.65l45.9-45.9c-45.9-45.9-107.1-76.5-178.5-76.5
+                  c-140.25,0-255,114.75-255,255s114.75,255,255,255s242.25-114.75,242.25-255v-25.5H286.875z" />
+            </g>
+          </g>
+        </svg>
+        <i-loading class="fade mx-auto" [class.show]="loading.google"></i-loading>
+      </div>
+      Entrar com Google
+    </button>
+    <button class="btn btn-block fb" (click)="socialLogin('facebook')">
+      <div>
+        <i-facebook class="fade" [class.show]="!loading.facebook"></i-facebook>
+        <i-loading class="fade" [class.show]="loading.facebook"></i-loading>
+      </div>
+      Entrar com Facebook
+    </button>
+  </div>
+</main>

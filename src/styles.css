@@ -1,76 +1,76 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-    background: #E6EBF2;
+  background: #E6EBF2;
 }
 .btn.btn-block {
-    display: grid;
-    grid-template-columns: 1fr 12fr;
-    border-radius: 2em;
+  display: grid;
+  grid-template-columns: 1fr 12fr;
+  border-radius: 2em;
 }
 label.btn-outline-theme {
-    color: var(--secondary);
-    border: 0.1px solid var(--dark);
-    border-radius: 1.5em;
-    transition: 300ms;
-    margin-bottom: 5px !important;
+  color: var(--secondary);
+  border: 0.1px solid var(--dark);
+  border-radius: 1.5em;
+  transition: 300ms;
+  margin-bottom: 5px !important;
 }
 label.btn-outline-theme.focus, label.btn-outline-theme:focus {
-    box-shadow: none;
+  box-shadow: none;
 }
 label.btn-outline-theme:hover, label.btn-outline-theme.active {
-    color: #fff;
-    background-color: var(--dark);
-    transition: 300ms;
+  color: #fff;
+  background-color: var(--dark);
+  transition: 300ms;
 }
 @media (min-width: 950px) {
-    label.btn-outline-theme {
-        border: 0.1px solid var(--primary);
-    }
-    label.btn-outline-theme:hover, label.btn-outline-theme.active {
-        color: #fff;
-        background-color: var(--primary);
-    }
+  label.btn-outline-theme {
+    border: 0.1px solid var(--primary);
+  }
+  label.btn-outline-theme:hover, label.btn-outline-theme.active {
+    color: #fff;
+    background-color: var(--primary);
+  }
 }
 .btn.btn-theme {
-    color: var(--secondary);
-    background: var(--primary);
-    transition: 1s;
+  color: var(--secondary);
+  background: var(--primary);
+  transition: 1s;
 }
 .btn.btn-theme:focus,
 .btn.btn-theme:hover {
-    border-color: var(--secondary);
-    background: var(--dark);
-    transition: 1s;
+  border-color: var(--secondary);
+  background: var(--dark);
+  transition: 1s;
 }
 .btn.btn-outline-theme:not(label){
-    border-color: var(--primary);
-    color: var(--primary);
-    background: transparent;
-    transition: 1s;
+  border-color: var(--primary);
+  color: var(--primary);
+  background: transparent;
+  transition: 1s;
 }
 .btn.btn-outline-theme:focus:not(label),
 .btn.btn-outline-theme:hover:not(label){
-    border-color: var(--primary);
-    background: var(--primary);
-    color: var(--secondary);
-    transition: 1s;
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--secondary);
+  transition: 1s;
 }
 .badge-theme {
-    background: var(--primary);
-    color: var(--secondary);
+  background: var(--primary);
+  color: var(--secondary);
 }
 a.badge-theme:hover {
-    background: var(--dark);
-    color: var(--secondary) !important;
-    text-decoration: none;
+  background: var(--dark);
+  color: var(--secondary) !important;
+  text-decoration: none;
 }
 .badge-theme-light {
-    background: var(--secondary);
-    color: var(--dark) !important;
+  background: var(--secondary);
+  color: var(--dark) !important;
 }
 .text-theme {
-    color: var(--primary);
+  color: var(--primary);
 }
 .pointer {
-    cursor: pointer;
+  cursor: pointer;
 }

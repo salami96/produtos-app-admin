@@ -22,8 +22,60 @@
     </div>
   </div>
 </nav>
-<main class="py-5" [style.margin-top]="showSearchBar ? '5em' : '2em'">
-  <div id="accordion">
+<main class="pt-5" [style.margin-top]="showSearchBar ? '5em' : '2em'">
+  <div id="category-selector">
+    <div class="btn-toolbar btn-group-toggle btn-group btn-group-theme" id="categorias">
+      <label class="btn btn-outline-theme ml-3" (click)="setCategory('todos')" [class.active]="isActive == 'todos'">
+        <input type="radio">
+        todos
+        <span class="badge badge-pill badge-info">{{qtt['todos']}}</span>
+      </label>
+      <label class="btn btn-outline-theme" *ngFor="let cat of status" (click)="setCategory(cat)" [class.active]="isActive == cat">
+        <input type="radio">
+        {{ cat }}
+        <span class="badge badge-pill badge-info">{{qtt[cat]}}</span>
+      </label>
+    </div>
+  </div>
+  <div class="orders" *ngIf="hasOrders">
+    <div class="card order-card" [ngClass]="status[order.status].replace(' ','-')" *ngFor="let order of orders[isActive]">
+      <div>
+        <p class="colored f-75">pedido #{{order.cod}}</p>
+        <p>{{order.client.name}}</p>
+        <p class="f-75">{{formatAddress(order.address)}}</p>
+      </div>
+      <div class="text-right">
+        <p class="f-75">{{order.date | date:'dd/MM/yyyy'}} <br> {{order.date | date:'HH:mm'}}</p>
+        <p class="colored">R$ {{order.total.toFixed(2).replace('.',',')}}</p>
+      </div>
+      <i-chevron-right class="colored"></i-chevron-right>
+    </div>
+    <div class="card error-card" *ngIf="orders[isActive] && orders[isActive].length == 0">
+      <span>😕</span>
+      <p class="mb-0">Nenhum pedido encontrado com os filtros selecionados,</p>
+      <p class="f-75">mude a cetegoria para ver seus pedidos recebidos!</p>
+    </div>
+  </div>
+  <div class="orders" *ngIf="!hasOrders">
+    <div class="card error-card">
+      <span>😕</span>
+      <p class="mb-0">Nenhum pedido foi recebido ainda,</p>
+      <p class="f-75">mas continue divulgando sua loja!</p>
+    </div>
+  </div>
+</main>
+
+
+
+
+
+
+
+
+
+
+<!--
+    <div id="accordion">
     <div class="card">
       <div class="card-header">
         <h5 class="mb-0">
@@ -36,9 +88,9 @@
         </span>
       </div>
       <div class="collapse p-2" [class.show]="expanded['novos']" data-parent="#accordion">
-        <div class="card inner-card">
+        <div class="card inner-card" *ngFor="let order of orders['novos']">
           <div>
-            <p class="colored f-75">pedido #1</p>
+            <p class="colored f-75">pedido #{{order.cod}}</p>
             <p>Gabriel Salami</p>
             <p class="f-75">Av. Cruz de Malta, 705, Centro</p>
           </div>
@@ -155,4 +207,4 @@
       </div>
     </div>
   </div>
-</main>
+ -->

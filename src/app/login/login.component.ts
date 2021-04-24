@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SnackbarService } from '../services/snackbar.service';
 import { StoreService } from '../services/store.service';
 import { UserService } from '../services/user.service';
 
@@ -25,7 +26,6 @@ export class LoginComponent implements OnInit {
   cadPassword2Error = false;
   nameError = false;
   phoneError = false;
-  msgError = '';
   loginError: boolean;
   loading = {
     facebook: false,
@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private uService: UserService,
     private sService: StoreService,
+    private snackbar: SnackbarService,
   ) { }
 
   ngOnInit() {
@@ -98,19 +99,23 @@ export class LoginComponent implements OnInit {
     return re.test(String(email).toLowerCase());
   }
 
+  setErrorMsg = (text: string) => {
+    this.snackbar.show(text, 'error');
+    setTimeout(() => {
+      this.clear();
+    }, 5000);
+  }
+
   signIn() {
     this.loading.login = true;
     if (this.validate()) {
       this.uService.login(this.email, this.password).then(resp => {
         this.loading.login = false;
+        this.snackbar.show('Sucesso ao entrar com email e senha');
         this.clear();
       }).catch((e: any) => {
         this.loading.login = false;
-        this.msgError = this.getMessage(e.code);
-        this.loginError = true;
-        setTimeout(() => {
-          this.clear();
-        }, 5000);
+        this.setErrorMsg(this.getMessage(e.code));
       });
     } else {
       this.loading.login = false;
@@ -121,15 +126,12 @@ export class LoginComponent implements OnInit {
     this.loading.register = true;
     if (this.validateRegister()) {
       this.uService.save(this.name, this.phone, this.cadEmail, this.cadPassword).then(resp => {
-      this.loading.register = false;
-      this.clear();
-    }).catch((e: any) => {
         this.loading.register = false;
-        this.msgError = this.getMessage(e.code);
-        this.loginError = true;
-        setTimeout(() => {
-          this.clear();
-        }, 5000);
+        this.snackbar.show('Usuário criado com sucesso');
+        this.clear();
+      }).catch((e: any) => {
+        this.loading.register = false;
+        this.setErrorMsg(this.getMessage(e.code));
       });
     } else {
       this.loading.register = false;
@@ -140,15 +142,12 @@ export class LoginComponent implements OnInit {
     method === 'google' ? this.loading.google = true : this.loading.facebook = true;
     this.uService.providerLogin(method).then(resp => {
       method === 'google' ? this.loading.google = false : this.loading.facebook = false;
+      this.snackbar.show('Sucesso ao entrar via login social com ' + method);
       this.clear();
     }).catch((e: any) => {
       method === 'google' ? this.loading.google = false : this.loading.facebook = false;
       console.log(e);
-      this.msgError = this.getMessage(e.code);
-      this.loginError = true;
-      setTimeout(() => {
-        this.clear();
-      }, 5000);
+      this.setErrorMsg(this.getMessage(e.code));
     });
   }
 
@@ -156,44 +155,36 @@ export class LoginComponent implements OnInit {
     if (this.validateEmail(this.email)) {
       this.clear();
       this.uService.resetPassword(this.email).then(() => {
-        this.emailSend = true;
+        this.snackbar.show('Email enviado, confira sua caixa de entrada!');
         setTimeout(() => {
           this.emailSend = false;
         }, 15000);
       }).catch(e => {
         console.log(e);
-        this.msgError = this.getMessage(e.code);
-        this.loginError = true;
-        setTimeout(() => {
-          this.clear();
-        }, 5000);
+        this.setErrorMsg(this.getMessage(e.code));
       });
     } else {
       this.emailError = true;
-      this.msgError = 'Informe o email para resetar sua senha';
-      this.loginError = true;
-      setTimeout(() => {
-        this.clear();
-      }, 5000);
+      this.setErrorMsg('Informe o email para resetar sua senha');
     }
   }
 
   getMessage(code: string) {
     switch (code) {
       case 'auth/user-not-found':
-        return 'Usuário não encontrado 😕';
+        return 'Usuário não encontrado';
       case 'auth/wrong-password':
-        return 'Senha incorreta 😕';
+        return 'Senha incorreta';
       case 'auth/email-already-in-use':
-        return 'Esse email já está sendo usado 😕';
+        return 'Esse email já está sendo usado';
       case 'auth/invalid-email':
-        return 'Email inválido 😕';
+        return 'Email inválido';
       case 'auth/weak-password':
-        return 'Senha muito fraca 😕';
+        return 'Senha muito fraca';
       case 'auth/popup-closed-by-user':
-        return 'O processo de entrada foi cancelado pelo usuário 😕';
+        return 'O processo de entrada foi cancelado pelo usuário';
       default:
-        return 'Não foi possível realizar a ação 😕';
+        return 'Não foi possível realizar a ação';
     }
   }
 
@@ -210,6 +201,5 @@ export class LoginComponent implements OnInit {
     this.nameError = false;
     this.phoneError = false;
     this.loginError = false;
-    this.msgError = '';
   }
 }

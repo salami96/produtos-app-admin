@@ -1,0 +1,9 @@
+<div *ngIf="show" @state class="snackbar-wrap" [ngClass]="type">
+  <p class="text-center">
+    <span *ngIf="type == 'error'" style="font-size: 36px">😕</span>
+    <span *ngIf="type == 'success'" style="font-size: 36px">😁</span>
+  </p>
+  <p class="snackbar-text">
+    {{message}}
+  </p>
+</div>

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Store, User } from '../services/entities';
 import { StoreService } from '../services/store.service';
 import { UserService } from '../services/user.service';
@@ -23,13 +23,10 @@ export class ChooseStoreComponent implements OnInit {
   ngOnInit() {
     if (!this.uService.logged) {
       this.router.navigate([ '/entrar' ]);
+    } else {
+      const user = this.uService._user;
+      this.stores$ = this.sService.getStoresApi(user.uid);
     }
-    this.uService.getUser.subscribe(user => {
-      if (user) {
-        this.user = user;
-        this.stores$ = this.sService.getStores(user.uid);
-      }
-    });
   }
 
   setStore(store: Store) {

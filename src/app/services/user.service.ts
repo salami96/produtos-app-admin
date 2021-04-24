@@ -1,19 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, Subject } from 'rxjs';
 import { auth } from 'firebase';
 import { User } from './entities';
 import { Router } from '@angular/router';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   _user: User;
+  userSubject = new Subject<User>();
+  getUser = this.userSubject.asObservable();
+  logged = false;
+  options = {
+    headers: {
+      'authorization': 't5b3b9a5',
+      'Access-Control-Allow-Origin': '*'
+    }
+  };
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private snackbar: SnackbarService
   ) {
     this.verifyLocalStorage();
     auth().onAuthStateChanged(user => {
@@ -26,19 +37,6 @@ export class UserService {
       }
     });
   }
-  private user: Observer<User>;
-  logged = false;
-  options = {
-    headers: {
-      'authorization': 't5b3b9a5',
-      'Access-Control-Allow-Origin': '*'
-    }
-  };
-
-  getUser = new Observable<User>((observer) => {
-    observer.next(this._user);
-    this.user = observer;
-  });
 
   public verifyLocalStorage() {
     if (localStorage['token']) {
@@ -48,7 +46,12 @@ export class UserService {
 
   setUser(user: User) {
     this.logged = user !== undefined;
-    this.user.next(user);
+    this.userSubject.next(user);
+    this._user = user;
+  }
+
+  refresh() {
+    this.userSubject.next(this._user);
   }
 
   login(email: string, password: string): Promise<any> {
@@ -106,7 +109,7 @@ export class UserService {
 
   public logout() {
     this._user = undefined;
-    this.user.next(undefined);
+    this.userSubject.next(undefined);
     localStorage.removeItem('token');
     this.router.navigate(['/entrar']);
     return auth().signOut();
@@ -114,13 +117,13 @@ export class UserService {
 
   private getUserApi(uid: string) {
     this.http.get<User>(
-      `http://localhost:9000/api/user/${uid}`, this.options
+      `http://192.168.1.104:9000/api/user/${uid}`, this.options
     ).subscribe(user => {
       this.router.navigate(['/escolher-loja']);
       this.logged = true;
       this._user = user;
-      this.user.next(user);
-    });
+      this.userSubject.next(user);
+    }, () => this.snackbar.show('Erro ao conectar ao servidor, tente novamente mais tarde!', 'error') );
   }
 
   private saveUserApi(user: User) {
@@ -130,7 +133,7 @@ export class UserService {
       this.router.navigate(['/escolher-loja']);
       this.logged = true;
       this._user = user;
-      this.user.next(user);
-    });
+      this.userSubject.next(user);
+    }, () => this.snackbar.show('Erro ao conectar ao servidor, tente novamente mais tarde!', 'error') );
   }
 }

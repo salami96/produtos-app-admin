@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import {
   IconAlertCircle,
   IconBriefcase,
+  IconCheck,
   IconChevronDown,
   IconChevronRight,
   IconChevronUp,
   IconFacebook,
+  IconFrown,
   IconLogIn,
   IconPlusCircle,
   IconSave,
@@ -30,6 +32,7 @@ import { LoadingComponent } from './loading/loading.component';
     IconChevronRight,
     IconChevronUp,
     IconFacebook,
+    IconFrown,
     IconLogIn,
     IconPlusCircle,
     IconSave,
@@ -39,6 +42,7 @@ import { LoadingComponent } from './loading/loading.component';
     IconSlash,
     IconTag,
     LoadingComponent,
+    IconCheck
   ]
 })
 export class IconsModule { }

@@ -20,6 +20,8 @@ import { FormsModule } from '@angular/forms';
 import { IconsModule } from './icons/icons.module';
 import * as firebase from 'firebase';
 import { HttpClientModule } from '@angular/common/http';
+import { SnackbarComponent } from './snackbar/snackbar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCYIemjawWYApHGDQ1QpjheX4FArLLPDfo',
@@ -45,10 +47,12 @@ const firebaseConfig = {
     NavComponent,
     LoginComponent,
     ChooseStoreComponent,
-    CreateStoreComponent
+    CreateStoreComponent,
+    SnackbarComponent
   ],
   imports: [
     AppRoutingModule,
+    BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
