@@ -28,7 +28,6 @@ export class NavComponent implements OnInit, OnDestroy {
       this.sService.getStore.subscribe(this.verify),
       this.sService.getOrders.subscribe(value => {
         if (value) {
-          console.log(value);
           const newOrders = value.filter(order => order.status === 0).length;
           if (newOrders !== this.qtt) {
             this.cartTop = true;
@@ -45,8 +44,8 @@ export class NavComponent implements OnInit, OnDestroy {
   }
 
   verify = (value) => {
-    if (value && value.code) {
-      this.title = value.code + '/gerente';
+    if (value && value.title) {
+      this.title = value.title;
     }
     this.show = this.uService.logged && this.sService.alreadySelected;
   }

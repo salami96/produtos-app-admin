@@ -24,8 +24,13 @@ export class ChooseStoreComponent implements OnInit {
     if (!this.uService.logged) {
       this.router.navigate([ '/entrar' ]);
     } else {
-      const user = this.uService._user;
-      this.stores$ = this.sService.getStoresApi(user.uid);
+      const selected = this.sService.getSelectedStore();
+      if (selected) {
+        this.setStore(selected);
+      } else {
+        const user = this.uService._user;
+        this.stores$ = this.sService.getStoresApi(user.uid);
+      }
     }
   }
 

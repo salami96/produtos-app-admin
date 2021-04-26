@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ChooseStoreComponent } from './choose-store/choose-store.component';
 import { CreateStoreComponent } from './choose-store/create-store/create-store.component';
 import { LoginComponent } from './login/login.component';
+import { OrderDetailComponent } from './orders/order-detail/order-detail.component';
 import { OrdersComponent } from './orders/orders.component';
 import { PreferencesComponent } from './preferences/preferences.component';
 import { ProductsComponent } from './products/products.component';
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'escolher-loja', component: ChooseStoreComponent, canActivate: [ UserGuard ] },
   { path: 'nova-loja', component: CreateStoreComponent, canActivate: [ UserGuard ] },
   { path: 'pedidos', component: OrdersComponent, canActivate: [ UserGuard, StoreGuard ] },
+  { path: 'pedido/:id', component: OrderDetailComponent, canActivate: [ UserGuard, StoreGuard ] },
   { path: 'loja', component: StoreComponent, canActivate: [ UserGuard, StoreGuard ] },
   { path: 'produtos', component: ProductsComponent, canActivate: [ UserGuard, StoreGuard ] },
   { path: 'preferencias', component: PreferencesComponent, canActivate: [ UserGuard, StoreGuard ] },

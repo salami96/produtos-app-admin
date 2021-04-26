@@ -39,3 +39,5 @@ testem.log
 Thumbs.db
 .vscode/launch.json
 package-lock.json
+src/environments/environment.dev.ts
+src/environments/environment.ts

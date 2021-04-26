@@ -1,10 +1,11 @@
 .snackbar-wrap {
+  z-index: 1050;
   position: fixed;
-  bottom: 3em;
+  bottom: 1em;
   left: 50%;
   padding: 1em 0.5em;
   border-radius: 0.25em;
-  min-width: 80%;
+  min-width: 90%;
   transform-origin: center center;
   transform: translate(-50%, 0);
 }

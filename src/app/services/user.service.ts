@@ -50,10 +50,6 @@ export class UserService {
     this._user = user;
   }
 
-  refresh() {
-    this.userSubject.next(this._user);
-  }
-
   login(email: string, password: string): Promise<any> {
     return auth().signInWithEmailAndPassword(email, password).then(user => {
       this.getUserApi(user.user.uid);
@@ -117,7 +113,7 @@ export class UserService {
 
   private getUserApi(uid: string) {
     this.http.get<User>(
-      `http://192.168.1.104:9000/api/user/${uid}`, this.options
+      `http://192.168.1.103:9000/api/user/${uid}`, this.options
     ).subscribe(user => {
       this.router.navigate(['/escolher-loja']);
       this.logged = true;

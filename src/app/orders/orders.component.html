@@ -1,12 +1,12 @@
-<nav class="navbar fixed-top fade" *ngIf="!showSearchBar" [class.show]="!showSearchBar">
+<nav class="navbar fixed-top fade" *ngIf="!showSearchBar && innerWidth < 950" [class.show]="!showSearchBar">
   <span class="navbar-brand">
     {{store?.title}}
   </span>
-  <span (click)="showSearchBar= true">
+  <span (click)="setFocus()">
     <i-search></i-search>
   </span>
 </nav>
-<nav class="navbar fixed-top search-bar fade" *ngIf="showSearchBar" [class.show]="showSearchBar">
+<nav class="navbar fixed-top search-bar fade" *ngIf="showSearchBar && innerWidth < 950" [class.show]="showSearchBar">
   <div>
     <span class="mb-2">Pesquisar por nome do cliente ou nº do pedido: </span>
     <button type="button" class="close" (click)="showSearchBar = false">
@@ -14,18 +14,33 @@
     </button>
   </div>
   <div class="input-group">
-    <input type="text" class="form-control">
+    <input type="text" id="search-mobile" [(ngModel)]="query" class="form-control" (keyup.enter)="search()">
     <div class="input-group-append">
-      <span (click)="showSearchBar= true" class="btn btn-sm btn-search">
+      <span (click)="search()" class="btn btn-sm btn-search">
         <i-search></i-search>
       </span>
     </div>
   </div>
 </nav>
-<main class="pt-5" [style.margin-top]="showSearchBar ? '5em' : '2em'">
+<nav class="navbar fixed-top search-bar" *ngIf="innerWidth >= 950">
+  <span>Pesquisar por nome do cliente ou nº do pedido: </span>
+  <div class="input-group">
+    <input type="text" [(ngModel)]="query" class="form-control" (keyup.enter)="search()">
+    <div class="input-group-append">
+      <span (click)="search()" class="btn btn-sm btn-search">
+        <i-search></i-search>
+      </span>
+    </div>
+  </div>
+</nav>
+<main [style.margin-top]="showSearchBar ? '8em' : '5em'">
   <div id="category-selector">
     <div class="btn-toolbar btn-group-toggle btn-group btn-group-theme" id="categorias">
-      <label class="btn btn-outline-theme ml-3" (click)="setCategory('todos')" [class.active]="isActive == 'todos'">
+      <label class="btn btn-danger clear-filters" *ngIf="filtering" (click)="clearFilters()">
+        <i-slash></i-slash>
+        limpar filtros
+      </label>
+      <label class="btn btn-outline-theme" [class.ml-3]="!filtering" (click)="setCategory('todos')" [class.active]="isActive == 'todos'">
         <input type="radio">
         todos
         <span class="badge badge-pill badge-info">{{qtt['todos']}}</span>
@@ -48,19 +63,23 @@
         <p class="f-75">{{order.date | date:'dd/MM/yyyy'}} <br> {{order.date | date:'HH:mm'}}</p>
         <p class="colored">R$ {{order.total.toFixed(2).replace('.',',')}}</p>
       </div>
-      <i-chevron-right class="colored"></i-chevron-right>
+      <i-chevron-right class="colored pointer" routerLink="/pedido/{{order.cod}}"></i-chevron-right>
     </div>
     <div class="card error-card" *ngIf="orders[isActive] && orders[isActive].length == 0">
       <span>😕</span>
-      <p class="mb-0">Nenhum pedido encontrado com os filtros selecionados,</p>
-      <p class="f-75">mude a cetegoria para ver seus pedidos recebidos!</p>
+      <p class="mb-0">Nenhum pedido encontrado com os filtros selecionados, mude a categoria para ver seus pedidos recebidos!</p>
     </div>
   </div>
-  <div class="orders" *ngIf="!hasOrders">
+  <div class="orders" *ngIf="!hasOrders && !filtering">
     <div class="card error-card">
       <span>😕</span>
-      <p class="mb-0">Nenhum pedido foi recebido ainda,</p>
-      <p class="f-75">mas continue divulgando sua loja!</p>
+      <p class="mb-0">Nenhum pedido foi recebido ainda, continue divulgando sua empresa!</p>
+    </div>
+  </div>
+  <div class="orders" *ngIf="!hasOrders && filtering">
+    <div class="card error-card">
+      <span>😕</span>
+      <p class="mb-0">Nenhum pedido encontrado com os filtros selecionados, limpe os filtros aplicados!</p>
     </div>
   </div>
 </main>
