@@ -5,6 +5,8 @@ import { auth } from 'firebase';
 import { User } from './entities';
 import { Router } from '@angular/router';
 import { SnackbarService } from './snackbar.service';
+import { StoreService } from './store.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +16,10 @@ export class UserService {
   userSubject = new Subject<User>();
   getUser = this.userSubject.asObservable();
   logged = false;
+  returnUrl: string;
   options = {
     headers: {
-      'authorization': 't5b3b9a5',
+      'authorization': environment.secret,
       'Access-Control-Allow-Origin': '*'
     }
   };
@@ -24,7 +27,8 @@ export class UserService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
+    private sService: StoreService
   ) {
     this.verifyLocalStorage();
     auth().onAuthStateChanged(user => {
@@ -113,23 +117,33 @@ export class UserService {
 
   private getUserApi(uid: string) {
     this.http.get<User>(
-      `http://192.168.1.103:9000/api/user/${uid}`, this.options
+      `${environment.host}/api/user/${uid}`, this.options
     ).subscribe(user => {
-      this.router.navigate(['/escolher-loja']);
       this.logged = true;
       this._user = user;
       this.userSubject.next(user);
+      this.navigate()
     }, () => this.snackbar.show('Erro ao conectar ao servidor, tente novamente mais tarde!', 'error') );
   }
 
   private saveUserApi(user: User) {
     this.http.post<User>(
-      `http://localhost:9000/api/user`, user, this.options
+      `${environment.host}/api/user`, user, this.options
     ).subscribe(resp => {
-      this.router.navigate(['/escolher-loja']);
       this.logged = true;
       this._user = user;
       this.userSubject.next(user);
+      this.navigate()
     }, () => this.snackbar.show('Erro ao conectar ao servidor, tente novamente mais tarde!', 'error') );
+  }
+
+  private navigate() {
+    const selected = this.sService.getSelectedStore();
+    if (this.returnUrl && selected) {
+      this.sService.setStore(selected);
+      this.router.navigate([ this.returnUrl ]);
+    } else {
+      this.router.navigate([ '/escolher-loja' ]);
+    }    
   }
 }

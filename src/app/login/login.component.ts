@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SnackbarService } from '../services/snackbar.service';
 import { StoreService } from '../services/store.service';
 import { UserService } from '../services/user.service';
@@ -39,9 +39,11 @@ export class LoginComponent implements OnInit {
     private uService: UserService,
     private sService: StoreService,
     private snackbar: SnackbarService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.uService.returnUrl = this.route.snapshot.queryParams['returnUrl'];
     this.uService.verifyLocalStorage();
   }
 

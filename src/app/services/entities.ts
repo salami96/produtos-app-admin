@@ -44,11 +44,12 @@ export interface Product {
     optional: string[];
 }
 export interface Order {
+    _id: string;
     cod: number;
     products: OrderItem[];
     client: User;
     store: Store;
-    date: Date;
+    date: Date[];
     payment: Payment;
     pickup: boolean;
     address: Address;
@@ -79,6 +80,7 @@ export interface User {
     avatar: string;
 }
 export interface Address {
+    _id: string;
     name: string;
     street: string;
     number: string;

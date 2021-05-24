@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +22,9 @@ import * as firebase from 'firebase';
 import { HttpClientModule } from '@angular/common/http';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { registerLocaleData } from '@angular/common';
+import ptBr from '@angular/common/locales/pt';
+registerLocaleData(ptBr)
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCYIemjawWYApHGDQ1QpjheX4FArLLPDfo',
@@ -58,7 +61,7 @@ const firebaseConfig = {
     HttpClientModule,
     IconsModule
   ],
-  providers: [ IconsModule, StoreGuard, UserGuard ],
+  providers: [ IconsModule, StoreGuard, UserGuard, { provide: LOCALE_ID, useValue: 'pt' } ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {

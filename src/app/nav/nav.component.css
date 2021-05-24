@@ -62,7 +62,7 @@ div.nav-item {
 /* Desktop Navbar */
 ul.nav li {
   border-radius: 1em;
-  margin: 0 1em;
+  margin: 0 0.5em;
   padding: 0 0.5em;
 }
 ul.nav a {

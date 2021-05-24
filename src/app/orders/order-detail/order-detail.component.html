@@ -1,3 +1,134 @@
-<p>
-  order-detail works!
-</p>
+<div *ngIf="order" class="hasOrder">
+  <nav class="navbar fixed-top">
+    <div class="pointer" (click)="back()"><i-chevron-left></i-chevron-left><span hidden>Voltar</span></div>
+    <h1 class="navbar-brand">
+      Pedido #{{order.cod}}
+    </h1>
+    <div class="pointer" data-toggle="modal" data-target="#options"><i-more-vertical></i-more-vertical><span hidden>Opcões</span></div>
+    <h2 class="status" [ngClass]="status[order?.status].replaceAll(' ','-')">{{status[order.status]}}</h2>
+  </nav>
+  <main>
+    <div class="card">
+      <div class="card-icon">
+        <span class="icon-wrapper"><i-user></i-user></span>
+      </div>
+      <div class="card-body client">
+        <img src="{{order.client.avatar}}" alt="Foto do cliente">
+        <h3>
+          {{order.client.name}}
+        </h3>
+        <a target="_blank" href="tel:{{order.client.phone}}">
+          <i-phone></i-phone>
+          {{order.client.phone}}
+        </a>
+      </div>
+      <div class="card-footer">
+        <a class="btn btn-block btn-theme" target="_blank" href={{getMessage(order)}}>
+          <i-whatsapp></i-whatsapp>
+          Mandar mensagem
+        </a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">
+        <span class="icon-wrapper"><i-map></i-map></span>
+      </div>
+      <div class="card-body">
+        <h6>{{formatAddress(order.address)[0]}}</h6>
+        <h5>{{formatAddress(order.address)[1]}}</h5>
+      </div>
+      <div class="card-footer" *ngIf="!order.pickup">
+        <a class="btn btn-block btn-theme" target="_blank" href="{{getRoute(order.address)}}"><i-map-pin></i-map-pin>Criar rota</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">
+        <span class="icon-wrapper"><i-tag></i-tag></span>
+      </div>
+      <div class="card-body">
+        <div *ngFor="let item of order.products" class="product-list">
+          <img [src]="item.img" alt="Imagem do produto">
+          <div>
+            <h6 class="card-title">{{item.quantity}}x {{item.name}} {{item.size}}</h6>
+            <div *ngIf="item.extras.length > 0">
+              <p class="m-0">
+                Adicionar:
+                <span class="badge badge-pill badge-theme" *ngFor="let el of item.extras">{{el.name}}</span>
+            </div>
+            <div *ngIf="item.removed.length > 0">
+              <p class="m-0">
+                Retirar:
+                <span class="badge badge-pill badge-theme" *ngFor="let el of item.removed">{{el}}</span>
+            </div>
+            <div *ngIf="item.extras.observations">
+              <p class="m-0">
+                Obs.: {{el.name}}
+            </div>
+            <p>{{item.total | currency : 'BRL'}}</p>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">
+        <span class="icon-wrapper"><i-clipboard></i-clipboard></span>
+      </div>
+      <div class="card-body info">
+        <p><span>Inciado em:</span><span> {{order.date[0] | date : 'short'}}</span></p>
+        <p><span>Itens no pedido:</span><span> {{order.products.length}}</span></p>
+        <p><span>Total:</span><span> {{order.total | currency : 'BRL'}}</span></p>
+        <p><span>Pagamento: </span><span> {{order.payment.name}}</span></p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">
+        <span class="icon-wrapper"><i-clock></i-clock></span>
+      </div>
+      <div class="card-body info">
+        <p *ngFor="let data of order.date; let i=index">
+          <span *ngIf="data">{{status[i]}}: {{data | date : 'short'}}</span>
+        </p>
+      </div>
+    </div>
+  </main>
+  <div class="modal fade" id="options" tabindex="-1" aria-labelledby="optionsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="optionsLabel">Classificar pedido</h5>
+          <button type="button" class="close" id="close-modal" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <button class="btn btn-block mx-auto" [class.active]="state == status[order.status]" 
+          [ngClass]="state.replaceAll(' ','-')" *ngFor="let state of status" (click)="setStatus(state)">
+            <i-circle *ngIf="state != status[order.status]"></i-circle>
+            <i-check-circle *ngIf="state == status[order.status]"></i-check-circle>
+            {{state}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!order" class="hasNotOrder">
+  <nav class="navbar fixed-top">
+    <div class="pointer" (click)="back()"><i-chevron-left></i-chevron-left><span hidden>Voltar</span></div>
+    <h1 class="navbar-brand">
+      Pedido não encontrado
+    </h1>
+  </nav>
+  <main>
+    <div class="card">
+      <div class="card-icon">
+        <span class="icon-wrapper"><i-alert-circle></i-alert-circle></span>
+      </div>
+      <div class="card-body">
+        <h5>Não foi possível encontrar esse pedido!</h5>
+        <p>Voltando para a página de pedidos...</p>
+      </div>
+    </div>
+  </main>
+</div>

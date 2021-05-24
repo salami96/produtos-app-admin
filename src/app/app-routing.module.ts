@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'escolher-loja', component: ChooseStoreComponent, canActivate: [ UserGuard ] },
   { path: 'nova-loja', component: CreateStoreComponent, canActivate: [ UserGuard ] },
   { path: 'pedidos', component: OrdersComponent, canActivate: [ UserGuard, StoreGuard ] },
-  { path: 'pedido/:id', component: OrderDetailComponent, canActivate: [ UserGuard, StoreGuard ] },
+  { path: 'pedidos/:id', component: OrderDetailComponent, canActivate: [ UserGuard, StoreGuard ] },
   { path: 'loja', component: StoreComponent, canActivate: [ UserGuard, StoreGuard ] },
   { path: 'produtos', component: ProductsComponent, canActivate: [ UserGuard, StoreGuard ] },
   { path: 'preferencias', component: PreferencesComponent, canActivate: [ UserGuard, StoreGuard ] },

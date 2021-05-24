@@ -4,36 +4,58 @@ import {
   IconAlertCircle,
   IconBriefcase,
   IconCheck,
+  IconCheckCircle,
   IconChevronDown,
+  IconChevronLeft,
   IconChevronRight,
   IconChevronUp,
+  IconCircle,
+  IconClipboard,
+  IconClock,
   IconFacebook,
   IconFrown,
   IconLogIn,
+  IconMap,
+  IconMapPin,
+  IconMoreVertical,
+  IconPhone,
   IconPlusCircle,
   IconSave,
   IconSearch,
   IconSettings,
   IconShoppingBag,
   IconSlash,
-  IconTag
+  IconTag,
+  IconUser
 } from 'angular-feather';
+import { IconWhatsappComponent } from './whatsapp-icon/whatsapp-icon.component';
+import { InsertIconComponent } from './insert-icon/insert-icon.component';
 import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   imports: [
     CommonModule
   ],
-  declarations: [ LoadingComponent ],
+  declarations: [ LoadingComponent, InsertIconComponent, IconWhatsappComponent ],
   exports: [
     IconAlertCircle,
     IconBriefcase,
+    IconCircle,
+    IconClipboard,
+    IconClock,
+    IconCheck,
+    IconCheckCircle,
     IconChevronDown,
+    IconChevronLeft,
     IconChevronRight,
     IconChevronUp,
     IconFacebook,
     IconFrown,
     IconLogIn,
+    IconMap,
+    IconMapPin,
+    IconMoreVertical,
+    IconPhone,
     IconPlusCircle,
     IconSave,
     IconSearch,
@@ -41,8 +63,10 @@ import { LoadingComponent } from './loading/loading.component';
     IconShoppingBag,
     IconSlash,
     IconTag,
+    IconUser,
+    IconWhatsappComponent,
+    InsertIconComponent,
     LoadingComponent,
-    IconCheck
   ]
 })
 export class IconsModule { }

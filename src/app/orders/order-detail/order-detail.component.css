@@ -1,0 +1,148 @@
+@media (min-width: 950px) {
+  nav {
+    position: unset;
+    background: var(--dark) !important;
+    display: flex !important;
+    justify-content: center;
+    gap: 2em;
+  }
+  nav .navbar-brand {
+    margin: 0 !important;
+  }
+  nav :nth-child(3) {
+    order: 3;
+  }
+  [hidden] {
+    display: unset !important;
+  }
+  nav .status {
+    text-align: center;
+    color: var(--dark);
+    font-size: 1em !important;
+    padding: 0 0.5em;
+    border-radius: 1em;
+  }
+  main {
+    flex-flow: row wrap !important;
+    justify-content: center;
+    align-items: center;
+    margin: 3em auto !important;
+    max-width: 1080px;
+  }
+  .card {
+    max-width: 400px;
+  }
+  .status.entregando {
+    background: var(--primary);
+  }
+}
+.hasOrder nav {
+  display: grid;
+  grid-template: 2fr 1fr / 1fr 13fr 1fr;
+}
+nav {
+  background-color: var(--primary);
+  color: var(--secondary);
+  padding: 0;
+}
+nav :first-child {
+  margin-left: 1em;
+}
+nav :nth-child(3) {
+  margin-right: 1em;
+}
+nav .navbar-brand {
+  margin: auto;
+  font-size: 1.3em;
+}
+nav .status {
+  grid-column: 1 / 4;
+  text-align: center;
+  color: var(--dark);
+  font-size: 1.2em;
+  height: 100%;
+  margin-bottom: 0;
+}
+.novo {
+  background: var(--accent);
+  color: var(--primary) !important;
+}
+.preparando {
+  background: var(--secondary);
+  color: var(--primary) !important;
+}
+.entregando {
+  background: var(--dark);
+  color: white !important;
+}
+.pronto-para-retirar {
+  background: var(--info);
+  color: white !important;
+}
+.entregue {
+  background: var(--success);
+  color: white !important;
+}
+.cancelado {
+  background: var(--danger);
+  color: white !important;
+}
+.btn-block.active {
+  border: 2px solid var(--primary);
+  font-weight: bold;
+}
+main {
+  margin: 5em 1em;
+  padding: 1em 0;
+  display: flex;
+  flex-flow: column;
+  gap: 1.5em;
+}
+.card {
+  border-top: 2px solid var(--primary);
+}
+.card-icon {
+  margin: -1em auto;
+}
+.icon-wrapper {
+  background-color: var(--primary);
+  border-radius: 50%;
+  color: white;
+  width: 2em;
+  height: 2em;
+  display: flex;
+  justify-content: center;
+}
+.icon-wrapper :first-child {
+  width: 1em;
+  margin-top: 1px;
+}
+.client {
+  display: grid;
+  grid-template: 2fr 1fr / 2fr 6fr;
+  column-gap: 1em
+}
+.client img {
+  border-radius: 50%;
+  width: 100%;
+  grid-row: 1 / 3;
+  margin: auto 0.5em;
+}
+.client a {
+  color: var(--primary);
+}
+.product-list {
+  display: grid;
+  grid-template: 1fr / 2fr 6fr;
+}
+.product-list img {
+  width: 80%;
+  place-self: center;
+}
+.product-list hr {
+  margin: 0;
+  grid-column: 1/3;
+}
+.info.card-body {
+  text-align: center;
+}

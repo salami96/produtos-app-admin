@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Order, Store } from './entities';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class StoreService {
   };
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private snackbar: SnackbarService
   ) { }
 
   getStoresApi(uid: string) {
@@ -35,6 +37,25 @@ export class StoreService {
     this.http.get<Order[]>(
       `${environment.host}/api/orders/${code}`, this.options
     ).subscribe(this.setOrders);
+  }
+  
+  async setOrderStatus(cod: string, status: number, fn: (order: Order) => void) {
+    this.http.put<Order>(
+      `${environment.host}/api/order/`, { cod, status }, this.options
+    ).subscribe(resp => {
+      if (resp) {
+        const localOrders = this.getLocalOrders()
+        const arr = localOrders.map(o => {
+          if (o._id == cod) {
+            o = resp;
+          }
+          return o;
+        });
+        this.setOrders(arr);
+        fn(resp);
+        this.snackbar.show("Status do pedido alterado com sucesso!");
+      }
+    });
   }
 
   setStore(store: Store) {
@@ -56,9 +77,16 @@ export class StoreService {
     this.orders.next(list);
   }
 
-  getLocalOrders() {
+  getLocalOrders(): Order[] {
     if (localStorage['orders']) {
       return JSON.parse(localStorage['orders']);
+    }
+    return [];
+  }
+
+  getOrder(id: number) {
+    if (localStorage['orders']) {
+      return JSON.parse(localStorage['orders']).find(o => o.cod == id);
     }
     return [];
   }

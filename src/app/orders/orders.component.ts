@@ -65,8 +65,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
     }
   }
 
-  formatAddress(ad: Address) {
-    return `${ad.name}: ${ad.street}, ${ad.number}, ${ad.district}, ${ad.city} - ${ad.state}`;
+  formatAddress(o: Order) {
+    if (o.pickup) {
+      return `Retirar na loja: ${o.address.name}, ${o.address.city} - ${o.address.state}`;
+    }
+    return `Entregar em: ${o.address.name}: ${o.address.street}, ${o.address.number}, ${o.address.district}, ${o.address.city} - ${o.address.state}`;
   }
 
   search() {

@@ -111,7 +111,7 @@ main {
   border-left: .25em solid var(--secondary);
 }
 .order-card.entregando {
-  border-left: .25em solid var(--primary);
+  border-left: .25em solid var(--dark);
 }
 .order-card.pronto-para-retirar {
   border-left: .25em solid var(--info);
@@ -121,6 +121,30 @@ main {
 }
 .order-card.cancelados, .error-card {
   border-left: .25em solid var(--danger);
+}
+.badge-pill.novos {
+  background: var(--accent);
+  color: var(--primary) !important;
+}
+.badge-pill.preparando {
+  background: var(--secondary);
+  color: var(--primary) !important;
+}
+.badge-pill.entregando {
+  background: var(--dark);
+  color: white !important;
+}
+.badge-pill.pronto-para-retirar {
+  background: var(--info);
+  color: white !important;
+}
+.badge-pill.entregues {
+  background: var(--success);
+  color: white !important;
+}
+.badge-pill.cancelados {
+  background: var(--danger);
+  color: white !important;
 }
 .error-card {
   color: #222;
