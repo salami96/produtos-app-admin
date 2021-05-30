@@ -1,3 +1,112 @@
-<p>
-  store works!
-</p>
+<main>
+  <div class="form" id="entrar" role="tabpanel" aria-labelledby="nav-home-tab">
+    <div class="image" data-toggle="modal" data-target="#change-logo">
+      <img src="{{store.logo}}" alt="Logotipo da loja">
+      <span><i-edit></i-edit> trocar foto</span>
+    </div>
+    <div class="label-float">
+      <input type="text" [(ngModel)]="store.code" readonly />
+      <label>Apelido</label>
+    </div>
+    <div class="label-float">
+      <input type="text" [(ngModel)]="store.title" [class.invalid]="titleError" placeholder=" "
+        (keyup.enter)="focus('slogan')" autofocus />
+      <label>Nome da loja</label>
+    </div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="titleError">Nome da loja inválido</div>
+    <div class="label-float">
+      <input type="text" id="slogan" [(ngModel)]="store.slogan" [class.invalid]="sloganError" placeholder=" "
+        (keyup.enter)="focus('phone')" autofocus />
+      <label>Slogan</label>
+    </div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="sloganError">Slogan inválido</div>
+    <div class="label-float">
+      <input type="text" id="phone" [(ngModel)]="store.phone" [class.invalid]="phoneError" placeholder=" "
+        (keyup.enter)="focus('whatsapp')" autofocus />
+      <label>Telefone</label>
+    </div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="phoneError">Telefone inválido</div>
+    <div class="label-float">
+      <input type="text" id="whatsapp" [(ngModel)]="store.whatsapp" [class.invalid]="whatsappError" placeholder=" "
+        (keyup.enter)="focus('fb')" autofocus />
+      <label>Whatsapp</label>
+    </div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="whatsappError">Whatsapp inválido</div>
+    <div class="label-float">
+      <input type="text" id="fb" [(ngModel)]="store.fb" [class.invalid]="fbError" placeholder=" "
+        (keyup.enter)="focus('insta')" autofocus />
+      <label>Facebook</label>
+    </div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="fbError">Facebook inválido</div>
+    <div class="label-float">
+      <input type="text" id="insta" [(ngModel)]="store.insta" [class.invalid]="instaError" placeholder=" "
+        (keyup.enter)="focus('email')" autofocus />
+      <label>Instagram</label>
+    </div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="instaError">Instagram inválido</div>
+    <div class="label-float">
+      <input type="email" id="email" [(ngModel)]="store.email" [class.invalid]="emailError" placeholder=" "
+        (keyup.enter)="focus('insta')" autofocus />
+      <label>Email</label>
+    </div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="emailError">Email inválido</div>
+    <div class="addresses">
+      <span>Endereços</span>
+      <div class="box">
+        <div *ngFor="let ad of store.address" class="card p-1">
+          <span>{{ad.name}}</span>
+          <i-edit></i-edit>
+          <i-trash-2></i-trash-2>
+        </div>
+        <div class="card p-1">
+          <span>Nova filial</span>
+          <i-plus-circle></i-plus-circle>
+        </div>
+      </div>
+    </div>
+
+
+
+    map: string;
+    directions: string;
+    payments: Payment[];
+    categories: Category[];
+    ship: number[];
+    ownerUid: string;
+    color: string;
+    <a type="button" class="btn btn-outline-theme btn-block mt-4" href="/loja/preview">
+      <i-eye></i-eye>
+      Pré-visualizar
+    </a>
+    <a type="button" class="btn btn-theme btn-block mt-4" href="/loja/preview">
+      <div>
+        <i-save class="fade" [class.show]="!loading"></i-save>
+        <i-loading class="fade" [class.show]="loading"></i-loading>
+      </div>
+      Salvar alterações
+    </a>
+  </div>
+</main>
+<div class="modal fade" id="change-logo" tabindex="-1" role="dialog" aria-labelledby="change-logo" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-theme">Trocar Logo</h5>
+        <button type="button" class="close" data-dismiss="modal" id="logo-success" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form class="modal-body" id="logo">
+        <div class="label-float">
+          <input type="file" autofocus [(ngModel)]="filepath" name="logo"/>
+          <label>Nova imagem de logo</label>
+        </div>
+        <div class="text-danger fade mt-1 text-right" [class.show]="errorLogo">É necessário escolher uma foto para o seu perfil!</div>
+      </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-theme" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-theme" (click)="saveChanges('logo')">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
