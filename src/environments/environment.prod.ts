@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  secret: '',
+  secret: 't5b3b9a5',
   host: ''
 };

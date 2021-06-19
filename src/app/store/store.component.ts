@@ -17,6 +17,8 @@ export class StoreComponent implements OnInit, OnDestroy {
   payments: Payment[];
   subs: Subscription[] = [];
   availableColors: any;
+  errors: boolean[]
+  logo: any;
 
   constructor(
     private storeService: StoreService,
@@ -51,6 +53,31 @@ export class StoreComponent implements OnInit, OnDestroy {
     return color.properties[prop]
   }
   
+  saveChanges(field: string) {
+    switch (field) {
+      case 'name':
+        // if (this.name && this.user.name !== this.name) {
+        //   this.user.name = this.name;
+        //   this.uService.editUser(this.user).then(() => this.success(field));
+        // } else {
+        //   this.error[field] = true;
+        // }
+      break;
+      case 'logo':
+        // if (this.logo) {
+        //   this.storeService.editLogo(document.forms.item(0)).then(resp => {
+        //     resp.subscribe(store => {
+        //       this.store = store;
+        //       this.snackbar.show(field + 'Alterado com sucesso!');
+        //     });
+        //   });
+        // } else {
+        //   this.errors[field] = true;
+        // }
+      break;
+    }
+  }
+
   ngOnDestroy() {
     this.subs.map(s => s.unsubscribe());
   }

@@ -9,46 +9,46 @@
       <label>Apelido</label>
     </div>
     <div class="label-float">
-      <input type="text" [(ngModel)]="store.title" [class.invalid]="titleError" placeholder=" "
+      <input type="text" [(ngModel)]="store.title" [class.invalid]="errors['title']" placeholder=" "
         (keyup.enter)="focus('slogan')" autofocus />
       <label>Nome da loja</label>
     </div>
-    <div class="text-danger fade mt-1 text-right" [class.show]="titleError">Nome da loja inválido</div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="errors['title']">Nome da loja inválido</div>
     <div class="label-float">
-      <input type="text" id="slogan" [(ngModel)]="store.slogan" [class.invalid]="sloganError" placeholder=" "
+      <input type="text" id="slogan" [(ngModel)]="store.slogan" [class.invalid]="errors['slogan']" placeholder=" "
         (keyup.enter)="focus('phone')" />
       <label>Slogan</label>
     </div>
-    <div class="text-danger fade mt-1 text-right" [class.show]="sloganError">Slogan inválido</div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="errors['slogan']">Slogan inválido</div>
     <div class="label-float">
-      <input type="text" id="phone" [(ngModel)]="store.phone" [class.invalid]="phoneError" placeholder=" "
+      <input type="text" id="phone" [(ngModel)]="store.phone" [class.invalid]="errors['phone']" placeholder=" "
         (keyup.enter)="focus('whatsapp')" />
       <label>Telefone</label>
     </div>
-    <div class="text-danger fade mt-1 text-right" [class.show]="phoneError">Telefone inválido</div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="errors['phone']">Telefone inválido</div>
     <div class="label-float">
-      <input type="text" id="whatsapp" [(ngModel)]="store.whatsapp" [class.invalid]="whatsappError" placeholder=" "
+      <input type="text" id="whatsapp" [(ngModel)]="store.whatsapp" [class.invalid]="errors['whatsapp']" placeholder=" "
         (keyup.enter)="focus('fb')" />
       <label>Whatsapp</label>
     </div>
-    <div class="text-danger fade mt-1 text-right" [class.show]="whatsappError">Whatsapp inválido</div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="errors['whatsapp']">Whatsapp inválido</div>
     <div class="label-float">
-      <input type="text" id="fb" [(ngModel)]="store.fb" [class.invalid]="fbError" placeholder=" "
+      <input type="text" id="fb" [(ngModel)]="store.fb" [class.invalid]="errors['fb']" placeholder=" "
         (keyup.enter)="focus('insta')" />
       <label>Facebook</label>
     </div>
-    <div class="text-danger fade mt-1 text-right" [class.show]="fbError">Facebook inválido</div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="errors['fb']">Facebook inválido</div>
     <div class="label-float">
-      <input type="text" id="insta" [(ngModel)]="store.insta" [class.invalid]="instaError" placeholder=" "
+      <input type="text" id="insta" [(ngModel)]="store.insta" [class.invalid]="errors['insta']" placeholder=" "
         (keyup.enter)="focus('email')" />
       <label>Instagram</label>
     </div>
-    <div class="text-danger fade mt-1 text-right" [class.show]="instaError">Instagram inválido</div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="errors['insta']">Instagram inválido</div>
     <div class="label-float">
-      <input type="email" id="email" [(ngModel)]="store.email" [class.invalid]="emailError" placeholder=" "/>
+      <input type="email" id="email" [(ngModel)]="store.email" [class.invalid]="errors['email']" placeholder=" "/>
       <label>Email</label>
     </div>
-    <div class="text-danger fade mt-1 text-right" [class.show]="emailError">Email inválido</div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="errors['email']">Email inválido</div>
     <div class="addresses">
       <span>Endereços</span>
       <div class="box">
@@ -120,7 +120,7 @@
           <input type="file" autofocus [(ngModel)]="filepath" name="logo"/>
           <label>Nova imagem de logo</label>
         </div>
-        <div class="text-danger fade mt-1 text-right" [class.show]="errorLogo">É necessário escolher uma foto para o seu perfil!</div>
+        <div class="text-danger fade mt-1 text-right" [class.show]="errors['logo']">É necessário escolher uma foto para o seu perfil!</div>
       </form>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-theme" data-dismiss="modal">Fechar</button>
