@@ -16,37 +16,36 @@
     <div class="text-danger fade mt-1 text-right" [class.show]="titleError">Nome da loja inválido</div>
     <div class="label-float">
       <input type="text" id="slogan" [(ngModel)]="store.slogan" [class.invalid]="sloganError" placeholder=" "
-        (keyup.enter)="focus('phone')" autofocus />
+        (keyup.enter)="focus('phone')" />
       <label>Slogan</label>
     </div>
     <div class="text-danger fade mt-1 text-right" [class.show]="sloganError">Slogan inválido</div>
     <div class="label-float">
       <input type="text" id="phone" [(ngModel)]="store.phone" [class.invalid]="phoneError" placeholder=" "
-        (keyup.enter)="focus('whatsapp')" autofocus />
+        (keyup.enter)="focus('whatsapp')" />
       <label>Telefone</label>
     </div>
     <div class="text-danger fade mt-1 text-right" [class.show]="phoneError">Telefone inválido</div>
     <div class="label-float">
       <input type="text" id="whatsapp" [(ngModel)]="store.whatsapp" [class.invalid]="whatsappError" placeholder=" "
-        (keyup.enter)="focus('fb')" autofocus />
+        (keyup.enter)="focus('fb')" />
       <label>Whatsapp</label>
     </div>
     <div class="text-danger fade mt-1 text-right" [class.show]="whatsappError">Whatsapp inválido</div>
     <div class="label-float">
       <input type="text" id="fb" [(ngModel)]="store.fb" [class.invalid]="fbError" placeholder=" "
-        (keyup.enter)="focus('insta')" autofocus />
+        (keyup.enter)="focus('insta')" />
       <label>Facebook</label>
     </div>
     <div class="text-danger fade mt-1 text-right" [class.show]="fbError">Facebook inválido</div>
     <div class="label-float">
       <input type="text" id="insta" [(ngModel)]="store.insta" [class.invalid]="instaError" placeholder=" "
-        (keyup.enter)="focus('email')" autofocus />
+        (keyup.enter)="focus('email')" />
       <label>Instagram</label>
     </div>
     <div class="text-danger fade mt-1 text-right" [class.show]="instaError">Instagram inválido</div>
     <div class="label-float">
-      <input type="email" id="email" [(ngModel)]="store.email" [class.invalid]="emailError" placeholder=" "
-        (keyup.enter)="focus('insta')" autofocus />
+      <input type="email" id="email" [(ngModel)]="store.email" [class.invalid]="emailError" placeholder=" "/>
       <label>Email</label>
     </div>
     <div class="text-danger fade mt-1 text-right" [class.show]="emailError">Email inválido</div>
@@ -64,24 +63,44 @@
         </div>
       </div>
     </div>
-
-
-
-    map: string;
-    directions: string;
-    payments: Payment[];
-    categories: Category[];
-    ship: number[];
-    ownerUid: string;
-    color: string;
-    <a type="button" class="btn btn-outline-theme btn-block mt-4" href="/loja/preview">
+    <div class="payments">
+      <span>Formas de Pagamento</span>
+      <div class="box">
+        <div *ngFor="let pay of payments" class="card p-1">
+          <app-insert-icon [icon]="pay.icon"></app-insert-icon>
+          <span>{{pay.name}}</span>
+          <div>
+            <i-circle *ngIf="!checkProperties(pay, 'payment')"></i-circle>
+            <i-check-circle *ngIf="checkProperties(pay, 'payment')"></i-check-circle>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="colors">
+      <span>Esquema de cores</span>
+      <div class="box">
+        <div class="card" *ngFor="let color of availableColors" [style.border]="color.name == store.color ? '3px solid #215C96' : 'none'">
+          <div class="color">
+            <div [style.background]="getColor(color, '--dark')"></div>
+            <div [style.background]="getColor(color, '--primary')"></div>
+            <div [style.background]="getColor(color, '--secondary')"></div>
+            <div [style.background]="getColor(color, '--accent')"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn btn-outline-danger btn-block mt-4">
+      <i-slash></i-slash>
+      Desfazer alterações
+    </button>
+    <a type="button" class="btn btn-outline-theme btn-block" href="/loja/preview">
       <i-eye></i-eye>
       Pré-visualizar
     </a>
-    <a type="button" class="btn btn-theme btn-block mt-4" href="/loja/preview">
+    <a type="button" class="btn btn-theme btn-block" href="/loja/preview">
       <div>
-        <i-save class="fade" [class.show]="!loading"></i-save>
-        <i-loading class="fade" [class.show]="loading"></i-loading>
+        <i-save class="fade" *ngIf="!loading" [class.show]="!loading"></i-save>
+        <i-loading class="fade" *ngIf="loading" [class.show]="loading"></i-loading>
       </div>
       Salvar alterações
     </a>

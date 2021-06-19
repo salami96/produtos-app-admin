@@ -10,6 +10,10 @@
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   }
 }
+main {
+  margin-top: 2em;
+  margin-bottom: 6em;
+}
 main .form div.text-danger {
   display: flex;
   justify-content: flex-end;
@@ -91,34 +95,53 @@ main .form div.text-danger {
   line-height: 0;
   color: var(--primary);
 }
-.addresses > span:first-of-type {
-  color: var(--primary);
+.addresses, .payments, .colors {
+  margin-top: 0.5em
 }
-.addresses .box {
+.addresses > span:first-of-type,
+.payments > span:first-of-type,
+.colors > span:first-of-type {
+  color: var(--primary);
+  margin-top: 0.5em;
+}
+.addresses .box .card :not(span), 
+.payments .box .card div {
+  color: var(--primary);
+  cursor: pointer;
+}
+.addresses .box,
+.payments .box,
+.colors .box {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.25em 2%;
 }
-.addresses .box .card {
+.addresses .box .card,
+.payments .box .card {
   display: flex;
   flex-direction: row;
-  width: 48%;
+  min-width: 48%;
   justify-content: flex-end;
   gap: 0.5em
 }
-.addresses .box .card span {
+.addresses .box .card span,
+.payments .box .card span {
   flex-grow: 1;
   padding: 0.25em;
 }
-.addresses .box .card :not(span) {
-  color: var(--primary);
+.colors .card {
+  display: flex;
+  flex-direction: row;
+  width: 23%;
   cursor: pointer;
-  transition: 300ms;
 }
-.addresses .box .card :not(span) :hover {
-  color: var(--dark);
+.colors .card .color {
+  display: grid;
+  grid-template: 1fr 1fr / 1fr 1fr;
+  flex-grow: 1;
+  height: 3em;
 }
 .fade:not(.show) {
   height: 0;
@@ -130,24 +153,6 @@ main .form div.text-danger {
   height: auto;
   opacity: 1;
   transition: 500ms;
-}
-.separator {
-  margin: 2em auto;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  color: var(--dark);
-}
-.separator::before, .separator::after {
-  content: '';
-  flex: 1;
-  border-bottom: 1px solid var(--dark);
-}
-.separator::before {
-  margin-right: 1em;
-}
-.separator::after {
-  margin-left: 1em;
 }
 .hide {
   position: fixed;

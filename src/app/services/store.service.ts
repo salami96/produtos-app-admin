@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Order, Store } from './entities';
+import { Category, Order, Payment, Store } from './entities';
 import { SnackbarService } from './snackbar.service';
 
 @Injectable({
@@ -37,6 +37,12 @@ export class StoreService {
     this.http.get<Order[]>(
       `${environment.host}/api/orders/${code}`, this.options
     ).subscribe(this.setOrders);
+  }
+  
+  getProperties() {
+    return this.http.get<{ p: Payment[]; c: Category[] }>(
+      `${environment.host}/api/properties`, this.options
+    );
   }
   
   async setOrderStatus(cod: string, status: number, fn: (order: Order) => void) {
