@@ -45,6 +45,18 @@ export class StoreService {
     );
   }
   
+  updateStore(store: Store) {
+    return this.http.put<Store>(
+      `${environment.host}/api/store`, store, this.options
+    );
+  }
+
+  updateStoreLogo(code: string, base64: string) {
+    return this.http.post<string>(
+      `${environment.host}/api/store-logo`, { code, base64 }, this.options
+    );
+  }
+
   async setOrderStatus(cod: string, status: number, fn: (order: Order) => void) {
     this.http.put<Order>(
       `${environment.host}/api/order/`, { cod, status }, this.options

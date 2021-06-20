@@ -10,6 +10,7 @@ import { PreferencesComponent } from './preferences/preferences.component';
 import { ProductsComponent } from './products/products.component';
 import { StoreGuard } from './services/store.guard';
 import { UserGuard } from './services/user.guard';
+import { PreviewComponent } from './store/preview/preview.component';
 import { StoreComponent } from './store/store.component';
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'pedidos', component: OrdersComponent, canActivate: [ UserGuard, StoreGuard ] },
   { path: 'pedidos/:id', component: OrderDetailComponent, canActivate: [ UserGuard, StoreGuard ] },
   { path: 'loja', component: StoreComponent, canActivate: [ UserGuard, StoreGuard ] },
+  { path: 'loja/preview', component: PreviewComponent, canActivate: [ UserGuard, StoreGuard ] },
   { path: 'produtos', component: ProductsComponent, canActivate: [ UserGuard, StoreGuard ] },
   { path: 'preferencias', component: PreferencesComponent, canActivate: [ UserGuard, StoreGuard ] },
   { path: '**', redirectTo: 'entrar', pathMatch: 'full'},
