@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   secret: 't5b3b9a5',
-  host: 'http://192.168.1.103:9000'
+  host: 'http://localhost:9000'
 };
 
 /*

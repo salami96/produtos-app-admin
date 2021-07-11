@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Category, Order, Payment, Store } from './entities';
+import { Address, Category, Order, Payment, Store } from './entities';
 import { SnackbarService } from './snackbar.service';
 
 @Injectable({
@@ -23,13 +23,20 @@ export class StoreService {
 
   constructor(
     private http: HttpClient,
-    private snackbar: SnackbarService
+    private snackbar: SnackbarService,
   ) { }
 
   getStoresApi(uid: string) {
     return this.http.get<Store[]>(
+      `${environment.host}/api/stores-by-owner/${uid}`, this.options
+      // `${environment.host}/api/stores/`, this.options
+    );
+  }
+
+  getStoreCodes() {
+    return this.http.get<string[]>(
       // `${environment.host}/api/stores-by-owner/${uid}`, this.options
-      `${environment.host}/api/stores/`, this.options
+      `${environment.host}/api/available-codes/`, this.options
     );
   }
 
@@ -45,15 +52,33 @@ export class StoreService {
     );
   }
   
+  createStore(store: Store) {
+    return this.http.post<Store>(
+      `${environment.host}/api/store`, store, this.options
+    );
+  }
+
   updateStore(store: Store) {
     return this.http.put<Store>(
       `${environment.host}/api/store`, store, this.options
     );
   }
 
-  updateStoreLogo(code: string, base64: string) {
+  addAddress(address: Address) {
+    return this.http.post<Address>(
+      `${environment.host}/api/store/address`, { address }, this.options
+    );
+  }
+  
+  updateAddress(address: Address) {
+    return this.http.put<Address>(
+      `${environment.host}/api/store/address`, { address }, this.options
+    );
+  }
+
+  uploadLogo(base64: string, code: string) {
     return this.http.post<string>(
-      `${environment.host}/api/store-logo`, { code, base64 }, this.options
+      `${environment.host}/api/store-logo`, { base64, code }, this.options
     );
   }
 
@@ -74,6 +99,10 @@ export class StoreService {
         this.snackbar.show("Status do pedido alterado com sucesso!");
       }
     });
+  }
+
+  public zipRequest(zipCode: string) {
+    return this.http.get(`https://viacep.com.br/ws/${zipCode}/json/`);
   }
 
   setStore(store: Store) {

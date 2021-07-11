@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Address, Category, Payment, Store } from '../services/entities';
+import { Address, Payment, Store } from '../services/entities';
 import { colors, Theme } from '../theme/themes';
 import { StoreService } from '../services/store.service';
 import { SnackbarService } from '../services/snackbar.service';
 import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-store',
@@ -21,15 +22,16 @@ export class StoreComponent implements OnInit, OnDestroy {
   availableColors: any;
   errors: boolean[] = [];
   preview: string;
+  isNewAddress: boolean;
   selectedAddress: Address;
   reference: boolean;
   complement: boolean;
   loadingZipCode: boolean;
-  previewCount = 0;
   valid: boolean;
 
   constructor(
     private storeService: StoreService,
+    private userService: UserService,
     private snackbar: SnackbarService,
     private router: Router,
   ) { }
@@ -72,7 +74,15 @@ export class StoreComponent implements OnInit, OnDestroy {
     });
   }
 
+  setAddress(ad: Address) {
+    this.selectedAddress = ad;
+    this.isNewAddress = false;
+    this.complement = ad.complement != '';
+    this.reference = ad.reference != '';
+  }
+ 
   addAddress() {
+    this.isNewAddress = true;
     this.selectedAddress = {
       _id: '',
       name: '',
@@ -89,8 +99,31 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.reference = false;
   }
 
+  zipCodeApi() {
+    const aux = this.selectedAddress.zipCode;
+    if (aux.length === 8) {
+      this.loadingZipCode = true;
+      this.subs.push(
+        this.storeService.zipRequest(aux).subscribe((resp: any) => {
+          this.loadingZipCode = false;
+          this.selectedAddress.city = resp.localidade;
+          this.selectedAddress.state = resp.uf;
+          if (resp.logradouro) {
+            this.selectedAddress.street = resp.logradouro;
+          }
+          if (resp.bairro) {
+            this.selectedAddress.district = resp.bairro;
+          }
+        }, error => console.log(error))
+      );
+      this.errors['zipCode'] = false;
+    } else {
+      this.errors['zipCode'] = true;
+    }
+  }
+
   getColor(color: Theme, prop: string) {
-    return color.properties[prop]
+    return color.properties[prop];
   }
 
   validate() {
@@ -111,7 +144,7 @@ export class StoreComponent implements OnInit, OnDestroy {
     if (!this.editedStore.fb) {
       this.setError('fb');
     }
-    if (!this.editedStore.insta || this.editedStore.insta[0] != '@') {
+    if (!this.editedStore.insta || this.editedStore.insta[0] != '@' || this.editedStore.insta.includes('/')) {
       this.setError('insta');
     }
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -130,6 +163,36 @@ export class StoreComponent implements OnInit, OnDestroy {
     return this.valid;
   }
 
+  validateAddress() {
+    this.valid = true;
+    this.errors = [];
+    if (!this.selectedAddress.zipCode) {
+      this.setError('zipCode');
+    }
+    if (!this.selectedAddress.street) {
+      this.setError('street');
+    }
+    if (!this.selectedAddress.number) {
+      this.setError('number');
+    }
+    if (!this.selectedAddress.district) {
+      this.setError('district');
+    }
+    if (!this.selectedAddress.city) {
+      this.setError('city');
+    }
+    if (!this.selectedAddress.state) {
+      this.setError('state');
+    }
+    if (!this.selectedAddress.name) {
+      this.setError('name');
+    }
+    if (!this.valid) {
+      this.snackbar.show('Verifique o preenchimento dos dados acima', 'error')
+    }
+    return this.valid;
+  }
+
   setError(id: string) {
     this.errors[id] = true;
     this.valid = false;
@@ -139,35 +202,74 @@ export class StoreComponent implements OnInit, OnDestroy {
     switch (field) {
       case 'preview':
         if (this.validate()) {
-          this.previewCount++;
-          this.router.navigate([' /loja/preview' ]);
+          localStorage['preview'] = JSON.stringify(this.editedStore);
+          this.snackbar.show('Pré visualização gerada com sucesso!');
+          this.router.navigate([ 'loja/preview' ]);
         }
       break;
       case 'all':
         if (this.validate()) {
           this.loading = true;
+          this.editedStore.ownerUid = this.userService._user.uid;
+          this.storeService.updateStore(this.editedStore).subscribe(resp => {
+            this.loading = false;
+            if (resp) {
+              this.editedStore = resp;
+              this.snackbar.show('Dados editados com sucesso!');
+            } else {
+              this.snackbar.show('Ocorreu um erro ao salvar as alterações!', 'error');
+            }
+          });
         }
       break;
       case 'logo':
         if (this.preview && this.file.type.includes('image')) {
-          this.store.logo = this.preview
-          this.storeService.updateStoreLogo(this.store.code, this.preview).subscribe(resp => {
-            this.editedStore.logo = resp;
-            this.snackbar.show('Logotipo alterado com sucesso!');
-            document.getElementById('logo-success').click();
+          this.storeService.uploadLogo(this.preview, this.store.code).subscribe(resp => {
+            if (resp) {
+              this.editedStore.logo = resp;
+              this.snackbar.show('Logotipo alterado com sucesso!');
+              document.getElementById('logo-success').click();
+            } else {
+              this.errors[field] = true;
+            }
           });
           this.errors[field] = false;
         } else {
           this.errors[field] = true;
         }
       break;
-      case 'address':
-        if (this.preview && this.file.type.includes('image')) {
-          this.storeService.updateStoreLogo(this.store.code, this.preview).subscribe(resp => {
-            this.snackbar.show('Endereços atualizados com sucesso!');
-            document.getElementById('address-success').click();
+      case 'new-address':
+        if (this.validateAddress()) {
+          this.storeService.addAddress(this.selectedAddress).subscribe(resp => {
+            if (resp) {
+              this.errors[field] = false;
+              this.editedStore.address.push(resp);
+              document.getElementById('address-success').click();
+              this.snackbar.show('Endereços atualizados com sucesso!');
+            } else {
+              this.errors[field] = true;
+            }
           });
-          this.errors[field] = false;
+        } else {
+          this.errors[field] = true;
+        }
+      break;
+      case 'address':
+        if (this.validateAddress()) {
+          this.storeService.updateAddress(this.selectedAddress).subscribe(resp => {
+            if (resp) {
+              this.errors[field] = false;
+              this.editedStore.address.forEach(ad => {
+                if (ad._id == resp._id) {
+                  ad = resp;
+                }
+              });
+              document.getElementById('address-success').click();
+              this.snackbar.show('Endereços atualizados com sucesso!');
+            } else {
+              this.errors[field] = true;
+            }
+          });
         } else {
           this.errors[field] = true;
         }

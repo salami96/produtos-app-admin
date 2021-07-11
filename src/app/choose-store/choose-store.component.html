@@ -1,10 +1,10 @@
 <main>
-  <div *ngFor="let store of stores$ | async" class="card" (click)="setStore(store)" [style.border-color]="store.color ? store.color : '#103B66'">
-    <h5 class="card-title">{{store.title}}</h5>
+  <div *ngFor="let store of stores$ | async" class="card" (click)="setStore(store)" [style.border-color]="getColor(store.color, '--primary')">
+    <h5 class="card-title" [style.color]="getColor(store.color, '--dark')">{{store.title}}</h5>
     <img [src]="store.logo" alt="Logo da loja">
   </div>
-  <div class="card border-dark">
+  <a class="card border-dark" routerLink="/nova-loja">
     <h5 class="card-title">Criar nova loja</h5>
     <i-plus-circle></i-plus-circle>
-  </div>
+  </a>
 </main>

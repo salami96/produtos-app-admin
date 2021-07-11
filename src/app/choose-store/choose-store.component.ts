@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Store, User } from '../services/entities';
 import { StoreService } from '../services/store.service';
 import { UserService } from '../services/user.service';
+import { colors, Theme } from '../theme/themes';
 
 @Component({
   selector: 'app-choose-store',
@@ -32,6 +33,10 @@ export class ChooseStoreComponent implements OnInit {
         this.stores$ = this.sService.getStoresApi(user.uid);
       }
     }
+  }
+
+  getColor(color: string, prop: string) {
+    return colors.find(c => c.name == color).properties[prop];
   }
 
   setStore(store: Store) {

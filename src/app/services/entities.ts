@@ -80,7 +80,7 @@ export interface User {
     avatar: string;
 }
 export interface Address {
-    _id: string;
+    _id?: string;
     name: string;
     street: string;
     number: string;

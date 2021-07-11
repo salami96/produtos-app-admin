@@ -1,3 +1,43 @@
-<p>
-  preview works!
-</p>
+<!-- <main id="preview">
+  <iframe srcdoc="{{homePage}}"></iframe>
+  <div class="card">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <div class="mobile">
+      <section class="jumbotron">
+        <img src="{{store.logo}}" class="rounded-circle" alt="Logotipo da Empresa">
+        <div class="logo-and-number">
+          <h1>{{store.title}}</h1>
+          <a href="tel:+55{{store.phone}}">
+            <i-phone class="fill"></i-phone> {{store.phone}}
+          </a>
+        </div>
+      </section>
+      <p class="text-center text-theme">{{store.slogan}}</p>
+      <section class="actions sticky-top">
+        <a class="btn btn-block btn-dark" [routerLink]="[ '/produtos' ]">
+          <i-tag></i-tag>
+          Ver produtos
+        </a>
+      </section>
+      <section class="map" *ngIf="canLoad">
+        <div class="card clean-card">
+          <iframe [src]="map" frameborder="0" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+          <a href="{{store?.directions}}" target="_blank" rel="nofollow external noopener noreferrer" class="card-action">
+            <i-map></i-map>Como Chegar
+          </a>
+        </div>
+      </section>
+      <section class="social">
+        <a href="{{store.fb}}" target="_blank" rel="nofollow external noopener noreferrer">
+          <i-facebook></i-facebook>
+        </a>
+        <a href="{{store.insta}}" target="_blank" rel="nofollow external noopener noreferrer">
+          <i-instagram></i-instagram>
+        </a>
+        <a href="{{store.whatsapp}}" target="_blank" rel="nofollow external noopener noreferrer">
+          <i-whatsapp></i-whatsapp>
+        </a>
+      </section>
+    </div>
+  </div>
+</main> -->

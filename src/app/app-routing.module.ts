@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'pedidos', component: OrdersComponent, canActivate: [ UserGuard, StoreGuard ] },
   { path: 'pedidos/:id', component: OrderDetailComponent, canActivate: [ UserGuard, StoreGuard ] },
   { path: 'loja', component: StoreComponent, canActivate: [ UserGuard, StoreGuard ] },
-  { path: 'loja/preview', component: PreviewComponent, canActivate: [ UserGuard, StoreGuard ] },
+  // { path: 'loja/preview', component: PreviewComponent, canActivate: [ UserGuard, StoreGuard ] },
   { path: 'produtos', component: ProductsComponent, canActivate: [ UserGuard, StoreGuard ] },
   { path: 'preferencias', component: PreferencesComponent, canActivate: [ UserGuard, StoreGuard ] },
   { path: '**', redirectTo: 'entrar', pathMatch: 'full'},

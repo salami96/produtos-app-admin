@@ -5,7 +5,7 @@
     padding-top: 1em;
     margin: 2em auto;
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     border-radius: 0.5em;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   }
@@ -14,6 +14,9 @@
   .colors.invalid > span:first-of-type,
   .label-float label {
     background-color: white !important;
+  }
+  .modal-dialog {
+    max-width: 600px;
   }
 }
 main {
@@ -27,7 +30,7 @@ main .form div.text-danger {
 }
 .form {
   width: 100%;
-  max-width: 450px;
+  max-width: 500px;
   padding: 0 15px;
   margin: 0 auto;
 }
@@ -78,6 +81,9 @@ main .form div.text-danger {
 [readonly] {
   background: whitesmoke;
 }
+.label-float.fade:not(.show) {
+  padding-top: 0;
+}
 .label-float {
   position: relative;
   padding-top: 13px;
@@ -95,11 +101,17 @@ main .form div.text-danger {
   -moz-transition: all .1s linear;
   -webkit-appearance: none;
 }
+.address .ad-row-1 .label-float input {
+  min-width: 50px;
+}
 .label-float input:focus:not([readonly]) {
   border: 2px solid var(--primary);
 }
 .label-float input::placeholder {
   color: transparent;
+}
+.modal-dialog .label-float label {
+  background-color: white;
 }
 .label-float label {
   pointer-events: none;
@@ -121,7 +133,7 @@ main .form div.text-danger {
 }
 .label-float input:focus+label, .label-float input:not(:placeholder-shown)+label {
   font-size: 13px;
-  top: 0.5em;
+  top: 0.7em;
   line-height: 0;
   color: var(--primary);
 }
@@ -207,4 +219,13 @@ main .form div.text-danger {
   position: fixed;
   z-index: -1000;
   opacity: 0;
+}
+.address {
+  width: 80%;
+  margin: 0 auto;
+}
+.address .ad-row-1 {
+  display: grid;
+  grid-template-columns: 6fr 3fr;
+  gap: 0.25em;
 }

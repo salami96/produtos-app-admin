@@ -74,3 +74,32 @@ a.badge-theme:hover {
 .pointer {
   cursor: pointer;
 }
+.chk input {
+  display: none;
+}
+.chk label {
+  cursor: pointer;
+  font-size: 0.75em;
+  margin-right: 0.5em;
+}
+.chk input[type="radio"] + label:before, .chk input[type="checkbox"] + label:before {
+  border: 1px solid #5D5C5C;
+  content: "\00a0";
+  display: inline-block;
+  font: 16px/1em sans-serif;
+  height: 20px;
+  margin: 0 .25em 0 0;
+  padding:0;
+  vertical-align: top;
+  width: 20px;
+  border-radius: 4px;
+}
+.chk input[type="radio"]:checked + label:before, .chk input[type="checkbox"]:checked + label:before {
+  border: 1px solid var(--primary);
+  background: var(--secondary);
+  color: var(--primary);
+  content: "\2713";
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+}

@@ -12,13 +12,14 @@ main {
   min-height: 10em;
   border: 1.5px solid;
   border-top: 3px solid;
-  transition: border 100ms;
+  transition: all 200ms ease-in-out;
   cursor: pointer;
 }
 .card:hover {
   border: 2px solid;
   border-top: 4px solid;
-  transition: border 100ms;
+  font-weight: bold;
+  transition: all 200ms ease-in-out;
 }
 .card-title {
   background: white;
@@ -40,4 +41,7 @@ main {
   width: 50%;
   height: auto;
   margin: auto;
+}
+.card.border-dark {
+  color: #333;
 }
