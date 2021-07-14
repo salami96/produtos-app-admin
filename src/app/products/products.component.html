@@ -1,3 +1,43 @@
-<p>
-  products works!
-</p>
+<!--
+  Deve ter:
+
+  listagem de categorias
+  poder editar, desativar e criar categorias
+
+  listagem de pordutos
+  poder editar, desativar e criar pordutos
+ -->
+ <main>
+  <div class="categories" [class.invalid]="errors['categories']">
+    <span>Categorias</span>
+    <div class="box">
+      <div *ngFor="let cat of categories" class="card p-1">
+        <app-insert-icon [icon]="cat.icon"></app-insert-icon>
+        <span>{{cat.name}}</span>
+        <div>
+          <i-eye-off (click)="hide(cat)"></i-eye-off>
+          <i-edit></i-edit>
+        </div>
+      </div>
+      <div class="card p-1">
+        <span>Nova Categoria</span>
+        <div>
+          <i-plus-circle (click)="add()"></i-plus-circle>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="categories" [class.invalid]="errors['categories']">
+    <span>Categorias ocultadas</span>
+    <div class="box">
+      <div *ngFor="let cat of disabledCategories" class="card p-1">
+        <app-insert-icon [icon]="cat.icon"></app-insert-icon>
+        <span>{{cat.name}}</span>
+        <div>
+          <i-eye (click)="show(cat)"></i-eye>
+          <i-trash-2></i-trash-2>
+        </div>
+      </div>
+    </div>
+  </div>
+ </main>

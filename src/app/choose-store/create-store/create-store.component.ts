@@ -71,6 +71,7 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
   }
 
   checkCode() {
+    this.errors['code'] = /\W/.test(this.editedStore.code);
     this.errors['code-used'] = this.availableCodes.includes(this.editedStore.code);
   }
 
@@ -156,7 +157,7 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
   validate() {
     this.valid = true;
     this.errors = [];
-    if (!this.editedStore.code) {
+    if (!this.editedStore.code || (/\W/).test(this.editedStore.code)) {
       this.setError('code');
     }
     if (this.availableCodes.includes(this.editedStore.code)) {

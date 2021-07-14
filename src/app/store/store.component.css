@@ -121,7 +121,7 @@ main .form div.text-danger {
   transition: all .1s linear;
   -webkit-transition: all .1s linear;
   -moz-transition: all .1s linear;
-  background-color: #E6EBF2;
+  background-color: white;
   padding: 5px;
   box-sizing: border-box;
 }
@@ -136,6 +136,7 @@ main .form div.text-danger {
   top: 0.7em;
   line-height: 0;
   color: var(--primary);
+  background-color: #E6EBF2;
 }
 .addresses, .payments, .colors {
   margin-top: 0.5em;

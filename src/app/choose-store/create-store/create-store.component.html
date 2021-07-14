@@ -10,7 +10,7 @@
       <label>Apelido</label>
     </div>
     <div class="text-danger fade mt-1 text-right" [class.show]="errors['code-used']">Apelido já está sendo usado!</div>
-    <div class="text-danger fade mt-1 text-right" [class.show]="errors['code']">Apelido fora do formato!</div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="errors['code']">Apelido fora do formato, use somente letras e números!</div>
     <div class="label-float">
       <input type="text" id="title" [(ngModel)]="editedStore.title" [class.invalid]="errors['title']" placeholder=" "
         (keyup.enter)="focus('slogan')" />
