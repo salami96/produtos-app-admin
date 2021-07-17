@@ -109,7 +109,7 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
     this.complement = ad.complement != '';
     this.reference = ad.reference != '';
   }
- 
+
   addAddress() {
     this.isNewAddress = true;
     this.selectedAddress = {
@@ -157,6 +157,10 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
   validate() {
     this.valid = true;
     this.errors = [];
+    if (!this.editedStore.logo) {
+      this.valid = false;
+      this.snackbar.show('Faça o upload do seu logotipo', 'error')
+    }
     if (!this.editedStore.code || (/\W/).test(this.editedStore.code)) {
       this.setError('code');
     }
@@ -234,7 +238,7 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
     this.errors[id] = true;
     this.valid = false;
   }
-  
+
   saveChanges(field: string) {
     switch (field) {
       case 'preview':
@@ -253,6 +257,8 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
             if (resp) {
               this.editedStore = resp;
               this.snackbar.show('Loja criada com sucesso!');
+              this.storeService.setStore(resp);
+              this.router.navigate([ '/pedidos' ]);
             } else {
               this.snackbar.show('Ocorreu um erro ao salvar as alterações!', 'error');
             }
@@ -279,7 +285,6 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
         if (this.validateAddress()) {
           delete this.selectedAddress._id;
           this.storeService.addAddress(this.selectedAddress).subscribe(resp => {
-            alert(JSON.stringify(resp));
             if (resp) {
               this.errors[field] = false;
               this.editedStore.address.push(resp);
@@ -315,12 +320,12 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
       break;
     }
   }
-  
+
   readFile(e: any) {
     this.errors['logo'] = false;
     this.preview = ''
     this.file = (e.target as HTMLInputElement).files[0];
-    
+
     if (this.file && this.file.type.includes('image')) {
       const reader = new FileReader();
       reader.onload = () => {

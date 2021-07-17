@@ -80,7 +80,7 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.complement = ad.complement != '';
     this.reference = ad.reference != '';
   }
- 
+
   addAddress() {
     this.isNewAddress = true;
     this.selectedAddress = {
@@ -197,7 +197,7 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.errors[id] = true;
     this.valid = false;
   }
-  
+
   saveChanges(field: string) {
     switch (field) {
       case 'preview':
@@ -276,12 +276,12 @@ export class StoreComponent implements OnInit, OnDestroy {
       break;
     }
   }
-  
+
   readFile(e: any) {
     this.errors['logo'] = false;
     this.preview = ''
     this.file = (e.target as HTMLInputElement).files[0];
-    
+
     if (this.file && this.file.type.includes('image')) {
       const reader = new FileReader();
       reader.onload = () => {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Category, Product, Store } from '../services/entities';
 import { StoreService } from '../services/store.service';
@@ -8,12 +8,12 @@ import { StoreService } from '../services/store.service';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
-export class ProductsComponent implements OnInit {
-  categories: Category[];
-  disabledCategories: Category[];
+export class ProductsComponent implements OnInit, OnDestroy {
+  categories: Category[] = [];
+  disabledCategories: Category[] = [];
   products: Product[];
   disabledProducts: Product[];
-  subs: Subscription[];
+  subs: Subscription[] = [];
   store: Store;
 
   constructor(
@@ -24,12 +24,17 @@ export class ProductsComponent implements OnInit {
     this.subs.push(
       this.storeService.getStore.subscribe(s => this.store = s),
       this.storeService.getProperties().subscribe(this.classify)
-    )
+    );
   }
 
   classify = (resp: any) => {
-    resp.c.forEach(cat => {
-
+    resp.c.forEach((cat: Category) => {
+      if (cat.name == 'Todos') return;
+      if (this.store.categories.some(c => cat.name == c.name)) {
+        this.categories.push(cat);
+      } else {
+        this.disabledCategories.push(cat);
+      }
     })
   }
 
@@ -60,6 +65,10 @@ export class ProductsComponent implements OnInit {
     this.disabledCategories.sort(this.sortFn);
   }
 
-  sortFn = (a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+  sortFn = (a: Category, b: Category) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+
+  ngOnDestroy(): void {
+    this.subs.forEach(s => s.unsubscribe());
+  }
 
 }

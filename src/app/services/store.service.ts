@@ -45,13 +45,13 @@ export class StoreService {
       `${environment.host}/api/orders/${code}`, this.options
     ).subscribe(this.setOrders);
   }
-  
+
   getProperties() {
     return this.http.get<{ p: Payment[]; c: Category[] }>(
       `${environment.host}/api/properties`, this.options
     );
   }
-  
+
   createStore(store: Store) {
     return this.http.post<Store>(
       `${environment.host}/api/store`, store, this.options
@@ -69,7 +69,7 @@ export class StoreService {
       `${environment.host}/api/store/address`, { address }, this.options
     );
   }
-  
+
   updateAddress(address: Address) {
     return this.http.put<Address>(
       `${environment.host}/api/store/address`, { address }, this.options

@@ -7,6 +7,7 @@
     "serve": "ng s --host 0.0.0.0 --port 80",
     "backend": "cd ../backend && npm start",
     "build": "ng b --prod",
+    "deploy": "cd ../backend && npm run deploy-admin",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
