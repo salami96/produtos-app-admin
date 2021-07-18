@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Address, Category, Order, Payment, Store } from './entities';
+import { Address, Category, Order, Payment, Product, Store } from './entities';
 import { SnackbarService } from './snackbar.service';
 
 @Injectable({
@@ -49,6 +49,12 @@ export class StoreService {
   getProperties() {
     return this.http.get<{ p: Payment[]; c: Category[] }>(
       `${environment.host}/api/properties`, this.options
+    );
+  }
+
+  getProducts(code: string) {
+    return this.http.get<Product[]>(
+      `${environment.host}/api/products/${code}`, this.options
     );
   }
 

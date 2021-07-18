@@ -8,39 +8,70 @@
   poder editar, desativar e criar pordutos
 -->
 <main>
-  <h1 class="display-4 text-center mx-auto">
+  <!-- <h1 class="display-4 text-center mx-auto">
     <i-settings style="width: 1em"></i-settings> Em Construção
-  </h1>
-  <!-- <div class="categories">
+  </h1> -->
+  <div class="categories">
     <span>Categorias</span>
     <div class="box">
       <div *ngFor="let cat of categories" class="card p-1">
         <app-insert-icon [icon]="cat.icon"></app-insert-icon>
         <span>{{cat.name}}</span>
         <div>
-          <i-eye-off (click)="hide(cat)"></i-eye-off>
-          <i-edit></i-edit>
+          <i-trash-2 class="text-danger" (click)="hide(cat)"></i-trash-2>
         </div>
       </div>
       <div class="card p-1">
-        <span>Nova Categoria</span>
+        <span>Mais categorias</span>
         <div>
-          <i-plus-circle (click)="add()"></i-plus-circle>
+          <i-plus-circle data-toggle="modal" data-target="#add-category"></i-plus-circle>
         </div>
       </div>
     </div>
   </div>
-  <div class="categories">
-    <span>Categorias ocultadas</span>
+  <div class="products mt-3">
+    <span>Produtos</span>
     <div class="box">
-      <div *ngFor="let cat of disabledCategories" class="card p-1">
-        <app-insert-icon [icon]="cat.icon"></app-insert-icon>
-        <span>{{cat.name}}</span>
+      <div *ngFor="let prod of products" class="card p-1">
+        <span class="colored">#{{prod.cod}}</span>
+        <span>{{prod.name}}</span>
         <div>
-          <i-eye (click)="show(cat)"></i-eye>
-          <i-trash-2></i-trash-2>
+          <i-edit></i-edit>
+          <i-trash-2 class="text-danger" (click)="hide(prod)"></i-trash-2>
+        </div>
+      </div>
+      <div class="card p-1">
+        <span>Novo produto</span>
+        <div>
+          <i-plus-circle data-toggle="modal" data-target="#add-product"></i-plus-circle>
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 </main>
+<div class="modal fade" id="add-category" tabindex="-1" role="dialog" aria-labelledby="add-category" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-theme">Nova categoria</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="m-2 categories">
+        <div class="box">
+          <div *ngFor="let cat of disabledCategories" class="card p-1">
+            <app-insert-icon [icon]="cat.icon"></app-insert-icon>
+            <span>{{cat.name}}</span>
+            <div>
+              <i-plus-circle (click)="show(cat)"></i-plus-circle>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!disabledCategories || disabledCategories.length == 0" class="p-3">
+          <div role="alert" class="alert alert-info">Todas as Categorias já estão adicionadas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

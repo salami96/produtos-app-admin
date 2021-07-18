@@ -42,6 +42,7 @@ export interface Product {
         value: number;
     }[];
     optional: string[];
+    active: boolean;
 }
 export interface Order {
     _id: string;

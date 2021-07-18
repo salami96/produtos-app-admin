@@ -1,29 +1,32 @@
 @media (min-width: 949px) {
   main {
     background: white;
-    padding-bottom: 2em;
-    padding-top: 1em;
-    margin: 2em auto;
+    margin: 2em auto 0;
     width: 100%;
     max-width: 600px;
     border-radius: 0.5em;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   }
-  .addresses.invalid > span:first-of-type,
+  /* .addresses.invalid > span:first-of-type,
   .payments.invalid > span:first-of-type,
   .colors.invalid > span:first-of-type,
   .label-float label {
     background-color: white !important;
-  }
+  } */
   .modal-dialog {
     max-width: 600px;
+  }
+  .categories .box .card,
+  .products .box .card {
+    min-width: 48%;
   }
 }
 main {
   margin-top: 2em;
   margin-bottom: 6em;
+  padding: 1em 1em 2em;
 }
-main .form div.text-danger {
+/* main .form div.text-danger {
   display: flex;
   justify-content: flex-end;
   padding-right: 0.5em;
@@ -137,11 +140,11 @@ main .form div.text-danger {
   line-height: 0;
   color: var(--primary);
   background-color: #E6EBF2;
-}
-.categories, .addresses, .payments, .colors {
+} */
+.categories, .products {
   margin-top: 0.5em;
 }
-.addresses.invalid > span:first-of-type,
+/* .addresses.invalid > span:first-of-type,
 .payments.invalid > span:first-of-type,
 .colors.invalid > span:first-of-type {
   color: tomato;
@@ -160,42 +163,38 @@ main .form div.text-danger {
   border-radius: 10px;
   padding: 10px 5px;
   margin-top: 1em;
-}
+} */
 .categories > span:first-of-type,
-.addresses > span:first-of-type,
-.payments > span:first-of-type,
-.colors > span:first-of-type {
+.products > span:first-of-type {
   color: var(--primary);
   margin-top: 0.5em;
 }
-.categories .box .card :not(span),
-.addresses .box .card :not(span),
-.payments .box .card div {
+.categories .box .card div,
+.products .box .card div {
   color: var(--primary);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
 }
 .categories .box,
-.addresses .box,
-.payments .box,
-.colors .box {
+.products .box {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: stretch;
   flex-wrap: wrap;
   gap: 0.25em 2%;
 }
 .categories .box .card,
-.addresses .box .card,
-.payments .box .card {
+.products .box .card {
   display: flex;
   flex-direction: row;
-  min-width: 48%;
+  min-width: 49%;
   justify-content: flex-end;
-  gap: 0.5em
+  gap: 1%;
 }
 .categories .box .card span,
-.addresses .box .card span,
-.payments .box .card span {
+.products .box .card span {
   flex-grow: 1;
   padding: 0.25em;
 }
