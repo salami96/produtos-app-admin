@@ -21,10 +21,10 @@
           <i-trash-2 class="text-danger" (click)="hide(cat)"></i-trash-2>
         </div>
       </div>
-      <div class="card p-1">
-        <span>Mais categorias</span>
+      <div class="card p-1" data-toggle="modal" data-target="#add-category">
+        <span>Categorias</span>
         <div>
-          <i-plus-circle data-toggle="modal" data-target="#add-category"></i-plus-circle>
+          <i-plus-circle></i-plus-circle>
         </div>
       </div>
     </div>
@@ -33,8 +33,10 @@
     <span>Produtos</span>
     <div class="box">
       <div *ngFor="let prod of products" class="card p-1">
-        <span class="colored">#{{prod.cod}}</span>
-        <span>{{prod.name}}</span>
+        <span>
+          <span class="colored">#{{prod.cod}}</span>
+          {{prod.name}}
+        </span>
         <div>
           <i-edit></i-edit>
           <i-trash-2 class="text-danger" (click)="hide(prod)"></i-trash-2>
@@ -48,6 +50,17 @@
       </div>
     </div>
   </div>
+  <button type="button" class="btn btn-outline-danger btn-block mt-4" (click)="init()">
+    <i-slash></i-slash>
+    Desfazer alterações
+  </button>
+  <button type="button" class="btn btn-theme btn-block" (click)="saveChanges('all')">
+    <div>
+      <i-save class="fade" *ngIf="!loading" [class.show]="!loading"></i-save>
+      <i-loading class="fade" *ngIf="loading" [class.show]="loading"></i-loading>
+    </div>
+    Salvar alterações
+  </button>
 </main>
 <div class="modal fade" id="add-category" tabindex="-1" role="dialog" aria-labelledby="add-category" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -71,6 +84,105 @@
         <div *ngIf="!disabledCategories || disabledCategories.length == 0" class="p-3">
           <div role="alert" class="alert alert-info">Todas as Categorias já estão adicionadas</div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="change-product" tabindex="-1" role="dialog" aria-labelledby="change-product" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-theme">{{ isNewproduct ? 'Novo' : 'Editar' }} produto</h5>
+        <button type="button" class="close" data-dismiss="modal" id="product-success" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="form-signin product my-2">
+        <!-- cod: string;
+        store: string;
+        category: string;
+        name: string;
+        imgs: string[];
+        sizes: {
+            name: string;
+            value: number;
+        }[];
+        unity: string;
+        extras: {
+            name: string;
+            value: number;
+        }[];
+        optional: string[];
+        active: boolean;
+        <div class="label-float">
+          <input type="text" [(ngModel)]="product.cod" [class.invalid]="errors['cod']" placeholder=" " (keyup.enter)="focus(category)" [readonly]="isNewProduct" autofocus />
+            <label>
+              Código
+            </label>
+        </div>
+        <div class="text-danger fade mt-1 text-right" [class.show]="errors['cod']">É obrigatório informar um código!</div>
+        <div class="ad-row-1">
+          <div class="label-float">
+            <input type="text" [(ngModel)]="selectedAddress.street" [class.invalid]="errors['street']" id="street" placeholder=" " (keyup.enter)="focus('number')" />
+            <label>Rua, Avenida, etc.</label>
+          </div>
+          <div class="label-float">
+            <input id="number" type="text" pattern="[0-9]*" minlength="1" [(ngModel)]="selectedAddress.number" [class.invalid]="errors['number']" placeholder=" " (keyup.enter)="focus('district')" />
+            <label>Nº</label>
+          </div>
+        </div>
+        <div class="text-danger fade mt-1 text-right" [class.show]="errors['street']">É obrigatório informar o nome da rua!</div>
+        <div class="text-danger fade mt-1 text-right" [class.show]="errors['number']">É obrigatório informar o número!</div>
+        <div class="text-muted fade mt-1 text-right" [class.show]="!errors['number'] && selectedAddress.number.length == 0"><i-info></i-info> Caso não possua nº, Informe 0.</div>
+        <div class="label-float">
+          <input type="text" [(ngModel)]="selectedAddress.district" id="district" [class.invalid]="errors['district']" placeholder=" " (keyup.enter)="focus('city')" />
+          <label>Bairro</label>
+        </div>
+        <div class="text-danger fade mt-1 text-right" [class.show]="errors['district']">É obrigatório informar o Bairro</div>
+        <h5 class="text-center text-theme mt-3">Opcionais</h5>
+        <div class="row">
+          <div class="col-6">
+            <div class="chk">
+              <input type="checkbox" id="show-complement" [(ngModel)]="complement" (keyup.enter)="focus('city')" >
+              <label for="show-complement">Complemento</label>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="chk">
+              <input type="checkbox" id="show-reference" [(ngModel)]="reference" (keyup.enter)="focus('city')" >
+              <label for="show-reference">Ponto de referência</label>
+            </div>
+          </div>
+        </div>
+        <div class="label-float fade" [class.show]="complement">
+          <input type="text" [(ngModel)]="selectedAddress.complement" id="complement" placeholder=" " (keyup.enter)="focus('city')" />
+          <label>Complemento (opcional)</label>
+        </div>
+        <div class="label-float fade" [class.show]="reference">
+          <input type="text" [(ngModel)]="selectedAddress.reference" placeholder=" " id="reference" (keyup.enter)="focus('city')" />
+          <label>Ponto de referência (opcional)</label>
+        </div>
+        <div class="label-float">
+          <input type="text" [(ngModel)]="selectedAddress.city" id="city" [class.invalid]="errors['city']" placeholder=" " (keyup.enter)="focus('state')" />
+          <label>Cidade</label>
+        </div>
+        <div class="text-danger fade mt-1 text-right" [class.show]="errors['city']">É obrigatório informar uma cidade!</div>
+        <div class="label-float">
+          <input type="text" [(ngModel)]="selectedAddress.state" id="state" [class.invalid]="errors['state']" placeholder=" " (keyup.enter)="focus('name')" />
+          <label>Estado</label>
+        </div>
+        <div class="text-danger fade mt-1 text-right" [class.show]="errors['state']">É obrigatório informar um estado!</div>
+        <div class="label-float">
+          <input type="text" [(ngModel)]="selectedAddress.name" id="name" [class.invalid]="errors['name']" placeholder=" "
+          (keyup.enter)="isNewAddress ? saveChanges('new-address') : saveChanges('address')" [readonly]="!isNewAddress" />
+          <label>Identifique esse endereço</label>
+        </div>
+        <div class="text-danger fade mt-1 text-right" [class.show]="errors['name']">É obrigatório informar um nome para este endereço!</div>
+      --></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-theme" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-theme" (click)="saveChanges('address')" *ngIf="!isNewAddress">Salvar</button>
+        <button type="button" class="btn btn-theme" (click)="saveChanges('new-address')" *ngIf="isNewAddress">Adicionar</button>
       </div>
     </div>
   </div>

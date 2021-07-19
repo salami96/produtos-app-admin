@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Category, Product, Store } from '../services/entities';
 import { SnackbarService } from '../services/snackbar.service';
 import { StoreService } from '../services/store.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-products',
@@ -16,9 +17,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
   disabledProducts: Product[];
   subs: Subscription[] = [];
   store: Store;
+  loading: boolean;
+  all: Category;
 
   constructor(
     private storeService: StoreService,
+    private userService: UserService,
     private snackbar: SnackbarService,
   ) { }
 
@@ -27,11 +31,16 @@ export class ProductsComponent implements OnInit, OnDestroy {
       this.storeService.getStore.subscribe(this.setStore)
     );
     if (!this.store) {
-      this.setStore(this.storeService.getSelectedStore());
+      this.init();
     }
   }
 
+  init() {
+    this.setStore(this.storeService.getSelectedStore());
+  }
+
   setStore = (store: Store) => {
+    this.loading = false;
     this.store = store;
     this.subs.push(
       this.storeService.getProperties().subscribe(this.classify),
@@ -43,7 +52,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.categories = [];
     this.disabledCategories = [];
     resp.c.forEach((cat: Category) => {
-      if (cat.name == 'Todos') return;
+      if (cat.name == 'Todos') {
+        this.all = cat;
+        return;
+      }
       if (this.store.categories.some(c => cat.name == c.name)) {
         this.categories.push(cat);
       } else {
@@ -84,6 +96,26 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   sortFn = (a: Category, b: Category) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
+
+  saveChanges(field: string) {
+    switch (field) {
+      case 'all':
+        this.loading = true;
+        this.store.categories = [ this.all, ...this.categories];
+        this.store.ownerUid = this.userService._user.uid;
+        this.storeService.updateStore(this.store).subscribe(resp => {
+          this.loading = false;
+          if (resp) {
+            this.snackbar.show('Dados alterados com sucesso!');
+            // this.setStore(resp);
+            this.storeService.setStore(resp);
+          } else {
+            this.snackbar.show('Ocorreu um erro ao salvar as alterações!', 'error');
+          }
+        });
+      break;
+    }
+  }
 
   ngOnDestroy(): void {
     this.subs.forEach(s => s.unsubscribe());

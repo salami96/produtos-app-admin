@@ -175,7 +175,7 @@ main {
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 0.25em;
+  gap: 0.5em;
 }
 .categories .box,
 .products .box {
@@ -194,9 +194,13 @@ main {
   gap: 1%;
 }
 .categories .box .card span,
-.products .box .card span {
+.products .box .card {
   flex-grow: 1;
   padding: 0.25em;
+  justify-content: space-between;
+}
+.products .box .card {
+  min-height: 2.5em;
 }
 .colors .card {
   display: flex;
@@ -233,4 +237,8 @@ main {
   display: grid;
   grid-template-columns: 6fr 3fr;
   gap: 0.25em;
+}
+.colored {
+  font-size: 0.75em;
+  color: var(--primary);
 }
