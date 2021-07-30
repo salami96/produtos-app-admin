@@ -49,6 +49,7 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
   init() {
     this.errors = [];
     this.editedStore = {
+      _id: '',
       code: '',
       logo: '',
       title: '',
@@ -157,10 +158,10 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
   validate() {
     this.valid = true;
     this.errors = [];
-    if (!this.editedStore.logo) {
-      this.valid = false;
-      this.snackbar.show('Faça o upload do seu logotipo', 'error')
-    }
+    // if (!this.editedStore.logo) {
+    //   this.valid = false;
+    //   this.snackbar.show('Faça o upload do seu logotipo', 'error')
+    // }
     if (!this.editedStore.code || (/\W/).test(this.editedStore.code)) {
       this.setError('code');
     }
@@ -179,12 +180,12 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
     if (!this.editedStore.whatsapp) {
       this.setError('whatsapp');
     }
-    if (!this.editedStore.fb) {
-      this.setError('fb');
-    }
-    if (!this.editedStore.insta || this.editedStore.insta[0] != '@' || this.editedStore.insta.includes('/')) {
-      this.setError('insta');
-    }
+    // if (!this.editedStore.fb) {
+    //   this.setError('fb');
+    // }
+    // if (!this.editedStore.insta || this.editedStore.insta[0] != '@' || this.editedStore.insta.includes('/')) {
+    //   this.setError('insta');
+    // }
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!re.test(String(this.editedStore.email).toLowerCase())) {
       this.setError('email');
@@ -251,7 +252,9 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
       case 'all':
         if (this.validate()) {
           this.loading = true;
+          delete this.editedStore._id;
           this.editedStore.ownerUid = this.userService._user.uid;
+          this.editedStore.code = this.editedStore.code.toLowerCase()
           this.storeService.createStore(this.editedStore).subscribe(resp => {
             this.loading = false;
             if (resp) {
@@ -266,8 +269,18 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
         }
       break;
       case 'logo':
+        // if (this.avatar) {
+        //   this.uService.editUserAvatar(document.forms.item(0)).then(resp => {
+        //     resp.subscribe(user => {
+        //       this.user = user;
+        //       this.success(field);
+        //     });
+        //   });
+        // } else {
+        //   this.error[field] = true;
+        // }
         if (this.preview && this.file.type.includes('image')) {
-          this.storeService.uploadLogo(this.preview, this.editedStore.code).subscribe(resp => {
+          this.storeService.uploadLogo(this.file, this.editedStore.code).subscribe(resp => {
             if (resp) {
               this.editedStore.logo = resp;
               this.snackbar.show('Logotipo alterado com sucesso!');

@@ -82,9 +82,12 @@ export class StoreService {
     );
   }
 
-  uploadLogo(base64: string, code: string) {
-    return this.http.post<string>(
-      `${environment.host}/api/store-logo`, { base64, code }, this.options
+  uploadLogo(file: Blob, code: string) {
+    const data = new FormData();
+    data.append('logo', file);
+    data.append('code', code);
+    return this.http.put<string>(
+      `${environment.host}/api/store-logo`, data, this.options
     );
   }
 

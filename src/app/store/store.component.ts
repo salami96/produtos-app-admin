@@ -141,12 +141,12 @@ export class StoreComponent implements OnInit, OnDestroy {
     if (!this.editedStore.whatsapp) {
       this.setError('whatsapp');
     }
-    if (!this.editedStore.fb) {
-      this.setError('fb');
-    }
-    if (!this.editedStore.insta || this.editedStore.insta[0] != '@' || this.editedStore.insta.includes('/')) {
-      this.setError('insta');
-    }
+    // if (!this.editedStore.fb) {
+    //   this.setError('fb');
+    // }
+    // if (!this.editedStore.insta || this.editedStore.insta[0] != '@' || this.editedStore.insta.includes('/')) {
+    //   this.setError('insta');
+    // }
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!re.test(String(this.editedStore.email).toLowerCase())) {
       this.setError('email');
@@ -224,7 +224,7 @@ export class StoreComponent implements OnInit, OnDestroy {
       break;
       case 'logo':
         if (this.preview && this.file.type.includes('image')) {
-          this.storeService.uploadLogo(this.preview, this.store.code).subscribe(resp => {
+          this.storeService.uploadLogo(this.file, this.store.code).subscribe(resp => {
             if (resp) {
               this.editedStore.logo = resp;
               this.snackbar.show('Logotipo alterado com sucesso!');

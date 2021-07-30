@@ -1,4 +1,5 @@
 export interface Store {
+    _id: string;
     code: string;
     title: string;
     logo: string;
@@ -27,6 +28,7 @@ export interface Category {
     icon: string;
 }
 export interface Product {
+    _id?: string;
     cod: string;
     store: string;
     category: string;
