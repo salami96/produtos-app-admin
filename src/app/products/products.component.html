@@ -1,16 +1,4 @@
-<!--
-  Deve ter:
-
-  listagem de categorias
-  poder editar, desativar e criar categorias
-
-  listagem de pordutos
-  poder editar, desativar e criar pordutos
--->
 <main>
-  <!-- <h1 class="display-4 text-center mx-auto">
-    <i-settings style="width: 1em"></i-settings> Em Construção
-  </h1> -->
   <div class="categories">
     <span>Categorias</span>
     <div class="box">
@@ -18,13 +6,14 @@
         <app-insert-icon [icon]="cat.icon"></app-insert-icon>
         <span>{{cat.name}}</span>
         <div>
-          <i-trash-2 class="text-danger" (click)="hide(cat)"></i-trash-2>
+          <i-trash-2 class="text-secondary" *ngIf="loading"></i-trash-2>
+          <i-trash-2 class="text-danger" *ngIf="!loading" (click)="moveCategory(cat, categories, disabledCategories)"></i-trash-2>
         </div>
       </div>
-      <div class="card p-1" data-toggle="modal" data-target="#add-category">
-        <span>Categorias</span>
+      <div class="card p-1 pointer" data-toggle="modal" data-target="#show-categories">
+        <span>Mostrar categorias</span>
         <div>
-          <i-plus-circle></i-plus-circle>
+          <i-eye></i-eye>
         </div>
       </div>
     </div>
@@ -38,19 +27,27 @@
           {{prod.name}}
         </span>
         <div>
-          <i-edit></i-edit>
-          <i-trash-2 class="text-danger" (click)="hide(prod)"></i-trash-2>
+          <!-- <i-edit class="text-secondary" *ngIf="loading"></i-edit> -->
+          <i-trash-2 class="text-secondary" *ngIf="loading"></i-trash-2>
+          <!-- <i-edit (click)="setProduct(prod)" *ngIf="!loading" data-toggle="modal" data-target="#change-product"></i-edit> -->
+          <i-trash-2 class="text-danger" *ngIf="!loading" (click)="moveProduct(prod, products, disabledProducts)"></i-trash-2>
         </div>
       </div>
-      <div class="card p-1">
+      <div class="card p-1 pl-2 pointer" data-toggle="modal" data-target="#show-products">
+        <span>Mostrar produtos</span>
+        <div>
+          <i-eye></i-eye>
+        </div>
+      </div>
+      <div class="card p-1 pl-2 pointer" (click)="setProduct()" data-toggle="modal" data-target="#change-product">
         <span>Novo produto</span>
         <div>
-          <i-plus-circle data-toggle="modal" data-target="#add-product"></i-plus-circle>
+          <i-plus-circle></i-plus-circle>
         </div>
       </div>
     </div>
   </div>
-  <button type="button" class="btn btn-outline-danger btn-block mt-4" (click)="init()">
+  <!-- <button type="button" class="btn btn-outline-danger btn-block mt-4" (click)="init()">
     <i-slash></i-slash>
     Desfazer alterações
   </button>
@@ -60,9 +57,9 @@
       <i-loading class="fade" *ngIf="loading" [class.show]="loading"></i-loading>
     </div>
     Salvar alterações
-  </button>
+  </button> -->
 </main>
-<div class="modal fade" id="add-category" tabindex="-1" role="dialog" aria-labelledby="add-category" aria-hidden="true">
+<div class="modal fade" id="show-categories" tabindex="-1" role="dialog" aria-labelledby="show-categories" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -77,12 +74,42 @@
             <app-insert-icon [icon]="cat.icon"></app-insert-icon>
             <span>{{cat.name}}</span>
             <div>
-              <i-plus-circle (click)="show(cat)"></i-plus-circle>
+              <i-plus-circle *ngIf="loading" class="text-secondary"></i-plus-circle>
+              <i-plus-circle *ngIf="!loading" (click)="moveCategory(cat, disabledCategories, categories)"></i-plus-circle>
             </div>
           </div>
         </div>
         <div *ngIf="!disabledCategories || disabledCategories.length == 0" class="p-3">
-          <div role="alert" class="alert alert-info">Todas as Categorias já estão adicionadas</div>
+          <div role="alert" class="alert alert-info">Todas as Categorias já estão sendo mostradas!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="show-products" tabindex="-1" role="dialog" aria-labelledby="show-products" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-theme">Mostrar produtos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="m-2 products">
+        <div class="box">
+          <div *ngFor="let prod of disabledProducts" class="card p-1">
+            <span>
+              <span class="colored">#{{prod.cod}}</span>
+              {{prod.name}}
+            </span>
+            <div>
+              <i-plus-circle *ngIf="loading" class="text-secondary"></i-plus-circle>
+              <i-plus-circle *ngIf="!loading" (click)="moveProduct(prod, disabledProducts, products)"></i-plus-circle>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!disabledProducts || disabledProducts.length == 0" class="p-3">
+          <div role="alert" class="alert alert-info">Todos os Produtos já estão sendo mostrados!</div>
         </div>
       </div>
     </div>
@@ -92,97 +119,213 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-theme">{{ isNewproduct ? 'Novo' : 'Editar' }} produto</h5>
+        <h5 class="modal-title text-theme">
+          {{ isNewProduct ? 'Novo' : 'Editar' }} produto
+          <i-help-circle class="colored pointer" (click)="needHelp = !needHelp"></i-help-circle>
+        </h5>
         <button type="button" class="close" data-dismiss="modal" id="product-success" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="form-signin product my-2">
-        <!-- cod: string;
-        store: string;
-        category: string;
-        name: string;
-        imgs: string[];
-        sizes: {
-            name: string;
-            value: number;
-        }[];
-        unity: string;
-        extras: {
-            name: string;
-            value: number;
-        }[];
-        optional: string[];
-        active: boolean;
-        <div class="label-float">
-          <input type="text" [(ngModel)]="product.cod" [class.invalid]="errors['cod']" placeholder=" " (keyup.enter)="focus(category)" [readonly]="isNewProduct" autofocus />
-            <label>
-              Código
+      <div class="form-signin product m-2">
+        <div class="preview">
+          <div class="card" *ngFor="let aux of arr; let i = index">
+            <div *ngIf="selectedProduct.imgs[i]">
+              <i-trash-2 class="delete pointer" (click)="rmPhoto(i)"></i-trash-2>
+              <img src="{{selectedProduct.imgs[i]}}" alt="Imagem do produto">
+            </div>
+            <label [for]="'img-' + i" *ngIf="!selectedProduct.imgs[i]" class="pointer" [class.invalid]="errors['img']">
+              <i-image></i-image>
+              Escolher foto
             </label>
-        </div>
-        <div class="text-danger fade mt-1 text-right" [class.show]="errors['cod']">É obrigatório informar um código!</div>
-        <div class="ad-row-1">
-          <div class="label-float">
-            <input type="text" [(ngModel)]="selectedAddress.street" [class.invalid]="errors['street']" id="street" placeholder=" " (keyup.enter)="focus('number')" />
-            <label>Rua, Avenida, etc.</label>
           </div>
-          <div class="label-float">
-            <input id="number" type="text" pattern="[0-9]*" minlength="1" [(ngModel)]="selectedAddress.number" [class.invalid]="errors['number']" placeholder=" " (keyup.enter)="focus('district')" />
-            <label>Nº</label>
+          <div class="card pointer" (click)="addPhoto()">
+            <i-plus-circle></i-plus-circle>
+            Mais fotos
           </div>
         </div>
-        <div class="text-danger fade mt-1 text-right" [class.show]="errors['street']">É obrigatório informar o nome da rua!</div>
-        <div class="text-danger fade mt-1 text-right" [class.show]="errors['number']">É obrigatório informar o número!</div>
-        <div class="text-muted fade mt-1 text-right" [class.show]="!errors['number'] && selectedAddress.number.length == 0"><i-info></i-info> Caso não possua nº, Informe 0.</div>
+        <div *ngFor="let aux of arr, let i = index">
+          <input type="file" name="img" accept="image/*" [id]="'img-' + i" (change)="readFile($event, i)" hidden />
+        </div>
+        <div class="text-danger fade mt-1 text-right" [class.show]="errors['img']">Adicione pelo menos uma imagem!</div>
         <div class="label-float">
-          <input type="text" [(ngModel)]="selectedAddress.district" id="district" [class.invalid]="errors['district']" placeholder=" " (keyup.enter)="focus('city')" />
-          <label>Bairro</label>
+          <input type="text" [(ngModel)]="selectedProduct.cod" [class.invalid]="errors['cod']" placeholder=" " [readonly]="!isNewProduct" />
+          <label>
+            Código
+          </label>
         </div>
-        <div class="text-danger fade mt-1 text-right" [class.show]="errors['district']">É obrigatório informar o Bairro</div>
-        <h5 class="text-center text-theme mt-3">Opcionais</h5>
-        <div class="row">
-          <div class="col-6">
-            <div class="chk">
-              <input type="checkbox" id="show-complement" [(ngModel)]="complement" (keyup.enter)="focus('city')" >
-              <label for="show-complement">Complemento</label>
+        <div class="text-secondary fade mt-1 text-right" [class.show]="needHelp && !errors['cod']">
+          Pode ser um código ou apelido para o seu produto
+          <br> Ex.: 0, 1 ou até uma palavra ex.: camisa-preta
+        </div>
+        <div class="text-danger fade mt-1 text-right" [class.show]="errors['cod']">Código fora do formato, use somente letras e/ou números!</div>
+        <div class="label-float">
+          <input type="text" [(ngModel)]="selectedProduct.name" [class.invalid]="errors['name']" placeholder=" " />
+          <label>
+            Nome do Produto
+          </label>
+        </div>
+        <div class="text-secondary fade mt-1 text-right" [class.show]="needHelp && !errors['name']">
+          Pode ser o nome / descrição completa do seu produto
+          <br> Ex.: Camisa social preta
+        </div>
+        <div class="text-danger fade mt-1 text-right" [class.show]="errors['name']">Informe um nome para o produto!</div>
+        <div class="categories" [class.invalid]="errors['categories']">
+          <span>Categorias</span>
+          <div class="box">
+            <div *ngFor="let cat of categories" class="card p-1">
+              <app-insert-icon [icon]="cat.icon"></app-insert-icon>
+              <span>{{cat.name}}</span>
+              <div (click)="setProductCategory(cat)">
+                <i-square *ngIf="!productHasCategory(cat)"></i-square>
+                <i-check-square *ngIf="productHasCategory(cat)"></i-check-square>
+              </div>
             </div>
           </div>
-          <div class="col-6">
-            <div class="chk">
-              <input type="checkbox" id="show-reference" [(ngModel)]="reference" (keyup.enter)="focus('city')" >
-              <label for="show-reference">Ponto de referência</label>
+        </div>
+        <div class="text-secondary fade mt-1 text-right" [class.show]="needHelp && !errors['categories']">
+          Escolha uma ou mais categorias nas quais seu produto se encaixa
+        </div>
+        <div class="text-danger fade mt-1 text-right" [class.show]="errors['categories']">Escolha ao menos uma categoria!</div>
+        <div class="label-float">
+          <input type="text" [(ngModel)]="selectedProduct.unity" [class.invalid]="errors['unity']" placeholder=" " />
+          <label>
+            Unidade
+          </label>
+        </div>
+        <div class="text-secondary fade mt-1 text-right" [class.show]="needHelp && !errors['unity']">
+          É o nome dado a forma de agrupar variações do seu produto
+          <br> Ex.: Tamanho, Porções, Nº de Fatias, etc...
+        </div>
+        <div class="text-danger fade mt-1 text-right" [class.show]="errors['unity']">Informe uma unidade para o produto!</div>
+        <div class="sizes" [class.invalid]="errors['sizes']">
+          <span>{{selectedProduct.unity}}</span>
+          <div class="box">
+            <div *ngFor="let size of selectedProduct.sizes; let i = index" class="card p-1">
+              <span>{{size.name}}</span>
+              <span>{{ size.value | currency : 'BRL' }}</span>
+              <div>
+                <i-trash-2 class="text-danger" (click)="deleteSize(i)"></i-trash-2>
+              </div>
+            </div>
+            <div class="card p-1 pl-2 pointer" (click)="addingSize = true; focus('size-name')">
+              <span>Novo {{selectedProduct.unity.toLowerCase()}}</span>
+              <div>
+                <i-plus-circle></i-plus-circle>
+              </div>
             </div>
           </div>
         </div>
-        <div class="label-float fade" [class.show]="complement">
-          <input type="text" [(ngModel)]="selectedAddress.complement" id="complement" placeholder=" " (keyup.enter)="focus('city')" />
-          <label>Complemento (opcional)</label>
+        <div class="row fade" [class.show]="addingSize">
+          <div class="label-float col-5">
+            <input type="text" id="size-name" [(ngModel)]="newSize.name" [class.invalid]="errors['newSize']" placeholder=" " (keyup.enter)="focus('size-value')"/>
+            <label>
+              Nome
+            </label>
+          </div>
+          <div class="label-float col-5">
+            <input type="text" id="size-value" [(ngModel)]="newSize.value" [class.invalid]="errors['newSize']" placeholder=" " (keyup.enter)="setSize()"/>
+            <label>
+              Valor
+            </label>
+          </div>
+          <div class="col-2">
+            <i-x class="pointer text-danger" (click)="revertSize()"></i-x>
+            <i-check class="pointer colored" (click)="setSize()"></i-check>
+          </div>
         </div>
-        <div class="label-float fade" [class.show]="reference">
-          <input type="text" [(ngModel)]="selectedAddress.reference" placeholder=" " id="reference" (keyup.enter)="focus('city')" />
-          <label>Ponto de referência (opcional)</label>
+        <div class="text-secondary fade mt-1 text-right" [class.show]="needHelp && !errors['sizes'] && !errors['newSize']">
+          Seria o modelo e o valor para cada variação do produto
+          <br> Ex.: "Tamanho G custa R$ 75,00" ou "12 Fatias custa R$ 50,00"
         </div>
-        <div class="label-float">
-          <input type="text" [(ngModel)]="selectedAddress.city" id="city" [class.invalid]="errors['city']" placeholder=" " (keyup.enter)="focus('state')" />
-          <label>Cidade</label>
+        <div class="text-danger fade mt-1 text-right" [class.show]="errors['newSize']">Informe um nome e valor para a nova unidade!</div>
+        <div class="text-danger fade mt-1 text-right" [class.show]="errors['sizes']">Defina ao menos um tamanho!</div>
+        <div class="extras">
+          <span>Adicionais</span>
+          <div class="box">
+            <div *ngFor="let extra of selectedProduct.extras; let i = index" class="card p-1">
+              <span>{{extra.name}}</span>
+              <span>{{ extra.value | currency : 'BRL' }}</span>
+              <div>
+                <i-trash-2 class="text-danger" (click)="deleteExtra(i)"></i-trash-2>
+              </div>
+            </div>
+            <div class="card p-1 pl-2 pointer" (click)="addingExtra = true; focus('extra-name')">
+              <span>Novo adicional</span>
+              <div>
+                <i-plus-circle></i-plus-circle>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="text-danger fade mt-1 text-right" [class.show]="errors['city']">É obrigatório informar uma cidade!</div>
-        <div class="label-float">
-          <input type="text" [(ngModel)]="selectedAddress.state" id="state" [class.invalid]="errors['state']" placeholder=" " (keyup.enter)="focus('name')" />
-          <label>Estado</label>
+        <div class="row fade" [class.show]="addingExtra">
+          <div class="label-float col-5">
+            <input type="text" id="extra-name" [(ngModel)]="newExtra.name" [class.invalid]="errors['newExtra']" placeholder=" " (keyup.enter)="focus('extra-value')"/>
+            <label>
+              Nome
+            </label>
+          </div>
+          <div class="label-float col-5">
+            <input type="text" id="extra-value" [(ngModel)]="newExtra.value" [class.invalid]="errors['newExtra']" placeholder=" " (keyup.enter)="setExtra()"/>
+            <label>
+              Valor
+            </label>
+          </div>
+          <div class="col-2">
+            <i-x class="pointer text-danger" (click)="revertExtra()"></i-x>
+            <i-check class="pointer colored" (click)="setExtra()"></i-check>
+          </div>
         </div>
-        <div class="text-danger fade mt-1 text-right" [class.show]="errors['state']">É obrigatório informar um estado!</div>
-        <div class="label-float">
-          <input type="text" [(ngModel)]="selectedAddress.name" id="name" [class.invalid]="errors['name']" placeholder=" "
-          (keyup.enter)="isNewAddress ? saveChanges('new-address') : saveChanges('address')" [readonly]="!isNewAddress" />
-          <label>Identifique esse endereço</label>
+        <div class="text-secondary fade mt-1 text-right" [class.show]="needHelp && !errors['extras'] && !errors['newExtra']">
+          Seria algum adicional ao seu produto
+          <br> Ex.: "Borda Recheada custa R$ 2,00" ou "Embalagem de Presente custa R$ 0,50"
         </div>
-        <div class="text-danger fade mt-1 text-right" [class.show]="errors['name']">É obrigatório informar um nome para este endereço!</div>
-      --></div>
-      <div class="modal-footer">
+        <div class="text-danger fade mt-1 text-right" [class.show]="errors['newExtra']">Informe um nome e valor para o novo adicional!</div>
+        <div class="optional">
+          <span>Opcionais</span>
+          <div class="box">
+            <div *ngFor="let option of selectedProduct.optional; let i = index" class="card p-1">
+              <span>{{option}}</span>
+              <div>
+                <i-trash-2 class="text-danger" (click)="deleteOption(i)"></i-trash-2>
+              </div>
+            </div>
+            <div class="card p-1 pl-2 pointer" (click)="addingOption = true; focus('option-name')">
+              <span>Novo opcional</span>
+              <div>
+                <i-plus-circle></i-plus-circle>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row fade" [class.show]="addingOption">
+          <div class="label-float col-10">
+            <input type="text" id="option-name" [(ngModel)]="newOption" [class.invalid]="errors['newOption']" placeholder=" " (keyup.enter)="setOption()"/>
+            <label>
+              Nome
+            </label>
+          </div>
+          <div class="col-2">
+            <i-x class="pointer text-danger" (click)="revertOption()"></i-x>
+            <i-check class="pointer colored" (click)="setOption()"></i-check>
+          </div>
+        </div>
+        <div class="text-secondary fade mt-1 text-right" [class.show]="needHelp && !errors['optional'] && !errors['newOption']">
+          Seria algo que possa retirar do produto
+          <br> Ex.: "Alface" ou "Ervilha"
+        </div>
+        <div class="text-danger fade mb-3 mt-1 text-right" [class.show]="errors['newOption']">Informe um nome para o novo opcional!</div>
+      </div>
+      <div class="modal-footer mt-3">
         <button type="button" class="btn btn-outline-theme" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-theme" (click)="saveChanges('address')" *ngIf="!isNewAddress">Salvar</button>
-        <button type="button" class="btn btn-theme" (click)="saveChanges('new-address')" *ngIf="isNewAddress">Adicionar</button>
+        <button type="button" class="btn btn-theme w-50" (click)="saveChanges('edited-product')" *ngIf="!isNewProduct">
+          <i-loading *ngIf="loading"></i-loading>
+          <span *ngIf="!loading"> Salvar produto </span>
+        </button>
+        <button type="button" class="btn btn-theme w-50" (click)="saveChanges('new-product')" *ngIf="isNewProduct">
+          <i-loading *ngIf="loading"></i-loading>
+          <span *ngIf="!loading"> Criar produto </span>
+        </button>
       </div>
     </div>
   </div>

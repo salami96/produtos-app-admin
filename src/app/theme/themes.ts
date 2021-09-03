@@ -67,10 +67,10 @@ const pink: Theme = {
     name: 'pink',
     properties: {
         '--background': '#E6EBF2',
-        '--dark': '#741F46',
-        '--primary': '#E83E8C',
-        '--secondary': '#FEE6F1',
-        '--accent': '#3EE89A',
+        '--dark': '#9F5662',
+        '--primary': '#FBB3B1',
+        '--secondary': '#FDEAEA',
+        '--accent': '#4F6D7A',
     }
 };
 const purple: Theme = {

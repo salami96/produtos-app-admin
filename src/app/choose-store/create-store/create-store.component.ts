@@ -269,27 +269,19 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
         }
       break;
       case 'logo':
-        // if (this.avatar) {
-        //   this.uService.editUserAvatar(document.forms.item(0)).then(resp => {
-        //     resp.subscribe(user => {
-        //       this.user = user;
-        //       this.success(field);
-        //     });
-        //   });
-        // } else {
-        //   this.error[field] = true;
-        // }
         if (this.preview && this.file.type.includes('image')) {
           this.storeService.uploadLogo(this.file, this.editedStore.code).subscribe(resp => {
-            if (resp) {
-              this.editedStore.logo = resp;
+            if (resp.status) {
+              this.editedStore.logo = resp.url;
               this.snackbar.show('Logotipo alterado com sucesso!');
-              document.getElementById('logo-success').click();
             } else {
-              this.errors[field] = true;
+              this.snackbar.show('Falha ao enviar a imagem!', 'error');
             }
+            document.getElementById('logo-success').click();
+          }, e => {
+            console.log(e);
+            this.snackbar.show('Falha ao enviar a imagem!', 'error');
           });
-          this.errors[field] = false;
         } else {
           this.errors[field] = true;
         }

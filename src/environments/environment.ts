@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   secret: 't5b3b9a5',
   host: 'http://localhost:9000'
+  // host: 'http://produtos-server.herokuapp.com'
 };
 
 /*

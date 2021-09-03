@@ -29,13 +29,11 @@ export class StoreService {
   getStoresApi(uid: string) {
     return this.http.get<Store[]>(
       `${environment.host}/api/stores-by-owner/${uid}`, this.options
-      // `${environment.host}/api/stores/`, this.options
     );
   }
 
   getStoreCodes() {
     return this.http.get<string[]>(
-      // `${environment.host}/api/stores-by-owner/${uid}`, this.options
       `${environment.host}/api/available-codes/`, this.options
     );
   }
@@ -54,7 +52,7 @@ export class StoreService {
 
   getProducts(code: string) {
     return this.http.get<Product[]>(
-      `${environment.host}/api/products/${code}`, this.options
+      `${environment.host}/api/products/${code}?all=true`, this.options
     );
   }
 
@@ -86,8 +84,37 @@ export class StoreService {
     const data = new FormData();
     data.append('logo', file);
     data.append('code', code);
-    return this.http.put<string>(
+    return this.http.put<any>(
       `${environment.host}/api/store-logo`, data, this.options
+    );
+  }
+
+  updateProduct(product: Product, uid: string) {
+    return this.http.put<Product>(
+      `${environment.host}/api/product/`, { uid, product }, this.options
+    );
+  }
+
+  uploadPhotos(files: Blob[], cod: string) {
+    const data = new FormData();
+    files.forEach(f => {
+      data.append('productImages', f);
+    });
+    data.append('cod', cod);
+    return this.http.post<any>(
+      `${environment.host}/api/product-images/`, data, this.options
+    );
+  }
+
+  createProduct(files: Blob[], product: Product, uid: string) {
+    const data = new FormData();
+    files.forEach(f => {
+      data.append('productImages', f);
+    });
+    data.append('uid', uid);
+    data.append('product', `${JSON.stringify(product)}`);
+    return this.http.post<Product>(
+      `${environment.host}/api/product/`, data, this.options
     );
   }
 

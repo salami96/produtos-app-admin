@@ -210,11 +210,13 @@ export class StoreComponent implements OnInit, OnDestroy {
       case 'all':
         if (this.validate()) {
           this.loading = true;
-          this.editedStore.ownerUid = this.userService._user.uid;
+          if (!this.editedStore.ownerUid) this.editedStore.ownerUid = this.userService._user.uid;
           this.storeService.updateStore(this.editedStore).subscribe(resp => {
             this.loading = false;
             if (resp) {
+              this.storeService.setStore(resp);
               this.editedStore = resp;
+              this.store = resp;
               this.snackbar.show('Dados editados com sucesso!');
             } else {
               this.snackbar.show('Ocorreu um erro ao salvar as alterações!', 'error');
@@ -225,21 +227,26 @@ export class StoreComponent implements OnInit, OnDestroy {
       case 'logo':
         if (this.preview && this.file.type.includes('image')) {
           this.storeService.uploadLogo(this.file, this.store.code).subscribe(resp => {
-            if (resp) {
-              this.editedStore.logo = resp;
+            if (resp.status) {
+              this.editedStore.logo = resp.url;
+              this.store = this.editedStore;
+              this.storeService.setStore(this.editedStore);
               this.snackbar.show('Logotipo alterado com sucesso!');
-              document.getElementById('logo-success').click();
             } else {
-              this.errors[field] = true;
+              this.snackbar.show('Falha ao enviar a imagem!', 'error');
             }
+            document.getElementById('logo-success').click();
+          }, e => {
+            console.log(e);
+            this.snackbar.show('Falha ao enviar a imagem!', 'error');
           });
-          this.errors[field] = false;
         } else {
           this.errors[field] = true;
         }
       break;
       case 'new-address':
         if (this.validateAddress()) {
+          delete this.selectedAddress._id;
           this.storeService.addAddress(this.selectedAddress).subscribe(resp => {
             if (resp) {
               this.errors[field] = false;

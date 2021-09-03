@@ -83,7 +83,7 @@ main {
 }
 [readonly] {
   background: whitesmoke;
-}
+}*/
 .label-float.fade:not(.show) {
   padding-top: 0;
 }
@@ -139,46 +139,62 @@ main {
   top: 0.7em;
   line-height: 0;
   color: var(--primary);
-  background-color: #E6EBF2;
-} */
-.categories, .products {
+}
+.categories, .products, .optional, .extras, .sizes {
   margin-top: 0.5em;
 }
-/* .addresses.invalid > span:first-of-type,
-.payments.invalid > span:first-of-type,
-.colors.invalid > span:first-of-type {
+.text-secondary {
+  cursor: auto;
+}
+.categories.invalid > span:first-of-type,
+.optional.invalid > span:first-of-type,
+.sizes.invalid > span:first-of-type {
   color: tomato;
   pointer-events: none;
   position: absolute;
   transition: all .1s linear;
   -webkit-transition: all .1s linear;
   -moz-transition: all .1s linear;
-  background-color: #E6EBF2;
+  background-color: white;
   padding: 0 5px;
   margin: -20px 10px;
   font-size: 75%;
 }
-.addresses.invalid, .payments.invalid, .colors.invalid {
+.categories.invalid,
+.optional.invalid,
+.sizes.invalid {
   border: 2px solid tomato;
   border-radius: 10px;
   padding: 10px 5px;
   margin-top: 1em;
-} */
+}
 .categories > span:first-of-type,
-.products > span:first-of-type {
+.products > span:first-of-type,
+.extras > span:first-of-type,
+.optional > span:first-of-type,
+.sizes > span:first-of-type {
   color: var(--primary);
   margin-top: 0.5em;
 }
+.categories .box .card div:nth-child(3) {
+  align-items: center !important;
+}
 .categories .box .card div,
-.products .box .card div {
+.products .box .card div,
+.extras .box .card div,
+.optional .box .card div,
+.sizes .box .card div {
   color: var(--primary);
   cursor: pointer;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5em;
 }
 .categories .box,
-.products .box {
+.products .box,
+.extras .box,
+.optional .box,
+.sizes .box {
   display: flex;
   justify-content: flex-start;
   align-items: stretch;
@@ -186,21 +202,34 @@ main {
   gap: 0.25em 2%;
 }
 .categories .box .card,
-.products .box .card {
+.products .box .card,
+.extras .box .card,
+.optional .box .card,
+.sizes .box .card {
   display: flex;
   flex-direction: row;
   min-width: 49%;
+  min-width: 150px;
   justify-content: flex-end;
   gap: 1%;
 }
 .categories .box .card span,
-.products .box .card {
+.categories .box .card,
+.categories .box .card.pointer,
+.products .box .card,
+.extras .box .card,
+.optional .box .card,
+.sizes .box .card {
   flex-grow: 1;
   padding: 0.25em;
   justify-content: space-between;
 }
 .products .box .card {
   min-height: 2.5em;
+}
+.card.pointer:hover {
+  border: 1px solid var(--primary);
+  transition: all 500ms;
 }
 .colors .card {
   display: flex;
@@ -229,16 +258,79 @@ main {
   z-index: -1000;
   opacity: 0;
 }
-.address {
-  width: 80%;
-  margin: 0 auto;
-}
-.address .ad-row-1 {
-  display: grid;
-  grid-template-columns: 6fr 3fr;
-  gap: 0.25em;
-}
 .colored {
   font-size: 0.75em;
   color: var(--primary);
+}
+.modal .row div.col-5 label,
+.modal .row div.col-10 label {
+  margin-left: 10px;
+}
+.modal .row div.col-2 {
+  padding-top: 10px;
+  gap: 5px;
+  display: grid;
+  place-items: center;
+}
+.preview {
+  margin-top: 0.5em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  gap: 0.5em;
+}
+.preview .card {
+  border: 1px solid lightgray;
+  background: whitesmoke;
+  border-radius: 0.5em;
+  width: 30vw;
+  height: 30vw;
+  max-width: 100px;
+  max-height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75em;
+}
+.preview .card label {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+.preview .card .delete {
+  color: white;
+  background: var(--danger);
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3em;
+  height: 3em;
+  border-radius: 0.5em;
+  padding: 0.5em;
+}
+.preview .card .delete:hover {
+  background: tomato;
+  transition: 300ms;
+}
+.preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: scale-down;
+  -o-object-fit: scale-down;
+  border-radius: 0.5em;
+}
+.preview .pointer:hover:not(.delete) {
+  border-radius: 0.5em;
+  border-width: 1px;
+  border: solid lightgray;
+  transition: border-width 300ms;
+}
+.preview .pointer.invalid:not(.delete) {
+  border-radius: 0.5em;
+  border: 1px solid tomato;
 }

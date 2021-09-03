@@ -24,6 +24,7 @@ export interface Payment {
     icon: string;
 }
 export interface Category {
+    _id?: string;
     name: string;
     icon: string;
 }
@@ -31,7 +32,7 @@ export interface Product {
     _id?: string;
     cod: string;
     store: string;
-    category: string;
+    categories: Category[];
     name: string;
     imgs: string[];
     sizes: {

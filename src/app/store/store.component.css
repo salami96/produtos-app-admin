@@ -167,7 +167,7 @@ main .form div.text-danger {
   color: var(--primary);
   margin-top: 0.5em;
 }
-.addresses .box .card :not(span), 
+.addresses .box .card :not(span),
 .payments .box .card div {
   color: var(--primary);
   cursor: pointer;

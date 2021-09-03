@@ -74,6 +74,9 @@ a.badge-theme:hover {
 .pointer {
   cursor: pointer;
 }
+[readonly] {
+  cursor: auto;
+}
 .chk input {
   display: none;
 }

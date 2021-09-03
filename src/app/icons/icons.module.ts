@@ -5,6 +5,7 @@ import {
   IconBriefcase,
   IconCheck,
   IconCheckCircle,
+  IconCheckSquare,
   IconChevronDown,
   IconChevronLeft,
   IconChevronRight,
@@ -17,6 +18,8 @@ import {
   IconEyeOff,
   IconFacebook,
   IconFrown,
+  IconHelpCircle,
+  IconImage,
   IconInfo,
   IconInstagram,
   IconLogIn,
@@ -30,9 +33,11 @@ import {
   IconSettings,
   IconShoppingBag,
   IconSlash,
+  IconSquare,
   IconTag,
   IconTrash2,
-  IconUser
+  IconUser,
+  IconX
 } from 'angular-feather';
 import { IconWhatsappComponent } from './whatsapp-icon/whatsapp-icon.component';
 import { InsertIconComponent } from './insert-icon/insert-icon.component';
@@ -51,6 +56,7 @@ import { LoadingComponent } from './loading/loading.component';
     IconClock,
     IconCheck,
     IconCheckCircle,
+    IconCheckSquare,
     IconChevronDown,
     IconChevronLeft,
     IconChevronRight,
@@ -61,6 +67,8 @@ import { LoadingComponent } from './loading/loading.component';
     IconFacebook,
     IconFrown,
     IconLogIn,
+    IconHelpCircle,
+    IconImage,
     IconInfo,
     IconInstagram,
     IconMap,
@@ -73,9 +81,11 @@ import { LoadingComponent } from './loading/loading.component';
     IconSettings,
     IconShoppingBag,
     IconSlash,
+    IconSquare,
     IconTag,
     IconTrash2,
     IconUser,
+    IconX,
     IconWhatsappComponent,
     InsertIconComponent,
     LoadingComponent,

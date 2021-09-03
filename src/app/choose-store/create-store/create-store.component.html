@@ -57,7 +57,7 @@
       <div class="box">
         <div *ngFor="let ad of editedStore.address" class="card p-1">
           <span>{{ad.name}}</span>
-          <i-edit (click)="setAddress(ad)" data-toggle="modal" data-target="#change-address"></i-edit>
+          <!-- <i-edit (click)="setAddress(ad)" data-toggle="modal" data-target="#change-address"></i-edit> -->
           <i-trash-2 class="text-danger" (click)="rmAddress(ad.name)"></i-trash-2>
         </div>
         <div class="card p-1">
@@ -95,10 +95,10 @@
       </div>
     </div>
     <div class="text-danger fade mt-1 text-right" [class.show]="errors['color']">Selecione um esquema de cor!</div>
-    <button type="button" class="btn btn-outline-danger btn-block mt-4" (click)="init()">
-      <i-slash></i-slash>
-      Desfazer alterações
-    </button>
+    <a type="button" class="btn btn-outline-danger btn-block mt-4" routerLink="['/escolher-loja']">
+      <i-chevron-left></i-chevron-left>
+      Voltar
+    </a>
     <!-- <button type="button" class="btn btn-outline-theme btn-block" (click)="saveChanges('preview')">
       <i-eye></i-eye>
       Pré-visualizar
