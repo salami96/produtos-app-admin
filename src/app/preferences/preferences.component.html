@@ -1,7 +1,7 @@
 <main>
   <div class="form" id="entrar" role="tabpanel" aria-labelledby="nav-home-tab">
     <div class="card p-3">
-      <div class="shippings" [class.invalid]="store.shippings.lenght < 1">
+      <div class="shippings" [class.invalid]="store.shippings.length < 1">
         <span>Custos de envio</span>
         <div class="box">
           <div *ngFor="let shipping of areas" class="card p-1">
@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      <div class="text-danger fade mt-1 text-right" [class.show]="store.shippings.lenght < 1">Adicione ao menos um custo de envio para continuar</div>
+      <div class="text-danger fade mt-1 text-right" [class.show]="store.shippings.length < 1">Adicione ao menos um custo de envio para continuar</div>
     </div>
   </div>
   <div class="card p-3">
