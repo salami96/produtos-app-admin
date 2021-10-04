@@ -49,6 +49,14 @@
       <label>Email</label>
     </div>
     <div class="text-danger fade mt-1 text-right" [class.show]="errors['email']">Email inválido</div>
+    <div class="label-float" *ngIf="editedStore.ownerUid">
+      <input type="text" id="map" [(ngModel)]="editedStore.map" placeholder=" "/>
+      <label>Mapa</label>
+    </div>
+    <div class="label-float" *ngIf="editedStore.ownerUid">
+      <input type="text" id="directions" [(ngModel)]="editedStore.directions" placeholder=" "/>
+      <label>Como chegar</label>
+    </div>
     <div class="addresses" [class.invalid]="errors['address']">
       <span>Endereços</span>
       <div class="box">

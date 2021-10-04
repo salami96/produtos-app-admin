@@ -127,7 +127,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="form-signin product m-2">
+      <div class="form-signin product m-2" *ngIf="categories.length > 0">
         <div class="preview">
           <div class="card" *ngFor="let aux of arr; let i = index">
             <div *ngIf="selectedProduct.imgs[i]">
@@ -316,13 +316,16 @@
         </div>
         <div class="text-danger fade mb-3 mt-1 text-right" [class.show]="errors['newOption']">Informe um nome para o novo opcional!</div>
       </div>
-      <div class="modal-footer mt-3">
+      <div *ngIf="categories.length == 0" class="p-3">
+        <div role="alert" class="alert alert-danger">Adicione ao menos uma categoria, caso contrário não será possível cadastrar produtos!</div>
+      </div>
+      <div class="modal-footer mt-3" *ngIf="categories.length > 0">
         <button type="button" class="btn btn-outline-theme" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-theme w-50" (click)="saveChanges('edited-product')" *ngIf="!isNewProduct">
+        <button type="button" class="btn btn-theme w-50" (click)="saveChanges('edited-product')">
           <i-loading *ngIf="loading"></i-loading>
           <span *ngIf="!loading"> Salvar produto </span>
         </button>
-        <button type="button" class="btn btn-theme w-50" (click)="saveChanges('new-product')" *ngIf="isNewProduct">
+        <button type="button" class="btn btn-theme w-50" (click)="saveChanges('new-product')">
           <i-loading *ngIf="loading"></i-loading>
           <span *ngIf="!loading"> Criar produto </span>
         </button>

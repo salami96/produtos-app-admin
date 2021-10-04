@@ -15,7 +15,10 @@ export interface Store {
     directions: string;
     payments: Payment[];
     categories: Category[];
-    ship: number[];
+    shippings: {
+        zipCode: string;
+        value: number;
+    }[];
     ownerUid: string;
     color: string;
 }

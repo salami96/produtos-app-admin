@@ -1,12 +1,12 @@
 @media (min-width: 949px) {
   main {
-    background: white;
-    padding: 1em 1em 2em;
+    /* background: white;
+    padding: 1em 1em 2em; */
     margin: 2em auto;
     width: 100%;
     max-width: 600px;
-    border-radius: 0.5em;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+    /* border-radius: 0.5em; */
+    /* box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25); */
   }
   .modal-dialog {
     max-width: 600px;
@@ -15,6 +15,9 @@
 main {
   margin: 2em auto 6em;
   padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
 .fade:not(.show) {
   height: 0;
@@ -30,4 +33,55 @@ main {
   position: fixed;
   z-index: -1000;
   opacity: 0;
+}
+.shippings {
+  margin-top: 0.5em;
+}
+.shippings.invalid > span:first-of-type {
+  color: tomato;
+  pointer-events: none;
+  position: absolute;
+  transition: all .1s linear;
+  -webkit-transition: all .1s linear;
+  -moz-transition: all .1s linear;
+  background-color: #E6EBF2;
+  padding: 0 5px;
+  margin: -20px 10px;
+  font-size: 75%;
+}
+.shippings.invalid {
+  border: 2px solid tomato;
+  border-radius: 10px;
+  padding: 10px 5px;
+  margin-top: 1em;
+}
+.shippings > span:first-of-type {
+  color: var(--primary);
+  margin-top: 0.5em;
+}
+.shippings .box .card :not(span) {
+  color: var(--primary);
+  cursor: pointer;
+}
+.shippings .box {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25em 2%;
+}
+.shippings .box .card {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  /* min-width: 48%; */
+  justify-content: flex-end;
+  gap: 0.5em
+}
+.shippings .box .card span {
+  flex-grow: 1;
+  padding: 0.25em;
+}
+.colored {
+  color: var(--primary);
 }

@@ -65,7 +65,7 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
       directions: '',
       payments: [],
       categories: [],
-      ship: [],
+      shippings: [],
       ownerUid: '',
       color: '',
     }
