@@ -8,6 +8,7 @@
     "backend": "cd ../backend && npm start",
     "build": "ng b --prod",
     "deploy": "cd ../backend && npm run deploy-admin",
+    "build:deploy": "ng b --prod && npm run deploy",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
