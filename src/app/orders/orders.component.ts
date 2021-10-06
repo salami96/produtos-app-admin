@@ -67,7 +67,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
 
   formatAddress(o: Order) {
     if (o.pickup) {
-      return `Retirar na loja: ${o.address.name}, ${o.address.city} - ${o.address.state}`;
+      return `Retirar na loja: ${o.address.name}`;
     }
     return `Entregar em: ${o.address.name}: ${o.address.street}, ${o.address.number}, ${o.address.district}, ${o.address.city} - ${o.address.state}`;
   }
@@ -76,7 +76,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.clearFilters(false);
     if (this.query) {
       this.filtering = true;
-      this.classify(this.orders['todos'].filter((o: Order) => 
+      this.classify(this.orders['todos'].filter((o: Order) =>
         o.client.name.toLowerCase().includes(this.query) || o.cod == Number.parseInt(this.query)
       ))
     } else {

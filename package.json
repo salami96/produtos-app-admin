@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng s --host 0.0.0.0 --port 80",
+    "start": "npm run serve",
     "serve": "ng s --host 0.0.0.0 --port 80",
     "backend": "cd ../backend && npm start",
     "build": "ng b --prod",

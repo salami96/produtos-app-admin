@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Observer, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { auth } from 'firebase';
 import { User } from './entities';
 import { Router } from '@angular/router';
@@ -140,10 +140,10 @@ export class UserService {
   private navigate() {
     const selected = this.sService.getSelectedStore();
     if (this.returnUrl && selected) {
-      this.sService.setStore(selected);
+      this.sService.refreshStore(selected.code)
       this.router.navigate([ this.returnUrl ]);
     } else {
       this.router.navigate([ '/escolher-loja' ]);
-    }    
+    }
   }
 }

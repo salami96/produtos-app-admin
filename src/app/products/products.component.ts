@@ -208,6 +208,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.store.categories = [ this.all, ...this.categories ];
         this.store.ownerUid = this.getUid();
         this.storeService.updateStore(this.store).subscribe(resp => {
+          this.storeService.setStore(resp);
           this.loading = false;
           if (resp) {
             this.snackbar.show('Dados alterados com sucesso!');

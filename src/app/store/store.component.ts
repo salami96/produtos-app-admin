@@ -213,6 +213,7 @@ export class StoreComponent implements OnInit, OnDestroy {
           const isNotAdmin = !this.editedStore.ownerUid
           if (isNotAdmin) this.editedStore.ownerUid = this.userService._user.uid;
           this.storeService.updateStore(this.editedStore).subscribe(resp => {
+            this.storeService.setStore(resp);
             this.loading = false;
             if (resp) {
               if (isNotAdmin) resp.ownerUid = null;

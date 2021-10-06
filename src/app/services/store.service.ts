@@ -32,6 +32,12 @@ export class StoreService {
     );
   }
 
+  refreshStore(code: string) {
+    this.http.get<Store>(
+      `${environment.host}/api/store/${code}`, this.options
+    ).subscribe(this.setStore);
+  }
+
   getStoreCodes() {
     return this.http.get<string[]>(
       `${environment.host}/api/available-codes/`, this.options
@@ -141,7 +147,7 @@ export class StoreService {
     return this.http.get(`https://viacep.com.br/ws/${zipCode}/json/`);
   }
 
-  setStore(store: Store) {
+  setStore = (store: Store) => {
     localStorage['store'] = JSON.stringify(store);
     this.alreadySelected = true;
     this.selected.next(store);
