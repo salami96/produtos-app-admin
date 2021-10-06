@@ -1,9 +1,13 @@
 <div *ngIf="show" @state class="snackbar-wrap" [ngClass]="type">
+  <button type="button" class="close" (click)="show = false" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
   <p class="text-center">
     <span *ngIf="type == 'error'" style="font-size: 36px">😕</span>
     <span *ngIf="type == 'success'" style="font-size: 36px">😁</span>
   </p>
   <p class="snackbar-text">
     {{message}}
+    <a [routerLink]="action" *ngIf="action">Clique aqui!</a>
   </p>
 </div>

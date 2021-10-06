@@ -31,6 +31,7 @@ export class SnackbarComponent implements OnInit, OnDestroy {
   show: boolean;
   message: string;
   type: string;
+  action: string;
   snackbarSubscription: Subscription;
 
   constructor(private snkService: SnackbarService) { }
@@ -39,16 +40,15 @@ export class SnackbarComponent implements OnInit, OnDestroy {
     this.snackbarSubscription = this.snkService.snackbarState
     .subscribe(
       (state) => {
-        if (state.type) {
-          this.type = state.type;
-        } else {
-          this.type = 'success';
-        }
+        this.type = state.type || 'success';
+        this.action = state.action;
         this.message = state.message;
         this.show = true;
+
+        const timeout = state.action ? 10000 : 5000;
         setTimeout(() => {
           this.show = false;
-        }, 5000);
+        }, timeout);
       }
     );
   }
