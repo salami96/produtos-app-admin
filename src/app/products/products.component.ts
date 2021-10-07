@@ -203,16 +203,16 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   saveChanges(field: string, obj?: any) {
     this.loading = true;
+    const isNotAdmin = !this.store.ownerUid
+    if (isNotAdmin) this.store.ownerUid = this.userService._user.uid;
     switch (field) {
       case 'categorias':
         this.store.categories = [ this.all, ...this.categories ];
-        this.store.ownerUid = this.getUid();
         this.storeService.updateStore(this.store).subscribe(resp => {
-          this.storeService.setStore(resp);
           this.loading = false;
           if (resp) {
             this.snackbar.show('Dados alterados com sucesso!');
-            // this.setStore(resp);
+            if (isNotAdmin) resp.ownerUid = null;
             this.storeService.setStore(resp);
           } else {
             this.snackbar.show('Ocorreu um erro ao salvar as alterações!', 'error');
