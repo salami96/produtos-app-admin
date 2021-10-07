@@ -91,8 +91,8 @@
       <div class="box">
         <div class="card" *ngFor="let color of availableColors" [style.border]="color.name == editedStore.color ? '3px solid #215C96' : 'none'">
           <div class="color" (click)="editedStore.color = color.name">
+            <div class="primary" [style.background]="getColor(color, '--primary')"></div>
             <div [style.background]="getColor(color, '--dark')"></div>
-            <div [style.background]="getColor(color, '--primary')"></div>
             <div [style.background]="getColor(color, '--secondary')"></div>
             <div [style.background]="getColor(color, '--accent')"></div>
           </div>
