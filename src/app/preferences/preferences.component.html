@@ -1,23 +1,54 @@
 <main>
-  <div class="form" id="entrar" role="tabpanel" aria-labelledby="nav-home-tab">
-    <div class="card p-3">
-      <div class="shippings" [class.invalid]="store.shippings.length < 1">
-        <span>Custos de envio</span>
-        <div class="box">
-          <div *ngFor="let shipping of areas" class="card p-1">
-            <span>{{ shipping[0] }}</span>
-            <span class="colored">{{ shipping[1] }}</span>
-            <i-trash-2 class="text-danger" (click)="rmAddress(shipping)"></i-trash-2>
-          </div>
-          <div class="card p-1">
-            <span>Novo envio</span>
-            <i-plus-circle >
-              <!-- (click)="shippingAddress()" data-toggle="modal" data-target="#change-shipping" -->
-            </i-plus-circle>
-          </div>
+  <div class="card p-3">
+    <div class="shippings" [class.invalid]="store.shippings.length < 1">
+      <h6>Custos de envio</h6>
+      <div class="box">
+        <div *ngFor="let shipping of areas" class="card p-1">
+          <span>{{ shipping.zipCode }}</span>
+          <span class="colored">{{ shipping.value }}</span>
+          <i-trash-2 class="text-danger" (click)="rmAddress(shipping)" *ngIf="false"></i-trash-2>
+        </div>
+        <div class="card p-1" *ngIf="false">
+          <span>Novo envio</span>
+          <i-plus-circle >
+            <!-- (click)="shippingAddress()" data-toggle="modal" data-target="#change-shipping" -->
+          </i-plus-circle>
         </div>
       </div>
-      <div class="text-danger fade mt-1 text-right" [class.show]="store.shippings.length < 1">Adicione ao menos um custo de envio para continuar</div>
+    </div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="store.shippings.length < 1">Adicione ao menos um custo de envio para continuar</div>
+  </div>
+  <div class="card p-3" *ngIf="pixActivated">
+    <div class="pix">
+      <h6>Cadastro da chave Pix</h6>
+      <div class="box">
+        <div class="btn-group">
+          <button class="btn" [ngClass]="pixKeyType == type ? 'btn-theme' : 'btn-outline-theme'"
+            *ngFor="let type of keyTypes" (click)="pixKeyType = type">
+              {{type}}
+          </button>
+        </div>
+      </div>
+      <div class="label-float">
+        <input type="text" [(ngModel)]="pixKey" [class.invalid]="errors['pixKey']" placeholder=" " [disabled]="!pixKeyType"/>
+        <label>{{ pixKeyType ? 'Informe a chave aqui ' : 'Escolha o tipo acima' }}</label>
+      </div>
+      <!-- <div class="preview" [class.filled]="preview">
+        <img *ngIf="preview" src="{{preview}}" alt="Nova Logo">
+      </div>
+      <div class="label-float">
+        <input type="file" [class.invalid]="errors['logo']" name="logo" accept="image/*" (change)="readFile($event)" />
+        <label>Imagem do QR Code PIX</label>
+      </div> -->
+      <div class="actions">
+        <button class="btn btn-outline-danger mt-2" (click)="save('delete-pix')" [disabled]="loading['pix']">
+          Excluir
+        </button>
+        <button class="btn btn-theme mt-2" (click)="save('pix')" [disabled]="loading['pix']">
+          Salvar
+        </button>
+      </div>
+      <div class="text-danger fade mt-1 text-right" [class.show]="errors['pix']">{{pixErrorMsg}}</div>
     </div>
   </div>
   <div class="card p-3">

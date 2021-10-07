@@ -68,6 +68,9 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
       shippings: [],
       ownerUid: '',
       color: '',
+      pixQrCode: '',
+      pixKey: '',
+      pixKeyType: '',
     }
   }
 

@@ -21,6 +21,9 @@ export interface Store {
     }[];
     ownerUid: string;
     color: string;
+    pixQrCode: string;
+    pixKey: string;
+    pixKeyType: string;
 }
 export interface Payment {
     name: string;

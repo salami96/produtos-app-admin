@@ -25,6 +25,7 @@ main {
 }
 .fade:not(.show) {
   height: 0;
+  width: 0;
   opacity: 0;
   transition: 500ms;
 }
@@ -38,9 +39,6 @@ main {
   z-index: -1000;
   opacity: 0;
 }
-.shippings {
-  margin-top: 0.5em;
-}
 .shippings.invalid > span:first-of-type {
   color: tomato;
   pointer-events: none;
@@ -48,7 +46,7 @@ main {
   transition: all .1s linear;
   -webkit-transition: all .1s linear;
   -moz-transition: all .1s linear;
-  background-color: #E6EBF2;
+  background-color: white;
   padding: 0 5px;
   margin: -20px 10px;
   font-size: 75%;
@@ -59,9 +57,10 @@ main {
   padding: 10px 5px;
   margin-top: 1em;
 }
-.shippings > span:first-of-type {
+.shippings > h6,
+.pix > h6 {
   color: var(--primary);
-  margin-top: 0.5em;
+  margin-bottom: 1em;
 }
 .shippings .box .card :not(span) {
   color: var(--primary);
@@ -144,5 +143,22 @@ main {
   top: 0.7em;
   line-height: 0;
   color: var(--primary);
-  background-color: #E6EBF2;
+  background-color: white;
+}
+.card .pix .box,
+.btn.btn-block {
+  display: flex;
+  justify-content: center;
+}
+.btn-group {
+  flex-wrap: wrap;
+}
+.card .pix .actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5em;
+}
+.card .pix .actions button {
+  width: 10em;
+  max-width: 30vw;
 }
