@@ -79,6 +79,7 @@
         <p><span>Itens no pedido:</span><span> {{order.products.length}}</span></p>
         <p><span>Total:</span><span> {{order.total | currency : 'BRL'}}</span></p>
         <p><span>Pagamento: </span><span> {{order.payment.name}}</span></p>
+        <p>{{order.paymentDetail}}</p>
       </div>
     </div>
     <div class="card">
@@ -102,7 +103,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <button class="btn btn-block mx-auto" [class.active]="state == status[order.status]" 
+          <button class="btn btn-block mx-auto" [class.active]="state == status[order.status]"
           [ngClass]="state.replaceAll(' ','-')" *ngFor="let state of status" (click)="setStatus(state)">
             <i-circle *ngIf="state != status[order.status]"></i-circle>
             <i-check-circle *ngIf="state == status[order.status]"></i-check-circle>

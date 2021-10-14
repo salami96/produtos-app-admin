@@ -9,6 +9,7 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class InsertIconComponent implements OnInit {
   @Input() icon: string;
+  @Input() mini: boolean;
   safeHtml: SafeHtml;
   constructor(
     private sanitizer: DomSanitizer,
@@ -17,6 +18,7 @@ export class InsertIconComponent implements OnInit {
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformID)) {
+      if (this.mini) this.icon = this.icon.replace(/36px/g,'18px');
       this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(this.icon);
     }
   }

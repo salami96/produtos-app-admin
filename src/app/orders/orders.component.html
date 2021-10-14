@@ -65,6 +65,7 @@
       <div class="text-right">
         <p class="f-75">{{order.date[0] | date:'dd/MM/yyyy'}} <br> {{order.date[0] | date:'HH:mm'}}</p>
         <p class="colored">{{order.total | currency : 'BRL'}}</p>
+        <p class="colored"><app-insert-icon mini="true" [icon]="order.payment.icon"></app-insert-icon></p>
       </div>
       <i-chevron-right class="colored pointer" routerLink="/pedidos/{{order.cod}}"></i-chevron-right>
     </div>

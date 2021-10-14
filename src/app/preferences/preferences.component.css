@@ -58,22 +58,26 @@ main {
   margin-top: 1em;
 }
 .shippings > h6,
+.card-brands > h6,
 .pix > h6 {
   color: var(--primary);
   margin-bottom: 1em;
 }
-.shippings .box .card :not(span) {
+.shippings .box .card :not(span),
+.card-brands .box .card:not(.disabled) :not(span) {
   color: var(--primary);
   cursor: pointer;
 }
-.shippings .box {
+.shippings .box,
+.card-brands .box {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.25em 2%;
 }
-.shippings .box .card {
+.shippings .box .card,
+.card-brands .box .card {
   display: flex;
   flex-direction: row;
   flex-grow: 1;
@@ -81,7 +85,8 @@ main {
   justify-content: flex-end;
   gap: 0.5em
 }
-.shippings .box .card span {
+.shippings .box .card span,
+.card-brands .box .card span {
   flex-grow: 1;
   padding: 0.25em;
 }
@@ -161,4 +166,17 @@ main {
 .card .pix .actions button {
   width: 10em;
   max-width: 30vw;
+}
+.disabled {
+  color: lightgray !important;
+  cursor: auto;
+}
+.row div.col-10 label {
+  margin-left: 10px;
+}
+.row div.col-2 {
+  padding-top: 10px;
+  gap: 5px;
+  display: grid;
+  place-items: center;
 }

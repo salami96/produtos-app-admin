@@ -71,6 +71,7 @@ export class CreateStoreComponent implements OnInit, OnDestroy {
       pixQrCode: '',
       pixKey: '',
       pixKeyType: '',
+      cardBrands: [],
     }
   }
 

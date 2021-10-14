@@ -24,6 +24,7 @@ export interface Store {
     pixQrCode: string;
     pixKey: string;
     pixKeyType: string;
+    cardBrands: string[];
 }
 export interface Payment {
     name: string;

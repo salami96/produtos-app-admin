@@ -24,6 +24,10 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   pixKey: string;
   pixQrCode: string;
   pixErrorMsg: string;
+  cardBrands: string[];
+  cardActivated: boolean;
+  newBrand: string;
+  addingBrand: boolean;
 
   constructor(
     private uService: UserService,
@@ -33,7 +37,12 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.store = this.sService.getSelectedStore();
+    this.setStore(this.sService.getSelectedStore());
+    this.subs.push(this.sService.getStore.subscribe(this.setStore));
+  }
+
+  setStore = (store) => {
+    this.store = store;
     this.areas = this.store.shippings.map(s => {
       return {
         zipCode: `CEP: ${s.zipCode}`,
@@ -46,6 +55,10 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       this.pixKey = this.store.pixKey;
       this.pixKeyType = this.store.pixKeyType;
       this.pixQrCode = this.store.pixQrCode;
+    }
+    if (this.store.payments.some(p => p.name == 'Cartão')) {
+      this.cardActivated = true;
+      this.cardBrands = this.store.cardBrands;
     }
   }
 
@@ -128,13 +141,50 @@ export class PreferencesComponent implements OnInit, OnDestroy {
           this.store.pixKey = this.pixKey
           this.sService.updateStore(this.store).toPromise().then(resp => {
             if (isNotAdmin) resp.ownerUid = null;
-            this.store = resp;
             this.sService.setStore(resp);
             this.loading[property] = false;
             this.snackbar.show('Dados Pix gravados com sucesso');
           }).catch(e => {
             console.log(e);
             this.snackbar.show('Houve um erro ao salvar seus dados do Pix', 'error');
+            this.loading[property] = false;
+          })
+        } else {
+          this.errors[property] = true;
+        }
+        break;
+      case 'delete-pix':
+        this.loading['pix'] = true;
+        this.store.pixKeyType = '';
+        this.pixKeyType = '';
+        this.store.pixKey = '';
+        this.pixKey = '';
+        this.sService.updateStore(this.store).toPromise().then(resp => {
+          if (isNotAdmin) resp.ownerUid = null;
+          this.sService.setStore(resp);
+          this.loading['pix'] = false;
+          this.snackbar.show('Dados Pix excluídos com sucesso');
+        }).catch(e => {
+          console.log(e);
+          this.snackbar.show('Houve um erro ao excluir seus dados do Pix', 'error');
+          this.loading['pix'] = false;
+        })
+        break;
+      case 'brand':
+        if (this.newBrand) {
+          this.loading[property] = true;
+          this.cardBrands.push(this.newBrand);
+          this.newBrand = '';
+          this.addingBrand = false;
+          this.store.cardBrands = this.cardBrands;
+          this.sService.updateStore(this.store).toPromise().then(resp => {
+            if (isNotAdmin) resp.ownerUid = null;
+            this.sService.setStore(resp);
+            this.loading[property] = false;
+            this.snackbar.show('Nova bandeira de cartão adicionada com sucesso com sucesso');
+          }).catch(e => {
+            console.log(e);
+            this.snackbar.show('Houve um erro ao adicionar a nova bandeira', 'error');
             this.loading[property] = false;
           })
         } else {

@@ -51,6 +51,34 @@
       <div class="text-danger fade mt-1 text-right" [class.show]="errors['pix']">{{pixErrorMsg}}</div>
     </div>
   </div>
+  <div class="card p-3" *ngIf="cardActivated">
+    <div class="card-brands">
+      <h6>Bandeiras de cartão</h6>
+      <div class="box">
+        <div *ngFor="let brand of cardBrands" class="card p-1">
+          <span>{{ brand }}</span>
+          <!-- <i-trash-2 class="text-danger" (click)="save(delete-brand)" *ngIf="true"></i-trash-2> -->
+        </div>
+        <div class="card p-1 pointer" [class.disabled]="loading['brand']" (click)="addingBrand = true">
+          <span>Nova bandeira</span>
+          <i-plus-circle></i-plus-circle>
+        </div>
+      </div>
+    </div>
+    <div class="row fade" [class.show]="addingBrand">
+      <div class="label-float col-10">
+        <input type="text" id="brand-name" [(ngModel)]="newBrand" [class.invalid]="errors['newBrand']" placeholder=" " (keyup.enter)="save('brand')"/>
+        <label>
+          Nome da bandeira
+        </label>
+      </div>
+      <div class="col-2">
+        <i-x class="pointer text-danger" (click)="newBrand = ''; addingBrand = false"></i-x>
+        <i-check class="pointer colored" (click)="save('brand')"></i-check>
+      </div>
+    </div>
+    <div class="text-danger fade mt-1 text-right" [class.show]="errors['newBrand']">Preencha o nome da bandeira que quer adicionar!</div>
+  </div>
   <div class="card p-3">
     <button class="btn btn-block btn-outline-theme" (click)="selectStore()">Mudar de loja</button>
     <button class="btn btn-block btn-danger" (click)="logout()">Sair</button>
