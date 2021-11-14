@@ -181,32 +181,31 @@ export class PreferencesComponent implements OnInit, OnDestroy {
             if (isNotAdmin) resp.ownerUid = null;
             this.sService.setStore(resp);
             this.loading[property] = false;
-            this.snackbar.show('Nova bandeira de cartão adicionada com sucesso com sucesso');
+            this.snackbar.show('Bandeiras alteradas com sucesso');
           }).catch(e => {
             console.log(e);
-            this.snackbar.show('Houve um erro ao adicionar a nova bandeira', 'error');
+            this.snackbar.show('Houve um erro ao alterar as bandeiras', 'error');
             this.loading[property] = false;
           })
         } else {
           this.errors[property] = true;
         }
         break;
-      case 'delete-pix':
-        this.loading['pix'] = true;
-        this.store.pixKeyType = '';
-        this.pixKeyType = '';
-        this.store.pixKey = '';
-        this.pixKey = '';
+      case 'delete-brand':
+        this.loading['brand'] = true;
+        this.cardBrands.splice(this.cardBrands.indexOf(this.newBrand), 1);
+        this.newBrand = '';
+        this.store.cardBrands = this.cardBrands;
         this.sService.updateStore(this.store).toPromise().then(resp => {
           if (isNotAdmin) resp.ownerUid = null;
           this.store = resp;
           this.sService.setStore(resp);
-          this.loading['pix'] = false;
-          this.snackbar.show('Dados Pix excluídos com sucesso');
+          this.loading['brand'] = false;
+          this.snackbar.show('Bandeiras alteradas com sucesso');
         }).catch(e => {
           console.log(e);
-          this.snackbar.show('Houve um erro ao excluir seus dados do Pix', 'error');
-          this.loading['pix'] = false;
+          this.snackbar.show('Houve um erro ao alterar as bandeiras', 'error');
+          this.loading['brand'] = false;
         })
         break;
     }

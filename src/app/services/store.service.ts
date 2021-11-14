@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Address, Category, Order, Payment, Product, Store } from './entities';
 import { SnackbarService } from './snackbar.service';
+import { SocketService } from './socket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class StoreService {
   constructor(
     private http: HttpClient,
     private snackbar: SnackbarService,
+    private socket: SocketService,
   ) { }
 
   getStoresApi(uid: string) {
@@ -151,7 +153,8 @@ export class StoreService {
     localStorage['store'] = JSON.stringify(store);
     this.alreadySelected = true;
     this.selected.next(store);
-    this.getOrdersApi((store as any)._id);
+    this.getOrdersApi(store._id);
+    this.socket.listen.on(`orders-to-${store._id}`, this.setOrders);
   }
 
   unsetStore() {

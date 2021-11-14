@@ -59,9 +59,14 @@ const firebaseConfig = {
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    IconsModule
+    IconsModule,
   ],
-  providers: [ IconsModule, StoreGuard, UserGuard, { provide: LOCALE_ID, useValue: 'pt' } ],
+  providers: [
+    IconsModule,
+    StoreGuard,
+    UserGuard,
+    { provide: LOCALE_ID, useValue: 'pt' },
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {

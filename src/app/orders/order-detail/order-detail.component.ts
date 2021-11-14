@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Address, Order } from 'src/app/services/entities';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { SocketService } from 'src/app/services/socket.service';
 import { StoreService } from 'src/app/services/store.service';
 
 @Component({
@@ -12,12 +13,14 @@ import { StoreService } from 'src/app/services/store.service';
 export class OrderDetailComponent implements OnInit {
   order: Order;
   status = ['novo', 'preparando', 'entregando', 'pronto para retirar', 'entregue', 'cancelado'];
+  currentListener: string;
 
   constructor(
     private sService: StoreService,
     private snackbar: SnackbarService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private socket: SocketService
   ) { }
 
   ngOnInit() {
@@ -27,7 +30,12 @@ export class OrderDetailComponent implements OnInit {
   private getOrder() {
     this.route.params.subscribe(params => {
       if (params.id) {
-        this.setOrder(this.sService.getOrder(params.id));
+        const order = this.sService.getOrder(params.id);
+        this.setOrder(order);
+        this.socket.listen.off(this.currentListener);
+        this.currentListener = `changes-on-${order._id}`;
+        this.socket.listen.on(this.currentListener, this.setOrder)
+
         if (!this.order) {
           this.notFound();
         }

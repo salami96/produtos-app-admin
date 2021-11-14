@@ -55,9 +55,9 @@
     <div class="card-brands">
       <h6>Bandeiras de cartão</h6>
       <div class="box">
-        <div *ngFor="let brand of cardBrands" class="card p-1">
+        <div *ngFor="let brand of cardBrands; let i = index" class="card p-1">
           <span>{{ brand }}</span>
-          <!-- <i-trash-2 class="text-danger" (click)="save(delete-brand)" *ngIf="true"></i-trash-2> -->
+          <i-trash-2 class="text-danger" (click)="newBrand = brand; save('delete-brand')"></i-trash-2>
         </div>
         <div class="card p-1 pointer" [class.disabled]="loading['brand']" (click)="addingBrand = true">
           <span>Nova bandeira</span>
